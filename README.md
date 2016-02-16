@@ -6,3 +6,7 @@ C++ / OpenGL implementation of the Mazes for Programmers book
 
     sudo apt-get install freeglut3
     sudo apt-get install freeglut3-dev
+
+
+#Resources used
+* https://tutorialsplay.com/opengl/tag/maze/
