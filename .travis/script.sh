@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 echo $PATH
+which cmake
 cmake --version
 make --version
 if [ -d build ]; then
