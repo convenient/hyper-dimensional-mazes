@@ -5,13 +5,14 @@ os:
   - linux
 
 install:
+  - #Enter dependencies directory
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+  - #Install cmake 3.3.2
   - CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz"
   - mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
   - export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-  - #ls -la ${DEPS_DIR}/cmake/bin
-  - export SPECIFIC_CMAKE=${DEPS_DIR}/cmake/bin/cmake
+  - #Exit dependencies directory
   - cd ..
 
 script:
