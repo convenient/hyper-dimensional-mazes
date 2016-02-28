@@ -1,5 +1,8 @@
 language:
   - cpp
 
+os:
+  - linux
+
 script:
   - ./.travis/script.sh
