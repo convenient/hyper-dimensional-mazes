@@ -8,7 +8,8 @@ install:
   - CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.2-Linux-x86_64.tar.gz"
   - mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
   - export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-  - export SPECIFIC_CMAKE=${DEPS_DIR}/cmake/bin/cmake
+  - ls -la ${DEPS_DIR}/cmake/bin
+  - export SPECIFIC_CMAKE=${DEPS_DIR}/cmake/bin
 
 script:
   - ./.travis/script.sh
