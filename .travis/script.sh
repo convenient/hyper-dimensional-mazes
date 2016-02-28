@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo $SPECIFIC_CMAKE
-
+which cmake
 cmake --version
 make --version
 if [ -d build ]; then
@@ -9,7 +9,7 @@ fi
 mkdir build
 cd build
 
-if [! -z "$var" ]; then
+if [ ! -z "${SPECIFIC_CMAKE}" ]; then
     (${SPECIFIC_CMAKE} ..)
 else
     cmake ..
