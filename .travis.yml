@@ -4,7 +4,11 @@ language:
 os:
   - linux
 
+sudo: true
+
 install:
+  - sudo apt-get install freeglut3
+  - sudo apt-get install freeglut3-dev
   - #Enter dependencies directory
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
