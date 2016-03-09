@@ -33,11 +33,17 @@ TEST(nodetest, test_double_linked) {
 
     ASSERT_EQ(&adam, betty.getLeftPtr());
     ASSERT_EQ(nullptr, betty.getRightPtr());
+
+    /**
+     * Break the link
+     */
+    betty.setLeftPtr(nullptr);
+
+    ASSERT_EQ(nullptr, adam.getRightPtr());
+    ASSERT_EQ(nullptr, betty.getLeftPtr());
 }
 
 TEST(nodetest, test_replace_node) {
-
-    return;
 
     /**
      * Initial node status

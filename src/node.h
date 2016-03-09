@@ -10,13 +10,21 @@ class Node {
     Node* y_plus = nullptr;
     Node* y_minus = nullptr;
 
-    public: Node()
-    {
-    }
-
     public: void setRightPtr(Node *node)
     {
+        Node*currentPtr = this->x_plus;
+        if (currentPtr == node) {
+            return;
+        }
         this->x_plus = node;
+
+        if (currentPtr != nullptr) {
+            currentPtr->setLeftPtr(nullptr);
+        }
+
+        if (node == nullptr) {
+            return;
+        }
 
         Node* ptr = node->getLeftPtr();
 
@@ -27,7 +35,20 @@ class Node {
 
     public: void setLeftPtr(Node *node)
     {
+        Node*currentPtr = this->x_minus;
+        if (currentPtr == node) {
+            return;
+        }
         this->x_minus = node;
+
+        if (currentPtr != nullptr) {
+            currentPtr->setRightPtr(nullptr);
+        }
+
+
+        if (node == nullptr) {
+            return;
+        }
 
         Node* ptr = node->getRightPtr();
 
