@@ -19,7 +19,7 @@ TEST(nodetest, test_double_linked) {
     Node adam;
     Node betty;
 
-    Node*bettyPtr = &betty;
+    Node *bettyPtr = &betty;
 
     /**
      * New node status
@@ -56,9 +56,9 @@ TEST(nodetest, test_replace_node) {
     Node betty;
     Node charlie;
 
-    Node*adamPtr = &adam;
-    Node*bettyPtr = &betty;
-    Node*charliePtr = &charlie;
+    Node *adamPtr = &adam;
+    Node *bettyPtr = &betty;
+    Node *charliePtr = &charlie;
 
     /**
      * New node status

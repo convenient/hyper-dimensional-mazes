@@ -5,12 +5,12 @@
 
 class Node {
 
-    Node* x_plus = nullptr;
-    Node* x_minus = nullptr;
+    Node *x_plus = nullptr;
+    Node *x_minus = nullptr;
 
-    public: void setRightPtr(Node *node)
-    {
-        Node*currentPtr = this->x_plus;
+public:
+    void setRightPtr(Node *node) {
+        Node *currentPtr = this->x_plus;
         if (currentPtr == node) {
             return;
         }
@@ -24,16 +24,16 @@ class Node {
             return;
         }
 
-        Node* ptr = node->getLeftPtr();
+        Node *ptr = node->getLeftPtr();
 
         if (this->shouldUpdatePtr(ptr)) {
             node->setLeftPtr(this);
         }
     }
 
-    public: void setLeftPtr(Node *node)
-    {
-        Node*currentPtr = this->x_minus;
+public:
+    void setLeftPtr(Node *node) {
+        Node *currentPtr = this->x_minus;
         if (currentPtr == node) {
             return;
         }
@@ -48,15 +48,15 @@ class Node {
             return;
         }
 
-        Node* ptr = node->getRightPtr();
+        Node *ptr = node->getRightPtr();
 
         if (this->shouldUpdatePtr(ptr)) {
             node->setRightPtr(this);
         }
     }
 
-    private: bool shouldUpdatePtr(Node*ptr)
-    {
+private:
+    bool shouldUpdatePtr(Node *ptr) {
         if (ptr == this) {
             //Already paired
             return false;
@@ -65,17 +65,17 @@ class Node {
             //Don't think this condition should actually be hit.
             return true;
         } else {
-            throw std::logic_error( "Should pair with something else" );
+            throw std::logic_error("Should pair with something else");
         }
     }
 
-    public: Node*getRightPtr()
-    {
+public:
+    Node *getRightPtr() {
         return this->x_plus;
     }
 
-    public: Node*getLeftPtr()
-    {
+public:
+    Node *getLeftPtr() {
         return this->x_minus;
     }
 };
