@@ -1,6 +1,8 @@
 #ifndef MAZES_FOR_PROGRAMMERS_NODE_H
 #define MAZES_FOR_PROGRAMMERS_NODE_H
 
+#include <stdexcept>
+
 class Node {
 
     Node* x_plus = nullptr;
@@ -18,27 +20,34 @@ class Node {
 
         Node* ptr = node->getLeftPtr();
 
-        if (ptr == this) {
-            return;
-        } else if (!((ptr == NULL) || (ptr == nullptr))) {
-            return;
+        if (this->shouldUpdatePtr(ptr)) {
+            node->setLeftPtr(this);
         }
-
-        node->setLeftPtr(this);
     }
 
     public: void setLeftPtr(Node *node)
     {
         this->x_minus = node;
+
         Node* ptr = node->getRightPtr();
 
-        if (ptr == this) {
-            return;
-        } else if (!((ptr == NULL) || (ptr == nullptr))) {
-            return;
+        if (this->shouldUpdatePtr(ptr)) {
+            node->setRightPtr(this);
         }
+    }
 
-        node->setRightPtr(this);
+    private: bool shouldUpdatePtr(Node*ptr)
+    {
+        if (ptr == this) {
+            //Already paired
+            return false;
+        } else if (ptr == nullptr) {
+            //Ptr unassigned, free to pair
+            //Don't think this condition should actually be hit.
+            return true;
+        } else {
+            throw std::logic_error( "Should pair with something else" );
+        }
     }
 
     public: Node*getRightPtr()
