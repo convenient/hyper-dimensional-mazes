@@ -7,8 +7,6 @@ class Node {
 
     Node* x_plus = nullptr;
     Node* x_minus = nullptr;
-    Node* y_plus = nullptr;
-    Node* y_minus = nullptr;
 
     public: void setRightPtr(Node *node)
     {
