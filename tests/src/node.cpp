@@ -5,14 +5,20 @@ using namespace std;
 
 Node getOneDimensionalTestNode()
 {
-    Node oneDimensionalNode = Node();
+    Axis* xAxis = new Axis('x');
+
+    Dimensions dimensions;
+    dimensions.addAxis(xAxis);
+
+    Node oneDimensionalNode = Node(dimensions);
+
     return oneDimensionalNode;
 }
 
 TEST(nodetest, test_initial_state) {
     Node adam = getOneDimensionalTestNode();
-    ASSERT_EQ(nullptr, adam.getRightPtr());
-    ASSERT_EQ(nullptr, adam.getLeftPtr());
+    ASSERT_EQ(nullptr, adam.getPtr('x', Axis::positive));
+    ASSERT_EQ(nullptr, adam.getPtr('x', Axis::negative));
 }
 
 TEST(nodetest, test_double_linked) {
@@ -32,21 +38,21 @@ TEST(nodetest, test_double_linked) {
      *
      * null <- adam <-> betty -> null
      */
-    adam.setRightPtr(bettyPtr);
+    adam.setPtr('x', Axis::positive, bettyPtr);
 
-    ASSERT_EQ(nullptr, adam.getLeftPtr());
-    ASSERT_EQ(&betty, adam.getRightPtr());
+    ASSERT_EQ(nullptr, adam.getPtr('x', Axis::negative));
+    ASSERT_EQ(&betty, adam.getPtr('x', Axis::positive));
 
-    ASSERT_EQ(&adam, betty.getLeftPtr());
-    ASSERT_EQ(nullptr, betty.getRightPtr());
+    ASSERT_EQ(&adam, betty.getPtr('x', Axis::negative));
+    ASSERT_EQ(nullptr, betty.getPtr('x', Axis::positive));
 
     /**
      * Break the link
      */
-    betty.setLeftPtr(nullptr);
+    betty.setPtr('x', Axis::negative, nullptr);
 
-    ASSERT_EQ(nullptr, adam.getRightPtr());
-    ASSERT_EQ(nullptr, betty.getLeftPtr());
+    ASSERT_EQ(nullptr, adam.getPtr('x', Axis::positive));
+    ASSERT_EQ(nullptr, betty.getPtr('x', Axis::negative));
 }
 
 TEST(nodetest, test_replace_node) {
@@ -72,23 +78,23 @@ TEST(nodetest, test_replace_node) {
      * null <- adam <-> betty -> null
      * null <- charlie -> null
      */
-    adam.setRightPtr(bettyPtr);
-    ASSERT_EQ(bettyPtr, adam.getRightPtr());
-    ASSERT_EQ(adamPtr, betty.getLeftPtr());
+    adam.setPtr('x', Axis::positive, bettyPtr);
+    ASSERT_EQ(bettyPtr, adam.getPtr('x', Axis::positive));
+    ASSERT_EQ(adamPtr, betty.getPtr('x', Axis::negative));
 
     /**
      * New node status
      * null <- adam -> null
      * null <- charlie <-> betty -> null
      */
-    betty.setLeftPtr(charliePtr);
+    betty.setPtr('x', Axis::negative, charliePtr);
 
-    ASSERT_EQ(nullptr, adam.getLeftPtr());
-    ASSERT_EQ(nullptr, adam.getRightPtr());
+    ASSERT_EQ(nullptr, adam.getPtr('x', Axis::negative));
+    ASSERT_EQ(nullptr, adam.getPtr('x', Axis::positive));
 
-    ASSERT_EQ(charliePtr, betty.getLeftPtr());
-    ASSERT_EQ(nullptr, betty.getRightPtr());
+    ASSERT_EQ(charliePtr, betty.getPtr('x', Axis::negative));
+    ASSERT_EQ(nullptr, betty.getPtr('x', Axis::positive));
 
-    ASSERT_EQ(nullptr, charlie.getLeftPtr());
-    ASSERT_EQ(bettyPtr, charlie.getRightPtr());
+    ASSERT_EQ(nullptr, charlie.getPtr('x', Axis::negative));
+    ASSERT_EQ(bettyPtr, charlie.getPtr('x', Axis::positive));
 }

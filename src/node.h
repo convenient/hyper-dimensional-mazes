@@ -3,44 +3,22 @@
 
 #include <stdexcept>
 #include <unordered_map>
-#include "axis.h"
+#include "dimensions.h"
 
 class Node {
 
 private:
-    const char x = 'x';
-    std::unordered_map<char, Axis> dimensions;
+    Dimensions dimensions;
 
 public:
-    Node()
+    Node(Dimensions dimensions)
     {
-        Axis x_axis('x');
-        this->dimensions.insert({this->x, x_axis});
-    }
-
-    void setRightPtr(Node *node) {
-        this->setPtr(this->x, Axis::positive, node);
-    }
-
-    Node *getRightPtr() {
-        return this->getPtr(this->x, Axis::positive);
-    }
-
-    void setLeftPtr(Node *node) {
-        this->setPtr(this->x, Axis::negative, node);
-    }
-
-    Node *getLeftPtr() {
-        return this->getPtr(this->x, Axis::negative);
+        this->dimensions = dimensions.clone();
     }
 
     Axis* getAxis(char axis)
     {
-        if (this->dimensions.count(axis)) {
-            return &this->dimensions.at(axis);
-        } else {
-            throw std::logic_error("Unexpected axis requested");
-        }
+        return this->dimensions.getAxisPtr(axis);
     }
 
     void setPtr(char axis, int direction, Node *node){
