@@ -15,6 +15,20 @@ Node getOneDimensionalTestNode()
     return oneDimensionalNode;
 }
 
+Node getTwoDimensionalTestNode()
+{
+    Axis* xAxis = new Axis('x');
+    Axis* yAxis = new Axis('y');
+
+    Dimensions dimensions;
+    dimensions.addAxis(xAxis);
+    dimensions.addAxis(yAxis);
+
+    Node twoDimensionalNode = Node(dimensions);
+
+    return twoDimensionalNode;
+}
+
 TEST(nodetest, test_initial_state) {
     Node adam = getOneDimensionalTestNode();
     ASSERT_EQ(nullptr, adam.getPtr('x', Axis::positive));
@@ -97,4 +111,25 @@ TEST(nodetest, test_replace_node) {
 
     ASSERT_EQ(nullptr, charlie.getPtr('x', Axis::negative));
     ASSERT_EQ(bettyPtr, charlie.getPtr('x', Axis::positive));
+}
+
+TEST(nodetest, test_two_dimensions) {
+    Node adam = getTwoDimensionalTestNode();
+    Node betty = getTwoDimensionalTestNode();
+    Node charlie = getOneDimensionalTestNode();
+
+    Node *adamPtr = &adam;
+    Node *bettyPtr = &betty;
+    Node *charliePtr = &charlie;
+
+    //set adam above betty.
+    betty.setPtr('y', Axis::positive, adamPtr);
+    //set charlie to the left of betty
+    betty.setPtr('x', Axis::negative, charliePtr);
+
+    //Assert the linking worked both ways
+    ASSERT_EQ(bettyPtr, charlie.getPtr('x', Axis::positive));
+    ASSERT_EQ(bettyPtr, adam.getPtr('y', Axis::negative));
+
+    //Betty is now linked on two axis!
 }
