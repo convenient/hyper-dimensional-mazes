@@ -3,83 +3,64 @@
 
 #include <stdexcept>
 #include <unordered_map>
-#include <string>
+#include "axis.h"
 
 class Node {
 
-public: Node()
-    {
-        std::unordered_map<std::string, Node*> x_axis;
-        std::unordered_map<std::string, Node*> y_axis;
-        //std::unordered_map<std::string, Node*> z_axis;
-
-        this->dimensions.insert({this->x, x_axis});
-        this->dimensions.insert({this->y, y_axis});
-        //this->dimensions.insert({this->z, x_axis});
-    }
-
 private:
-    const std::string positive = "positive";
-    const std::string negative = "negative";
     const char x = 'x';
-    const char y = 'y';
-    const char z = 'z';
-
-    std::unordered_map<std::string, Node*> x_axis;
-    std::unordered_map<char, std::unordered_map<std::string, Node*>> dimensions;
+    std::unordered_map<char, Axis> dimensions;
 
 public:
-    void setRightPtr(Node *node) {
-        std::unordered_map<std::string, Node*>* x_axis = this->getAxis(this->x);
+    Node()
+    {
+        Axis x_axis;
+        this->dimensions.insert({this->x, x_axis});
+    }
 
-        this->setPtr(x_axis, node, this->positive);
+    void setRightPtr(Node *node) {
+        this->setPtr(this->x, Axis::positive, node);
     }
 
     Node *getRightPtr() {
-        std::unordered_map<std::string, Node*>* x_axis = this->getAxis(this->x);
-
-        return this->getPtr(x_axis, this->positive);
+        return this->getPtr(this->x, Axis::positive);
     }
 
     void setLeftPtr(Node *node) {
-        std::unordered_map<std::string, Node*>* x_axis = this->getAxis(this->x);
-
-        this->setPtr(x_axis, node, this->negative);
+        this->setPtr(this->x, Axis::negative, node);
     }
 
     Node *getLeftPtr() {
-
-        std::unordered_map<std::string, Node*>* x_axis = this->getAxis(this->x);
-
-        return this->getPtr(x_axis, this->negative);
+        return this->getPtr(this->x, Axis::negative);
     }
 
-private:
-
-    std::unordered_map<std::string, Node*>* getAxis(char axis)
+    Axis* getAxis(char axis)
     {
         if (this->dimensions.count(axis)) {
             return &this->dimensions.at(axis);
         } else {
-            return nullptr;
+            throw std::logic_error("Unexpected axis requested");
         }
     }
 
-    void setPtr(std::unordered_map<std::string, Node*>* axis, Node *node, std::string direction){
+private:
+
+    void setPtr(char axis, int direction, Node *node){
+        Axis* axisObject = this->getAxis(axis);
         Node *currentPtr = this->getPtr(axis, direction);
         if (currentPtr == node) {
             return;
         }
 
-        this->safeInsert(direction, node);
+        axisObject->setPtr(direction, node);
 
-        std::string oppositeDirection = this->getOppositeDirection(direction);
+        int oppositeDirection = axisObject->getOppositeDirection(direction);
 
         /**
          * Break the link with the current sister node.
          */
         if (currentPtr != nullptr) {
-            currentPtr->setPtr(axis, nullptr, oppositeDirection);
+            currentPtr->setPtr(axis, oppositeDirection, nullptr);
         }
 
         if (node == nullptr) {
@@ -92,34 +73,14 @@ private:
         Node *ptr = node->getPtr(axis, oppositeDirection);
 
         if (this->shouldUpdatePtr(ptr)) {
-            node->setPtr(axis, this, oppositeDirection);
+            node->setPtr(axis, oppositeDirection, this);
         }
     }
 
-    Node *getPtr(std::unordered_map<std::string, Node*>* axis, std::string direction) {
-        if (this->x_axis.count(direction)) {
-            return this->x_axis.at(direction);
-        } else {
-            return nullptr;
-        }
-    }
-
-    void safeInsert(std::string direction, Node *node)
-    {
-        if (this->x_axis.count(direction)) {
-            this->x_axis.erase(direction);
-        }
-        this->x_axis.insert({direction, node});
-    }
-
-    std::string getOppositeDirection(std::string direction) {
-        if (direction == this->positive) {
-            return this->negative;
-        } else if (direction == this->negative) {
-            return this->positive;
-        } else {
-            throw std::logic_error("Unexpected axis direction given");
-        }
+    Node *getPtr(char axis, int direction) {
+        Axis* axisObject = this->getAxis(axis);
+        Node* node = (Node*) axisObject->getPtr(direction);
+        return node;
     }
 
     bool shouldUpdatePtr(Node *ptr) {
@@ -128,7 +89,6 @@ private:
             return false;
         } else if (ptr == nullptr) {
             //Ptr unassigned, free to pair
-            //Don't think this condition should actually be hit.
             return true;
         } else {
             throw std::logic_error("Should pair with something else");
