@@ -3,8 +3,14 @@
 
 using namespace std;
 
+Node getOneDimensionalTestNode()
+{
+    Node oneDimensionalNode = Node();
+    return oneDimensionalNode;
+}
+
 TEST(nodetest, test_initial_state) {
-    Node adam;
+    Node adam = getOneDimensionalTestNode();
     ASSERT_EQ(nullptr, adam.getRightPtr());
     ASSERT_EQ(nullptr, adam.getLeftPtr());
 }
@@ -16,8 +22,8 @@ TEST(nodetest, test_double_linked) {
      * null <- adam -> null
      * null <- betty -> null
      */
-    Node adam;
-    Node betty;
+    Node adam = getOneDimensionalTestNode();
+    Node betty = getOneDimensionalTestNode();
 
     Node *bettyPtr = &betty;
 
@@ -52,9 +58,9 @@ TEST(nodetest, test_replace_node) {
      * null <- betty -> null
      * null <- charlie -> null
      */
-    Node adam;
-    Node betty;
-    Node charlie;
+    Node adam = getOneDimensionalTestNode();
+    Node betty = getOneDimensionalTestNode();
+    Node charlie = getOneDimensionalTestNode();
 
     Node *adamPtr = &adam;
     Node *bettyPtr = &betty;

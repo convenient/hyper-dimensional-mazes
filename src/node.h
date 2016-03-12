@@ -14,7 +14,7 @@ private:
 public:
     Node()
     {
-        Axis x_axis;
+        Axis x_axis('x');
         this->dimensions.insert({this->x, x_axis});
     }
 
@@ -42,8 +42,6 @@ public:
             throw std::logic_error("Unexpected axis requested");
         }
     }
-
-private:
 
     void setPtr(char axis, int direction, Node *node){
         Axis* axisObject = this->getAxis(axis);
@@ -83,6 +81,7 @@ private:
         return node;
     }
 
+private:
     bool shouldUpdatePtr(Node *ptr) {
         if (ptr == this) {
             //Already paired

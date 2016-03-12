@@ -13,12 +13,24 @@ public:
     void* positivePtr = nullptr;
     void* negativePtr = nullptr;
 
+    char identifier;
+
+    Axis(char identifier)
+    {
+        this->identifier = identifier;
+    }
+
+    char getIdentifier()
+    {
+        return this->identifier;
+    }
+
     void* getPtr(int direction)
     {
         if (direction == Axis::positive) {
-            return this->getPositivePtr();
+            return this->positivePtr;
         } else if (direction == Axis::negative) {
-            return this->getNegativePtr();
+            return this->negativePtr;
         } else {
             throw std::logic_error("Unexpected axis direction given");
         }
@@ -26,12 +38,12 @@ public:
 
     void* getPositivePtr()
     {
-        return this->positivePtr;
+        return this->getPtr(Axis::positive);
     }
 
     void* getNegativePtr()
     {
-        return this->negativePtr;
+        return this->getPtr(Axis::negative);
     }
 
     void setPtr(int direction, void* ptr)
