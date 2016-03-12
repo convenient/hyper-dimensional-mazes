@@ -7,33 +7,66 @@
 
 class Node {
 
+public: Node()
+    {
+        std::unordered_map<std::string, Node*> x_axis;
+        std::unordered_map<std::string, Node*> y_axis;
+        //std::unordered_map<std::string, Node*> z_axis;
+
+        this->dimensions.insert({this->x, x_axis});
+        this->dimensions.insert({this->y, y_axis});
+        //this->dimensions.insert({this->z, x_axis});
+    }
+
 private:
     const std::string positive = "positive";
     const std::string negative = "negative";
+    const char x = 'x';
+    const char y = 'y';
+    const char z = 'z';
 
     std::unordered_map<std::string, Node*> x_axis;
+    std::unordered_map<char, std::unordered_map<std::string, Node*>> dimensions;
 
 public:
     void setRightPtr(Node *node) {
-        this->setPtr(node, this->positive);
+        std::unordered_map<std::string, Node*>* x_axis = this->getAxis(this->x);
+
+        this->setPtr(x_axis, node, this->positive);
     }
 
     Node *getRightPtr() {
-        return this->getPtr(this->positive);
+        std::unordered_map<std::string, Node*>* x_axis = this->getAxis(this->x);
+
+        return this->getPtr(x_axis, this->positive);
     }
 
     void setLeftPtr(Node *node) {
-        this->setPtr(node, this->negative);
+        std::unordered_map<std::string, Node*>* x_axis = this->getAxis(this->x);
+
+        this->setPtr(x_axis, node, this->negative);
     }
 
     Node *getLeftPtr() {
-        return this->getPtr(this->negative);
+
+        std::unordered_map<std::string, Node*>* x_axis = this->getAxis(this->x);
+
+        return this->getPtr(x_axis, this->negative);
     }
 
 private:
 
-    void setPtr(Node *node, std::string direction){
-        Node *currentPtr = this->getPtr(direction);
+    std::unordered_map<std::string, Node*>* getAxis(char axis)
+    {
+        if (this->dimensions.count(axis)) {
+            return &this->dimensions.at(axis);
+        } else {
+            return nullptr;
+        }
+    }
+
+    void setPtr(std::unordered_map<std::string, Node*>* axis, Node *node, std::string direction){
+        Node *currentPtr = this->getPtr(axis, direction);
         if (currentPtr == node) {
             return;
         }
@@ -46,7 +79,7 @@ private:
          * Break the link with the current sister node.
          */
         if (currentPtr != nullptr) {
-            currentPtr->setPtr(nullptr, oppositeDirection);
+            currentPtr->setPtr(axis, nullptr, oppositeDirection);
         }
 
         if (node == nullptr) {
@@ -56,14 +89,14 @@ private:
         /**
          * Link the new sister node
          */
-        Node *ptr = node->getPtr(oppositeDirection);
+        Node *ptr = node->getPtr(axis, oppositeDirection);
 
         if (this->shouldUpdatePtr(ptr)) {
-            node->setPtr(this, oppositeDirection);
+            node->setPtr(axis, this, oppositeDirection);
         }
     }
 
-    Node *getPtr(std::string direction) {
+    Node *getPtr(std::unordered_map<std::string, Node*>* axis, std::string direction) {
         if (this->x_axis.count(direction)) {
             return this->x_axis.at(direction);
         } else {
