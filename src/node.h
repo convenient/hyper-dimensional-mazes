@@ -2,7 +2,6 @@
 #define MAZES_FOR_PROGRAMMERS_NODE_H
 
 #include <stdexcept>
-#include <unordered_map>
 #include "dimensions.h"
 
 class Node {
