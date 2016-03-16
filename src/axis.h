@@ -3,30 +3,26 @@
 
 #include <stdexcept>
 
-class Axis
-{
+class Axis {
 public:
 
     static const int negative = 0;
     static const int positive = 1;
 
-    void* positivePtr = nullptr;
-    void* negativePtr = nullptr;
+    void *positivePtr = nullptr;
+    void *negativePtr = nullptr;
 
     char identifier;
 
-    Axis(char identifier)
-    {
+    Axis(char identifier) {
         this->identifier = identifier;
     }
 
-    char getIdentifier()
-    {
+    char getIdentifier() {
         return this->identifier;
     }
 
-    void* getPtr(int direction)
-    {
+    void *getPtr(int direction) {
         if (direction == Axis::positive) {
             return this->positivePtr;
         } else if (direction == Axis::negative) {
@@ -36,18 +32,15 @@ public:
         }
     }
 
-    void* getPositivePtr()
-    {
+    void *getPositivePtr() {
         return this->getPtr(Axis::positive);
     }
 
-    void* getNegativePtr()
-    {
+    void *getNegativePtr() {
         return this->getPtr(Axis::negative);
     }
 
-    void setPtr(int direction, void* ptr)
-    {
+    void setPtr(int direction, void *ptr) {
         if (direction == Axis::positive) {
             return this->setPositivePtr(ptr);
         } else if (direction == Axis::negative) {
@@ -57,13 +50,11 @@ public:
         }
     }
 
-    void setPositivePtr(void* ptr)
-    {
+    void setPositivePtr(void *ptr) {
         this->positivePtr = ptr;
     }
 
-    void setNegativePtr(void* ptr)
-    {
+    void setNegativePtr(void *ptr) {
         this->negativePtr = ptr;
     }
 
@@ -75,6 +66,7 @@ public:
         } else {
             throw std::logic_error("Unexpected axis direction given");
         }
-    }};
+    }
+};
 
 #endif //MAZES_FOR_PROGRAMMERS_AXIS_H

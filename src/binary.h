@@ -3,8 +3,8 @@
 
 class binary {
 
-    public: int leet(void)
-    {
+public:
+    int leet(void) {
         return 1337;
     }
 };

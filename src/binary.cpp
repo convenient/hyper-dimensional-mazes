@@ -3,8 +3,7 @@
 
 using namespace std;
 
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
     binary object;
 
     cout << object.leet() << endl;

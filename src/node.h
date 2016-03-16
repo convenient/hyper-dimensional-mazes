@@ -10,18 +10,16 @@ private:
     Dimensions dimensions;
 
 public:
-    Node(Dimensions dimensions)
-    {
+    Node(Dimensions dimensions) {
         this->dimensions = dimensions;
     }
 
-    Axis* getAxis(char axis)
-    {
+    Axis *getAxis(char axis) {
         return this->dimensions.getAxisPtr(axis);
     }
 
-    void setPtr(char axis, int direction, Node *node){
-        Axis* axisObject = this->getAxis(axis);
+    void setPtr(char axis, int direction, Node *node) {
+        Axis *axisObject = this->getAxis(axis);
         Node *currentPtr = this->getPtr(axis, direction);
         if (currentPtr == node) {
             return;
@@ -53,8 +51,8 @@ public:
     }
 
     Node *getPtr(char axis, int direction) {
-        Axis* axisObject = this->getAxis(axis);
-        Node* node = (Node*) axisObject->getPtr(direction);
+        Axis *axisObject = this->getAxis(axis);
+        Node *node = (Node *) axisObject->getPtr(direction);
         return node;
     }
 

@@ -5,7 +5,8 @@
 
 class opengl {
 
-    public: opengl(int argcs, char** argvs, void (* renderFunctio)( void )) {
+public:
+    opengl(int argcs, char **argvs, void (*renderFunctio)(void)) {
         glutInit(&argcs, argvs);
         glutInitDisplayMode(GLUT_SINGLE);
         glutInitWindowSize(300, 300);
@@ -14,8 +15,8 @@ class opengl {
         glutDisplayFunc(renderFunctio);
     }
 
-    public: void startLoop(void)
-    {
+public:
+    void startLoop(void) {
         glutMainLoop();
     }
 };

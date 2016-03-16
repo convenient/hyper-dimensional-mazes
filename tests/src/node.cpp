@@ -3,9 +3,8 @@
 
 using namespace std;
 
-Node getOneDimensionalTestNode()
-{
-    Axis* xAxis = new Axis('x');
+Node getOneDimensionalTestNode() {
+    Axis *xAxis = new Axis('x');
 
     Dimensions dimensions;
     dimensions.addAxis(xAxis);
@@ -15,10 +14,9 @@ Node getOneDimensionalTestNode()
     return oneDimensionalNode;
 }
 
-Node getTwoDimensionalTestNode()
-{
-    Axis* xAxis = new Axis('x');
-    Axis* yAxis = new Axis('y');
+Node getTwoDimensionalTestNode() {
+    Axis *xAxis = new Axis('x');
+    Axis *yAxis = new Axis('y');
 
     Dimensions dimensions;
     dimensions.addAxis(xAxis);
