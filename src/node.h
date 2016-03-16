@@ -13,7 +13,7 @@ private:
 public:
     Node(Dimensions dimensions)
     {
-        this->dimensions = dimensions.clone();
+        this->dimensions = dimensions;
     }
 
     Axis* getAxis(char axis)

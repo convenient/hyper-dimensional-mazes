@@ -10,7 +10,7 @@ Node getOneDimensionalTestNode()
     Dimensions dimensions;
     dimensions.addAxis(xAxis);
 
-    Node oneDimensionalNode = Node(dimensions);
+    Node oneDimensionalNode = Node(dimensions.clone());
 
     return oneDimensionalNode;
 }
