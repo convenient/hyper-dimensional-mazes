@@ -13,10 +13,6 @@ public:
 
     }
 
-    Node(Dimensions dimensions) {
-        this->dimensions = dimensions;
-    }
-
     Axis *getAxis(char axis) {
         return this->dimensions.getAxisPtr(axis);
     }
