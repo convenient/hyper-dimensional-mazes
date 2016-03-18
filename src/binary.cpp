@@ -10,7 +10,7 @@ using namespace std;
 class TwoDimensionalMaze {
 private:
     Dimensions dimensions;
-    std::unordered_map<string, Node*> map;
+    std::unordered_map<string, Node *> map;
 
     std::string getMapIdentifier(int x, int y) {
         std::ostringstream stream;
@@ -34,17 +34,16 @@ public:
     void createNode(int x, int y) {
         string id = this->getMapIdentifier(x, y);
 
-        if (this->existsNode(x, y)) {
+        return this->createNode(id);
+    }
+
+    void createNode(std::string id) {
+        if (this->existsNode(id)) {
             throw std::logic_error("Tried to create a node where already exists");
         }
 
         Node *node = new Node(dimensions.clone());
         this->map.insert({id, node});
-    }
-
-    bool existsNode(int x, int y) {
-        string id = this->getMapIdentifier(x, y);
-        return this->existsNode(id);
     }
 
     bool existsNode(std::string id) {
