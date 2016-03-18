@@ -6,13 +6,13 @@
 class opengl {
 
 public:
-    opengl(int argcs, char **argvs, void (*renderFunctio)(void)) {
+    opengl(int argcs, char **argvs, void (*renderFunction)(void)) {
         glutInit(&argcs, argvs);
-        glutInitDisplayMode(GLUT_SINGLE);
+        glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_ALPHA);
         glutInitWindowSize(300, 300);
         glutInitWindowPosition(100, 100);
         glutCreateWindow("Hello world :D");
-        glutDisplayFunc(renderFunctio);
+        glutDisplayFunc(renderFunction);
     }
 
 public:
