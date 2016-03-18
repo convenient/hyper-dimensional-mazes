@@ -2,26 +2,33 @@
 
 #include "opengl.h"
 
+#include <unistd.h>
+
 using namespace std;
 
-void drawSquare(int x, int y) {
+void drawNode(TwoDimensionalNode *node) {
     GLfloat squareSize = 0.1;
 
-    GLfloat xOffset = squareSize * x;
-    GLfloat yOffset = squareSize * y;
+    GLfloat xOffset = squareSize * node->getX();
+    GLfloat yOffset = squareSize * node->getY();
 
     glBegin(GL_LINES);
-    //Horizontal line bottom
-    glVertex2f(squareSize + xOffset, yOffset);
-    glVertex2f(xOffset, yOffset);
+
+    if (node->getDownPtr() == nullptr) {
+        //Horizontal line bottom
+        glVertex2f(squareSize + xOffset, yOffset);
+        glVertex2f(xOffset, yOffset);
+    }
 
     //Vertical line left
     glVertex2f(xOffset, yOffset);
     glVertex2f(xOffset, squareSize + yOffset);
 
     //Horizontal line top
-    glVertex2f(squareSize + xOffset, squareSize + yOffset);
-    glVertex2f(xOffset, squareSize + yOffset);
+    if (node->getUpPtr() == nullptr) {
+        glVertex2f(squareSize + xOffset, squareSize + yOffset);
+        glVertex2f(xOffset, squareSize + yOffset);
+    }
 
     //Vertical line right
     glVertex2f(squareSize + xOffset, squareSize + yOffset);
@@ -29,6 +36,9 @@ void drawSquare(int x, int y) {
 
     glEnd();
     glFlush();
+
+//    unsigned int microseconds = 2000000;
+//    usleep(microseconds);
 }
 
 void render() {
@@ -46,6 +56,8 @@ int main(int argc, char **argv) {
     maze.createNode(1, 0);
     maze.createNode(1, 1);
 
+    maze.connectNodes(0, 0, 0, 1);
+
     //Grey background
     glClearColor(0.75, 0.75, 0.75, 1);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -53,11 +65,8 @@ int main(int argc, char **argv) {
 
     for (auto i : maze.getMap()) {
         TwoDimensionalNode *node = i.second;
-        int x = node->getX();
-        int y = node->getY();
-        drawSquare(x, y);
+        drawNode(node);
     }
-
 
     graphics.startLoop();
     return 0;

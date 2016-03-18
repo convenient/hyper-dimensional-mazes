@@ -28,7 +28,7 @@ public:
         return this->map;
     }
 
-    void createNode(int x, int y) {
+    TwoDimensionalNode* createNode(int x, int y) {
         std::string id = this->getMapIdentifier(x, y);
 
         if (this->existsNode(id)) {
@@ -39,13 +39,35 @@ public:
         node->setX(x);
         node->setY(y);
         this->map.insert({id, node});
+        return node;
     }
 
-    Node *getNode(int x, int y) {
+    void connectNodes(int x, int y, int x2, int y2) {
+        TwoDimensionalNode* firstNode = getNode(x, y);
+        TwoDimensionalNode* secondNode = getNode(x2, y2);
+
+        if ((x == x2) && (abs(y-y2) == 1)) {
+            if (y>y2) {
+                return firstNode->setDownPtr(secondNode);
+            } else {
+                return firstNode->setUpPtr(secondNode);
+            }
+        } else if ((y == y2) && (abs(x-x2) == 1)) {
+            if (x>x2) {
+                return firstNode->setLeftPtr(secondNode);
+            } else {
+                return firstNode->setRightPtr(secondNode);
+            }
+        }
+
+        throw std::logic_error("Tried to connect two non-adjacent nodes");
+    }
+
+    TwoDimensionalNode *getNode(int x, int y) {
         std::string id = this->getMapIdentifier(x, y);
 
         if (this->existsNode(id)) {
-            this->map.at(id);
+            return this->map.at(id);
         }
         throw std::logic_error("Tried to get a node that does not exist");
     }
