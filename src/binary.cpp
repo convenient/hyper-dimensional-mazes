@@ -9,20 +9,14 @@
 
 using namespace std;
 
-class TwoDimensionalMaze {
-private:
-    Dimensions dimensions;
-    std::unordered_map<string, Node *> map;
+class TwoDimensionalNode : public Node {
 
-    std::string getMapIdentifier(int x, int y) {
-        std::ostringstream stream;
-        stream << x << "," << y;
-        std::string result = stream.str();
-        return result;
-    }
+private:
+    int x =13;
+    int y = 13;
 
 public:
-    TwoDimensionalMaze() {
+    TwoDimensionalNode() {
         Axis *xAxis = new Axis('x');
         Axis *yAxis = new Axis('y');
 
@@ -33,19 +27,64 @@ public:
         this->dimensions = dimensions;
     }
 
+    void setX(int x) {
+        this->x = x;
+    }
+
+    void setY(int y) {
+        this->y = y;
+    }
+
+    int getX() {
+        return this->x;
+    }
+
+    int getY() {
+        return this->y;
+    }
+};
+
+class TwoDimensionalMaze {
+private:
+    std::unordered_map<string, TwoDimensionalNode *> map;
+
+    std::string getMapIdentifier(int x, int y) {
+        std::ostringstream stream;
+        stream << x << "," << y;
+        std::string result = stream.str();
+        return result;
+    }
+
+public:
+    TwoDimensionalMaze() {
+    }
+
+    std::unordered_map<string, TwoDimensionalNode *> getMap()
+    {
+        return this->map;
+    }
+
     void createNode(int x, int y) {
         string id = this->getMapIdentifier(x, y);
 
-        return this->createNode(id);
-    }
-
-    void createNode(std::string id) {
         if (this->existsNode(id)) {
             throw std::logic_error("Tried to create a node where already exists");
         }
 
-        Node *node = new Node(dimensions.clone());
+        TwoDimensionalNode *node = new TwoDimensionalNode();
+        node->setX(x);
+        node->setY(y);
         this->map.insert({id, node});
+    }
+
+    Node* getNode(int x, int y)
+    {
+        string id = this->getMapIdentifier(x, y);
+
+        if (this->existsNode(id)) {
+            this->map.at(id);
+        }
+        throw std::logic_error("Tried to get a node that does not exist");
     }
 
     bool existsNode(std::string id) {
@@ -86,16 +125,6 @@ void drawSquare(int x, int y)
 
 void render() {
 
-    //Grey background
-    glClearColor(0.75, 0.75, 0.75, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glFlush();
-
-    drawSquare(0, 0);
-    drawSquare(0, 1);
-    drawSquare(1, 0);
-    drawSquare(1, 1);
-
 }
 
 int main(int argc, char **argv) {
@@ -108,6 +137,20 @@ int main(int argc, char **argv) {
     maze.createNode(0, 1);
     maze.createNode(1, 0);
     maze.createNode(1, 1);
+
+    //Grey background
+    glClearColor(0.75, 0.75, 0.75, 1);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glFlush();
+
+    for(auto i : maze.getMap())
+    {
+        TwoDimensionalNode* node = i.second;
+        int x = node->getX();
+        int y = node->getY();
+        drawSquare(x, y);
+    }
+
 
     graphics.startLoop();
     return 0;

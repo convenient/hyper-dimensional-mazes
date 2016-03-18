@@ -6,10 +6,13 @@
 
 class Node {
 
-private:
+public:
     Dimensions dimensions;
 
-public:
+    Node() {
+
+    }
+
     Node(Dimensions dimensions) {
         this->dimensions = dimensions;
     }
