@@ -2,25 +2,25 @@
 #define MAZES_FOR_PROGRAMMERS_NODE_H
 
 #include <stdexcept>
-#include "dimensions.h"
 #include "point.h"
+#include <unordered_map>
 
 class Node {
 private:
-    std::unordered_map<Node*, Point*> linkedNodes;
-    Point* point;
+    std::unordered_map<Node*, Point> linkedNodes;
+    Point point;
 
 public:
 
-    Node(Point *p) {
+    Node(Point p) {
         this->point = p;
     }
 
-    void setPoint(Point* p) {
+    void setPoint(Point p) {
         this->point = p;
     }
 
-    Point* getPoint() {
+    Point getPoint() {
         return this->point;
     }
 

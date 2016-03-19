@@ -1,6 +1,15 @@
 #include "gtest/gtest.h"
 #include "point.h"
 
+TEST(point_test, get_point_value) {
+
+    Point a;
+    a.addPoint("x", 7);
+
+    ASSERT_EQ(0, a.getPositionOnAxis("y"));
+    ASSERT_EQ(7, a.getPositionOnAxis("x"));
+}
+
 TEST(point_test, get_point_as_string) {
 
     Point a;

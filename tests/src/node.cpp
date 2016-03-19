@@ -2,9 +2,12 @@
 #include "node.h"
 
 TEST(nodetest, test_bi_directional_links) {
-    Node* adam = new Node(new Point());
+    Point aPoint;
+    Point bPoint;
 
-    Node* betty = new Node(new Point());
+    Node* adam = new Node(aPoint);
+
+    Node* betty = new Node(bPoint);
 
     ASSERT_FALSE(adam->isLinked(betty));
     ASSERT_FALSE(betty->isLinked(adam));
