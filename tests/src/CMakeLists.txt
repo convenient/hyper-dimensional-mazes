@@ -8,7 +8,7 @@ include_directories(${BASE_PROJECT_SOURCE_DIR})
 
 add_executable(runTests
         agoogletest.cpp
-        location.cpp
+        point.cpp
         )
 
 target_link_libraries(runTests gtest gtest_main)

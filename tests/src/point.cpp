@@ -1,9 +1,9 @@
 #include "gtest/gtest.h"
-#include "location.h"
+#include "point.h"
 
-TEST(location_test, get_location_as_string) {
+TEST(point_test, get_point_as_string) {
 
-    Location a;
+    Point a;
     a.addPoint("x", 1);
 
     ASSERT_EQ("(x:1)", a.getAsString());
@@ -16,12 +16,12 @@ TEST(location_test, get_location_as_string) {
     ASSERT_EQ("(x:1)(y:9)(z:99)", a.getAsString());
 }
 
-TEST(location_test, euclidean_distance_basic) {
+TEST(point_test, euclidean_distance_basic) {
 
-    Location a;
+    Point a;
     a.addPoint("x", 1);
 
-    Location b;
+    Point b;
     b.addPoint("x", 6);
 
     double distance = a.getEuclideanDistanceTo(b);
@@ -29,12 +29,12 @@ TEST(location_test, euclidean_distance_basic) {
     ASSERT_EQ(5, distance);
 }
 
-TEST(location_test, euclidean_distance_backwards) {
+TEST(point_test, euclidean_distance_backwards) {
 
-    Location a;
+    Point a;
     a.addPoint("a", 5);
 
-    Location b;
+    Point b;
     b.addPoint("a", 0);
 
     double distance = a.getEuclideanDistanceTo(b);
@@ -43,14 +43,14 @@ TEST(location_test, euclidean_distance_backwards) {
 }
 
 
-TEST(location_test, euclidean_distance_two_dimensional) {
+TEST(point_test, euclidean_distance_two_dimensional) {
 
     //These two points form a pretty typical 3/4/5 triangle.
-    Location a;
+    Point a;
     a.addPoint("a", 5);
     a.addPoint("b", 5);
 
-    Location b;
+    Point b;
     b.addPoint("a", 9); //4 difference
     b.addPoint("b", 8); //3 difference
 
