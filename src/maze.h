@@ -28,6 +28,16 @@ public:
         return false;
     }
 
+    void connectNodes(Point a, Point b) {
+        if (this->nodeExistsAtPoint(a) && this->nodeExistsAtPoint(b)) {
+            Node *nodeA = this->map.at(a.getAsString());
+            Node *nodeB = this->map.at(b.getAsString());
+
+            return this->connectNodes(nodeA, nodeB);
+        }
+        throw std::logic_error("Tried to connect two nodes which do not exist");
+    }
+
     void connectNodes(Node *a, Node *b) {
         if (!this->nodeExistsAtPoint(a->getPoint()) || !this->nodeExistsAtPoint(b->getPoint())) {
             throw std::logic_error("Tried to connect two nodes which do not exist");
