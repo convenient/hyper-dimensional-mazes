@@ -67,3 +67,21 @@ TEST(point_test, euclidean_distance_two_dimensional) {
 
     ASSERT_EQ(5, distance);
 }
+
+TEST(point_test, get_neighbour_points) {
+    Point test;
+    test.addPosition("x", 0);
+    test.addPosition("y", 0);
+
+    std::vector<Point> neighbouringPoints = test.getNeighbouringPoints();
+
+    Point a = neighbouringPoints.at(0);
+    Point b = neighbouringPoints.at(1);
+    Point c = neighbouringPoints.at(2);
+    Point d = neighbouringPoints.at(3);
+
+    ASSERT_EQ("(x:0)(y:1)", a.getAsString());
+    ASSERT_EQ("(x:0)(y:-1)", b.getAsString());
+    ASSERT_EQ("(x:1)(y:0)", c.getAsString());
+    ASSERT_EQ("(x:-1)(y:0)", d.getAsString());
+}

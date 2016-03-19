@@ -13,6 +13,12 @@ void drawNode(Node *node) {
     GLfloat xOffset = squareSize * p.getPositionOnAxis("x");
     GLfloat yOffset = squareSize * p.getPositionOnAxis("y");
 
+    //getAllPointsWithin1
+    //foreach point
+    //  if the point is linked
+    //      Figure out the linked directions, if up down etc, mark the bool of sides to draw
+    //Go through and draw all lines if the bool is set
+
     glBegin(GL_LINES);
 
 //    if (node->getDownPtr() == nullptr) {
@@ -61,12 +67,13 @@ int main(int argc, char **argv) {
 
     Node* a = maze.createNode(create2DPoint(0, 0));
     Node* b = maze.createNode(create2DPoint(0, 1));
+
+    Node* e = maze.createNode(create2DPoint(5, 1));
+
     Node* c = maze.createNode(create2DPoint(1, 0));
     Node* d = maze.createNode(create2DPoint(1, 1));
 
     maze.connectNodes(a, b);
-
-    bool areLinked = a->isLinked(b->getPoint());
 
     //Grey background
     glClearColor(0.75, 0.75, 0.75, 1);
