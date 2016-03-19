@@ -9,10 +9,15 @@
 #include <vector>
 
 class Point {
-public:
+private:
     std::string point = "";
     std::map<std::string, int> map;
     std::map<std::string, std::string> defined_axis;
+
+public:
+    Point() {
+
+    }
 
     std::map<std::string, std::string> getDefinedAxis() {
         return this->defined_axis;

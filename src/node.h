@@ -3,69 +3,46 @@
 
 #include <stdexcept>
 #include "dimensions.h"
+#include "point.h"
 
 class Node {
+private:
+    std::unordered_map<Node*, Point*> linkedNodes;
+    Point* point;
 
 public:
-    Dimensions dimensions;
 
-    Node() {
-
+    Node(Point *p) {
+        this->point = p;
     }
 
-    Axis *getAxis(char axis) {
-        return this->dimensions.getAxisPtr(axis);
+    void setPoint(Point* p) {
+        this->point = p;
     }
 
-    void setPtr(char axis, int direction, Node *node) {
-        Axis *axisObject = this->getAxis(axis);
-        Node *currentPtr = this->getPtr(axis, direction);
-        if (currentPtr == node) {
-            return;
-        }
+    Point* getPoint() {
+        return this->point;
+    }
 
-        axisObject->setPtr(direction, node);
-
-        int oppositeDirection = axisObject->getOppositeDirection(direction);
-
-        /**
-         * Break the link with the current sister node.
-         */
-        if (currentPtr != nullptr) {
-            currentPtr->setPtr(axis, oppositeDirection, nullptr);
-        }
-
-        if (node == nullptr) {
-            return;
-        }
-
-        /**
-         * Link the new sister node
-         */
-        Node *ptr = node->getPtr(axis, oppositeDirection);
-
-        if (this->shouldUpdatePtr(ptr)) {
-            node->setPtr(axis, oppositeDirection, this);
+    void link(Node *node) {
+        if (!this->isLinked(node)) {
+            this->linkedNodes.insert({node, node->getPoint()});
+            node->link(this);
         }
     }
 
-    Node *getPtr(char axis, int direction) {
-        Axis *axisObject = this->getAxis(axis);
-        Node *node = (Node *) axisObject->getPtr(direction);
-        return node;
+    void unlink(Node *node) {
+        if (this->isLinked(node)) {
+            this->linkedNodes.erase({node});
+            return node->unlink(this);
+        }
     }
 
-private:
-    bool shouldUpdatePtr(Node *ptr) {
-        if (ptr == this) {
-            //Already paired
-            return false;
-        } else if (ptr == nullptr) {
-            //Ptr unassigned, free to pair
+    bool isLinked(Node *node) {
+        if (this->linkedNodes.count(node)) {
             return true;
-        } else {
-            throw std::logic_error("Should pair with something else");
         }
+        return false;
     }
 };
 
