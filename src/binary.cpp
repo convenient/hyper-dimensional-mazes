@@ -52,12 +52,6 @@ void drawNode(Node *node) {
         }
     }
 
-    //getAllPointsWithin1
-    //foreach point
-    //  if the point is linked
-    //      Figure out the linked directions, if up down etc, mark the bool of sides to draw
-    //Go through and draw all lines if the bool is set
-
     glBegin(GL_LINES);
 
     if (!isLinkedDown) {
@@ -103,14 +97,7 @@ Point create2DPoint(int x, int y) {
 }
 
 void connectNodes(Maze* maze, int x1, int y1, int x2, int y2) {
-    Point a;
-    a.addPosition("x", x1);
-    a.addPosition("y", y1);
-    Point b;
-    b.addPosition("x", x2);
-    b.addPosition("y", y2);
-
-    maze->connectNodes(a, b);
+    maze->connectNodes(create2DPoint(x1, y1), create2DPoint(x2, y2));
 }
 
 int main(int argc, char **argv) {
