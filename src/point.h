@@ -23,7 +23,7 @@ public:
         return this->defined_axis;
     }
 
-    void addPoint(std::string axisIdentifier, int position) {
+    void addPosition(std::string axisIdentifier, int position) {
         if (this->map.count(axisIdentifier)) {
             throw std::logic_error("Tried to add a point when axis already defined");
         }

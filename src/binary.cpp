@@ -38,8 +38,8 @@ void drawNode(Node *node) {
     glEnd();
     glFlush();
 //
-    unsigned int microseconds = 2000000;
-    usleep(microseconds);
+//    unsigned int microseconds = 2000000;
+//    usleep(microseconds);
 }
 
 void render() {
@@ -48,8 +48,8 @@ void render() {
 
 Point create2DPoint(int x, int y) {
     Point p;
-    p.addPoint("x", x);
-    p.addPoint("y", y);
+    p.addPosition("x", x);
+    p.addPosition("y", y);
     return p;
 }
 
@@ -65,6 +65,8 @@ int main(int argc, char **argv) {
     Node* d = maze.createNode(create2DPoint(1, 1));
 
     maze.connectNodes(a, b);
+
+    bool areLinked = a->isLinked(b->getPoint());
 
     //Grey background
     glClearColor(0.75, 0.75, 0.75, 1);

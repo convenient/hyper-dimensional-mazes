@@ -38,6 +38,17 @@ public:
         }
     }
 
+    bool isLinked(Point p) {
+        for (auto i : this->linkedNodes) {
+            Point p1 = i.second;
+            if (p.getAsString() == p1.getAsString()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     bool isLinked(Node *node) {
         if (this->linkedNodes.count(node)) {
             return true;
