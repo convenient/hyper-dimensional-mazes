@@ -8,9 +8,7 @@ include_directories(${BASE_PROJECT_SOURCE_DIR})
 
 add_executable(runTests
         agoogletest.cpp
-        dimensions.cpp
-        binary.cpp
-        node.cpp
+        location.cpp
         )
 
 target_link_libraries(runTests gtest gtest_main)
