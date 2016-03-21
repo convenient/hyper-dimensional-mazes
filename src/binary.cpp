@@ -100,14 +100,29 @@ void connectNodes(Maze* maze, int x1, int y1, int x2, int y2) {
     maze->connectNodes(create2DPoint(x1, y1), create2DPoint(x2, y2));
 }
 
+void binaryAlgorithm(Maze *maze) {
+
+    Node* startNode = maze->getRandomNode();
+
+    //Foreach axis
+        //Get neighbouring points on that axis identified by positive and negative
+            //For each positive point
+                //insert as viable candidate
+        //Pick random from viable candidates
+            //connectNodes
+        //Pick from viable candidates
+            //set current node as it.
+
+}
+
 int main(int argc, char **argv) {
 
     opengl graphics(argc, argv, render);
 
     Maze maze;
 
-    for (int x=-9; x<9; x++) {
-        for (int y=-9; y<9; y++) {
+    for (int x=-3; x<3; x++) {
+        for (int y=-3; y<3; y++) {
             maze.createNode(create2DPoint(x, y));
         }
     }
@@ -115,25 +130,8 @@ int main(int argc, char **argv) {
 
     Maze *mazePtr = &maze;
 
-    connectNodes(mazePtr, 0, 0, 0, 1);
-    connectNodes(mazePtr, 0, 1, 0, 2);
-    connectNodes(mazePtr, 0, 2, 0, 3);
-    connectNodes(mazePtr, 0, 3, 0, 4);
 
-    connectNodes(mazePtr, 0, 4, 1, 4);
-    connectNodes(mazePtr, 1, 4, 2, 4);
-    connectNodes(mazePtr, 2, 4, 3, 4);
-    connectNodes(mazePtr, 3, 4, 4, 4);
-
-    connectNodes(mazePtr, 4, 4, 4, 3);
-    connectNodes(mazePtr, 4, 3, 4, 2);
-    connectNodes(mazePtr, 4, 2, 4, 1);
-    connectNodes(mazePtr, 4, 1, 4, 0);
-
-    connectNodes(mazePtr, 4, 0, 3, 0);
-    connectNodes(mazePtr, 3, 0, 2, 0);
-    connectNodes(mazePtr, 2, 0, 1, 0);
-    connectNodes(mazePtr, 1, 0, 0, 0);
+    binaryAlgorithm(mazePtr);
 
     //Grey background
     glClearColor(0.75, 0.75, 0.75, 1);
