@@ -46,7 +46,7 @@ public:
 
         double distance = 0;
 
-        std::vector<std::string> axis = Point::getAllAxis(this[0], point);
+        std::vector<std::string> axis = Point::getAllAxis(*this, point);
 
         for(std::vector<std::string>::reverse_iterator it = axis.rbegin(); it != axis.rend(); ++it) {
             std::string axisIdentifier = *it;
@@ -113,7 +113,7 @@ public:
 
         Point x;
 
-        std::vector<std::string> axis = Point::getAllAxis(this[0], x);
+        std::vector<std::string> axis = Point::getAllAxis(*this, x);
 
         for(std::vector<std::string>::reverse_iterator it = axis.rbegin(); it != axis.rend(); ++it) {
             std::string axisIdentifier = *it;
