@@ -32,6 +32,14 @@ public:
         this->point = "";
     }
 
+    void unsetPosition(std::string axisIdentifier) {
+        if (this->map.count(axisIdentifier)) {
+            this->map.erase({axisIdentifier});
+            this->defined_axis.erase({axisIdentifier});
+            this->point = "";
+        }
+    }
+
     int getPositionOnAxis(std::string axisIdentifier) {
         if (!this->map.count(axisIdentifier)) {
             return 0;
@@ -76,6 +84,12 @@ public:
         return this->point;
     }
 
+    std::vector<std::string> getAllAxis(){
+        Point x;
+        std::vector<std::string> axis = Point::getAllAxis(*this, x);
+        return axis;
+    }
+
     static std::vector<std::string> getAllAxis(Point a, Point b){
 
         std::map<std::string, std::string> allDefinedAxis;
@@ -111,36 +125,28 @@ public:
 
         std::vector<Point> neighbouringPoints;
 
-        Point x;
+        std::vector<std::string> axis = this->getAllAxis();
 
-        std::vector<std::string> axis = Point::getAllAxis(*this, x);
+        //Create a base point which is cloned from the current location
+        Point basePoint;
+        for(std::vector<std::string>::reverse_iterator it = axis.rbegin(); it != axis.rend(); ++it) {
+            std::string axisIdentifier = *it;
+            basePoint.addPosition(axisIdentifier, this->getPositionOnAxis(axisIdentifier));
+        }
 
         for(std::vector<std::string>::reverse_iterator it = axis.rbegin(); it != axis.rend(); ++it) {
             std::string axisIdentifier = *it;
 
             int thisPositionOnAxis = this->getPositionOnAxis(axisIdentifier);
 
-            Point tempPositive;
-            Point tempNegative;
+            Point tempPositive = basePoint;
+            tempPositive.unsetPosition(axisIdentifier);
             tempPositive.addPosition(axisIdentifier, thisPositionOnAxis + 1);
-            tempNegative.addPosition(axisIdentifier, thisPositionOnAxis - 1);
-
-            /**
-             *   Now we have defined this axis with a positive and negative offset
-             *   we need to clone the rest of the axis definition
-             *   this is probably an area which can be optimised when I come back
-             *   to the code with a few less pints
-             */
-            for(std::vector<std::string>::reverse_iterator it2 = axis.rbegin(); it2 != axis.rend(); ++it2) {
-                std::string axisIdentifier2 = *it2;
-                if (axisIdentifier != axisIdentifier2) {
-                    int thisPositionOnAxis2 = this->getPositionOnAxis(axisIdentifier2);
-                    tempPositive.addPosition(axisIdentifier2, thisPositionOnAxis2);
-                    tempNegative.addPosition(axisIdentifier2, thisPositionOnAxis2);
-                }
-            }
-
             neighbouringPoints.push_back(tempPositive);
+
+            Point tempNegative = basePoint;
+            tempNegative.unsetPosition(axisIdentifier);
+            tempNegative.addPosition(axisIdentifier, thisPositionOnAxis - 1);
             neighbouringPoints.push_back(tempNegative);
         }
 
