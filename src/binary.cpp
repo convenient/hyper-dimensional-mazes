@@ -1,4 +1,4 @@
-#include "maze.h"
+#include "mazebinary.h"
 #include "opengl.h"
 
 #include <unistd.h>
@@ -88,47 +88,12 @@ void render() {
 
 }
 
-Point create2DPoint(int x, int y) {
-    Point p;
-    p.addPosition("x", x);
-    p.addPosition("y", y);
-    return p;
-}
-
-void binaryAlgorithm(Maze *maze) {
-
-    std::vector<std::string> axis = maze->getAllAxis();
-
-    while (maze->getUnvisitedNodeCount() > 0) {
-        Node *workingNode = maze->getRandomUnvisitedNode();
-        Point workingPoint = workingNode->getPoint();
-
-        std::vector<Point> potentialPoints;
-
-        for (auto axisIdentifier : axis) {
-            Point p = Point::getNeighbourPoint(workingPoint, axisIdentifier, Point::positive);
-
-            if (maze->nodeExistsAtPoint(p)) {
-                potentialPoints.push_back(p);
-            }
-        }
-
-        if (potentialPoints.size() >= 1) {
-            unsigned long r = (unsigned long) maze->getRandomNumber(0, (int) potentialPoints.size() - 1);
-
-            Point chosenPoint = potentialPoints.at(r);
-            maze->connectNodes(workingPoint, chosenPoint);
-        }
-
-        maze->markNodeAsVisited(workingNode);
-    }
-}
 
 int main(int argc, char **argv) {
 
     opengl graphics(argc, argv, render);
 
-    Maze maze;
+    MazeBinary maze;
 
     int mazeSize = 12;
     int minpart = (int)floor(mazeSize/2) * -1;
@@ -136,13 +101,14 @@ int main(int argc, char **argv) {
 
     for (int x=minpart; x<maxpart; x++) {
         for (int y=minpart; y<maxpart; y++) {
-            maze.createNode(create2DPoint(x, y));
+            Point p;
+            p.addPosition("x", x);
+            p.addPosition("y", y);
+            maze.createNode(p);
         }
     }
 
-    Maze *mazePtr = &maze;
-
-    binaryAlgorithm(mazePtr);
+    maze.generate();
 
     //Grey background
     glClearColor(0.75, 0.75, 0.75, 1);

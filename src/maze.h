@@ -7,20 +7,19 @@
 #include <chrono>
 
 class Maze {
-private:
     std::unordered_map<std::string, Node *> map;
     std::unordered_map<std::string, Node *> visited_map;
     std::unordered_map<std::string, Node *> unvisited_map;
     std::mt19937 rng;
     bool rngSeeded = false;
 
-    Node* getRandomNode(std::unordered_map<std::string, Node *> map) {
+    Node *getRandomNode(std::unordered_map<std::string, Node *> map) {
 
         if (map.size() < 1) {
             throw std::logic_error("Tried to get random node when none in maze");
         }
 
-        int r = this->getRandomNumber(0, (int)map.size() -1);
+        int r = this->getRandomNumber(0, (int) map.size() - 1);
 
         //http://stackoverflow.com/a/27024374/4354325
         auto random_it = std::next(std::begin(map), r);
@@ -30,6 +29,9 @@ private:
     }
 
 public:
+
+
+    virtual void generate() = 0;
 
     int getRandomNumber(int min, int max) {
         if (!this->rngSeeded) {
@@ -61,15 +63,15 @@ public:
         throw std::logic_error("Tried to mark a node as visited when it does not exist");
     }
 
-    Node* getRandomUnvisitedNode() {
+    Node *getRandomUnvisitedNode() {
         return this->getRandomNode(this->unvisited_map);
     };
 
-    Node* getRandomNode() {
+    Node *getRandomNode() {
         return this->getRandomNode(this->map);
     }
 
-    std::vector<std::string> getAllAxis(){
+    std::vector<std::string> getAllAxis() {
 
         std::map<std::string, std::string> allDefinedAxis;
 
@@ -95,12 +97,12 @@ public:
         return axis;
     }
 
-    Node* createNode(Point p) {
+    Node *createNode(Point p) {
         if (this->nodeExistsAtPoint(p)) {
             throw std::logic_error("Tried to create a node where already exists");
         }
 
-        Node* n = new Node(p);
+        Node *n = new Node(p);
 
         this->map.insert({p.getAsString(), n});
         this->unvisited_map.insert({p.getAsString(), n});
