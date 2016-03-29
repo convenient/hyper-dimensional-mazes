@@ -97,31 +97,31 @@ Point create2DPoint(int x, int y) {
 
 void binaryAlgorithm(Maze *maze) {
 
-    Node*workingNode = nullptr;
-    if (workingNode == nullptr) {
-        workingNode = maze->getRandomNode();
+    std::vector<std::string> axis = maze->getAllAxis();
+
+    while (maze->getUnvisitedNodeCount() > 0) {
+        Node *workingNode = maze->getRandomUnvisitedNode();
+        Point workingPoint = workingNode->getPoint();
+
+        std::vector<Point> potentialPoints;
+
+        for (auto axisIdentifier : axis) {
+            Point p = Point::getNeighbourPoint(workingPoint, axisIdentifier, Point::positive);
+
+            if (maze->nodeExistsAtPoint(p)) {
+                potentialPoints.push_back(p);
+            }
+        }
+
+        if (potentialPoints.size() >= 1) {
+            unsigned long r = (unsigned long) maze->getRandomNumber(0, (int) potentialPoints.size() - 1);
+
+            Point chosenPoint = potentialPoints.at(r);
+            maze->connectNodes(workingPoint, chosenPoint);
+        }
+
+        maze->markNodeAsVisited(workingNode);
     }
-
-    Point workingPoint = workingNode->getPoint();
-
-    std::vector<Point> potentialPoints;
-
-    for (auto axisIdentifier : maze->getAllAxis()) {
-        Point p = Point::getNeighbourPoint(workingPoint, axisIdentifier, Point::positive);
-        potentialPoints.push_back(p);
-    }
-
-    maze->connectNodes(workingPoint, maze->getRandomPointFromVector(potentialPoints));
-
-    //Foreach axis
-        //Get neighbouring points on that axis identified by positive and negative
-            //For each positive point
-                //insert as viable candidate
-        //Pick random from viable candidates
-            //connectNodes
-        //Pick from viable candidates
-            //set current node as it.
-
 }
 
 int main(int argc, char **argv) {
@@ -130,15 +130,17 @@ int main(int argc, char **argv) {
 
     Maze maze;
 
-    for (int x=-3; x<3; x++) {
-        for (int y=-3; y<3; y++) {
+    int mazeSize = 12;
+    int minpart = (int)floor(mazeSize/2) * -1;
+    int maxpart = (int)ceil(mazeSize/2);
+
+    for (int x=minpart; x<maxpart; x++) {
+        for (int y=minpart; y<maxpart; y++) {
             maze.createNode(create2DPoint(x, y));
         }
     }
 
-
     Maze *mazePtr = &maze;
-
 
     binaryAlgorithm(mazePtr);
 

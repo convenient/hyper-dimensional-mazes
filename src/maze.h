@@ -4,31 +4,69 @@
 #include "node.h"
 #include <random>
 #include <string>
+#include <chrono>
 
 class Maze {
 private:
     std::unordered_map<std::string, Node *> map;
     std::unordered_map<std::string, Node *> visited_map;
     std::unordered_map<std::string, Node *> unvisited_map;
+    std::mt19937 rng;
+    bool rngSeeded = false;
 
-public:
+    Node* getRandomNode(std::unordered_map<std::string, Node *> map) {
 
-    Node* getRandomNode() {
-
-        if (this->map.size() < 1) {
+        if (map.size() < 1) {
             throw std::logic_error("Tried to get random node when none in maze");
         }
 
-        //http://stackoverflow.com/a/12658029/4354325
-        std::mt19937 rng(3141);
-        std::uniform_int_distribution<int> gen(0, (int)this->map.size() -1);
-        int r = gen(rng);
+        int r = this->getRandomNumber(0, (int)map.size() -1);
 
         //http://stackoverflow.com/a/27024374/4354325
-        auto random_it = std::next(std::begin(this->map), r);
+        auto random_it = std::next(std::begin(map), r);
 
         std::string key = random_it->first;
-        return this->map.at(key);
+        return map.at(key);
+    }
+
+public:
+
+    int getRandomNumber(int min, int max) {
+        if (!this->rngSeeded) {
+            typedef std::chrono::high_resolution_clock myclock;
+            myclock::time_point beginning = myclock::now();
+
+            myclock::duration d = myclock::now() - beginning;
+            unsigned seed = d.count();
+
+            this->rng.seed(seed);
+        }
+
+        std::uniform_int_distribution<int> gen(min, max);
+        int r = gen(rng);
+
+        return r;
+    }
+
+    void markNodeAsVisited(Node *node) {
+        Point p = node->getPoint();
+        if (this->nodeExistsAtPoint(p)) {
+            std::string pointId = p.getAsString();
+            if (this->unvisited_map.count(pointId)) {
+                this->unvisited_map.erase(pointId);
+                this->visited_map.insert({pointId, node});
+                return;
+            }
+        }
+        throw std::logic_error("Tried to mark a node as visited when it does not exist");
+    }
+
+    Node* getRandomUnvisitedNode() {
+        return this->getRandomNode(this->unvisited_map);
+    };
+
+    Node* getRandomNode() {
+        return this->getRandomNode(this->map);
     }
 
     std::vector<std::string> getAllAxis(){
@@ -65,6 +103,7 @@ public:
         Node* n = new Node(p);
 
         this->map.insert({p.getAsString(), n});
+        this->unvisited_map.insert({p.getAsString(), n});
         return n;
     }
 
@@ -99,15 +138,10 @@ public:
         return this->map;
     }
 
-    Point getRandomPointFromVector(std::vector<Point> pointVector) {
-
-        std::mt19937 rng(3141);
-        std::uniform_int_distribution<int> gen(0, (int)pointVector.size() -1);
-        unsigned long r = (unsigned long) gen(rng);
-
-        Point chosenPoint = pointVector.at(r);
-        return chosenPoint;
+    unsigned long getUnvisitedNodeCount() {
+        return this->unvisited_map.size();
     }
+
 };
 
 #endif //MAZES_FOR_PROGRAMMERS_MAZE_H
