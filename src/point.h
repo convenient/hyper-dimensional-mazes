@@ -60,8 +60,7 @@ public:
 
         std::vector<std::string> axis = Point::getAllAxis(*this, point);
 
-        for(std::vector<std::string>::reverse_iterator it = axis.rbegin(); it != axis.rend(); ++it) {
-            std::string axisIdentifier = *it;
+        for (auto axisIdentifier : axis) {
 
             int position = this->getPositionOnAxis(axisIdentifier);
             int comparePosition = point.getPositionOnAxis(axisIdentifier);
@@ -151,8 +150,8 @@ public:
         return neighbouringPoints;
     }
 
-    Point getNeighbourPoint(Point origin, std::string axis, int positiveOrNegative) {
-        int positionOnAxis = this->getPositionOnAxis(axis);
+    static Point getNeighbourPoint(Point origin, std::string axis, int positiveOrNegative) {
+        int positionOnAxis = origin.getPositionOnAxis(axis);
 
         Point point = origin;
         point.unsetPosition(axis);

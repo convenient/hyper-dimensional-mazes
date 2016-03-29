@@ -95,17 +95,24 @@ Point create2DPoint(int x, int y) {
     return p;
 }
 
-void connectNodes(Maze* maze, int x1, int y1, int x2, int y2) {
-    maze->connectNodes(create2DPoint(x1, y1), create2DPoint(x2, y2));
-}
-
 void binaryAlgorithm(Maze *maze) {
 
-    Node* startNode = maze->getRandomNode();
+    Node*workingNode = nullptr;
+    if (workingNode == nullptr) {
+        workingNode = maze->getRandomNode();
+    }
+
+    Point workingPoint = workingNode->getPoint();
+
+    std::vector<Point> potentialPoints;
 
     for (auto axisIdentifier : maze->getAllAxis()) {
-
+        Point p = Point::getNeighbourPoint(workingPoint, axisIdentifier, Point::positive);
+        potentialPoints.push_back(p);
     }
+
+    maze->connectNodes(workingPoint, maze->getRandomPointFromVector(potentialPoints));
+
     //Foreach axis
         //Get neighbouring points on that axis identified by positive and negative
             //For each positive point

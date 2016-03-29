@@ -8,6 +8,8 @@
 class Maze {
 private:
     std::unordered_map<std::string, Node *> map;
+    std::unordered_map<std::string, Node *> visited_map;
+    std::unordered_map<std::string, Node *> unvisited_map;
 
 public:
 
@@ -95,6 +97,16 @@ public:
 
     std::unordered_map<std::string, Node *> getMap() {
         return this->map;
+    }
+
+    Point getRandomPointFromVector(std::vector<Point> pointVector) {
+
+        std::mt19937 rng(3141);
+        std::uniform_int_distribution<int> gen(0, (int)pointVector.size() -1);
+        unsigned long r = (unsigned long) gen(rng);
+
+        Point chosenPoint = pointVector.at(r);
+        return chosenPoint;
     }
 };
 
