@@ -23,8 +23,7 @@ void drawNode(Node *node) {
 
     //Foreach point adjacent to the current node
     std::vector<Point> neighbouringPoints = nodePosition.getNeighbouringPoints();
-    for(std::vector<Point>::reverse_iterator it = neighbouringPoints.rbegin(); it != neighbouringPoints.rend(); ++it) {
-        Point p = *it;
+    for (auto p : neighbouringPoints) {
         if (node->isLinked(p)) {
 
             int tmpNodePositionX = p.getPositionOnAxis("x");
@@ -104,6 +103,9 @@ void binaryAlgorithm(Maze *maze) {
 
     Node* startNode = maze->getRandomNode();
 
+    for (auto axisIdentifier : maze->getAllAxis()) {
+
+    }
     //Foreach axis
         //Get neighbouring points on that axis identified by positive and negative
             //For each positive point

@@ -3,6 +3,7 @@
 
 #include "node.h"
 #include <random>
+#include <string>
 
 class Maze {
 private:
@@ -26,6 +27,32 @@ public:
 
         std::string key = random_it->first;
         return this->map.at(key);
+    }
+
+    std::vector<std::string> getAllAxis(){
+
+        std::map<std::string, std::string> allDefinedAxis;
+
+        for (auto nodeItr : this->getMap()) {
+            Node *node = nodeItr.second;
+            Point p = node->getPoint();
+
+            for (auto axisItr : p.getDefinedAxis()) {
+                std::string axisIdentifier = axisItr.first;
+                if (!allDefinedAxis.count(axisIdentifier)) {
+                    allDefinedAxis.insert({axisIdentifier, axisIdentifier});
+                }
+            }
+        }
+
+        std::vector<std::string> axis;
+
+        for (auto i: allDefinedAxis) {
+            std::string axisIdentifier = i.first;
+            axis.push_back(axisIdentifier);
+        }
+
+        return axis;
     }
 
     Node* createNode(Point p) {

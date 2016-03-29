@@ -80,8 +80,8 @@ TEST(point_test, get_neighbour_points) {
     Point c = neighbouringPoints.at(2);
     Point d = neighbouringPoints.at(3);
 
-    ASSERT_EQ("(x:0)(y:1)", a.getAsString());
-    ASSERT_EQ("(x:0)(y:-1)", b.getAsString());
-    ASSERT_EQ("(x:1)(y:0)", c.getAsString());
-    ASSERT_EQ("(x:-1)(y:0)", d.getAsString());
+    ASSERT_EQ("(x:1)(y:0)", a.getAsString());
+    ASSERT_EQ("(x:-1)(y:0)", b.getAsString());
+    ASSERT_EQ("(x:0)(y:1)", c.getAsString());
+    ASSERT_EQ("(x:0)(y:-1)", d.getAsString());
 }

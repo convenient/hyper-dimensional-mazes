@@ -9,12 +9,16 @@
 #include <vector>
 
 class Point {
+
 private:
     std::string point = "";
     std::map<std::string, int> map;
     std::map<std::string, std::string> defined_axis;
 
 public:
+    static const int positive = 1;
+    static const int negative = -1;
+
     Point() {
 
     }
@@ -129,28 +133,32 @@ public:
 
         //Create a base point which is cloned from the current location
         Point basePoint;
-        for(std::vector<std::string>::reverse_iterator it = axis.rbegin(); it != axis.rend(); ++it) {
-            std::string axisIdentifier = *it;
+        for (auto axisIdentifier : axis) {
             basePoint.addPosition(axisIdentifier, this->getPositionOnAxis(axisIdentifier));
         }
 
-        for(std::vector<std::string>::reverse_iterator it = axis.rbegin(); it != axis.rend(); ++it) {
-            std::string axisIdentifier = *it;
+        for (auto axisIdentifier : axis) {
 
             int thisPositionOnAxis = this->getPositionOnAxis(axisIdentifier);
 
-            Point tempPositive = basePoint;
-            tempPositive.unsetPosition(axisIdentifier);
-            tempPositive.addPosition(axisIdentifier, thisPositionOnAxis + 1);
-            neighbouringPoints.push_back(tempPositive);
+            Point positive = this->getNeighbourPoint(basePoint, axisIdentifier, Point::positive);
+            neighbouringPoints.push_back(positive);
 
-            Point tempNegative = basePoint;
-            tempNegative.unsetPosition(axisIdentifier);
-            tempNegative.addPosition(axisIdentifier, thisPositionOnAxis - 1);
-            neighbouringPoints.push_back(tempNegative);
+            Point negative = this->getNeighbourPoint(basePoint, axisIdentifier, Point::negative);
+            neighbouringPoints.push_back(negative);
         }
 
         return neighbouringPoints;
+    }
+
+    Point getNeighbourPoint(Point origin, std::string axis, int positiveOrNegative) {
+        int positionOnAxis = this->getPositionOnAxis(axis);
+
+        Point point = origin;
+        point.unsetPosition(axis);
+        point.addPosition(axis, positionOnAxis + positiveOrNegative);
+
+        return point;
     }
 };
 
