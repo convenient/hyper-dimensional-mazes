@@ -8,14 +8,13 @@
 
 class RendererGrid2D {
 private:
-    static void drawNode(Node *node) {
+    static void drawNode(Node *node, std::string xAxisIdentifier, std::string yAxisIdentifier) {
         GLfloat squareSize = 0.05;
 
         Point nodePosition = node->getPoint();
 
-        //TODO Make this node stuff generic and magical
-        int nodePositionX = nodePosition.getPositionOnAxis("x");
-        int nodePositionY = nodePosition.getPositionOnAxis("y");
+        int nodePositionX = nodePosition.getPositionOnAxis(xAxisIdentifier);
+        int nodePositionY = nodePosition.getPositionOnAxis(yAxisIdentifier);
 
         GLfloat xOffset = squareSize * nodePositionX;
         GLfloat yOffset = squareSize * nodePositionY;
@@ -30,13 +29,9 @@ private:
         for (auto p : neighbouringPoints) {
             if (node->isLinked(p)) {
 
-                int tmpNodePositionX = p.getPositionOnAxis("x");
-                int tmpNodePositionY = p.getPositionOnAxis("y");
+                int tmpNodePositionX = p.getPositionOnAxis(xAxisIdentifier);
+                int tmpNodePositionY = p.getPositionOnAxis(yAxisIdentifier);
 
-                /**
-                 * Is directional dimensionality only linked to how mazes are drawn?
-                 * Or do I need to figure out this upness/downness within the node itself?
-                 */
                 if (tmpNodePositionX == nodePositionX) {
                     if (tmpNodePositionY > nodePositionY) {
                         isLinkedUp = true;
@@ -50,7 +45,7 @@ private:
                         isLinkedLeft = true;
                     }
                 } else {
-                    exit(-1);
+                    throw std::logic_error("Could not figure out how nodes are linked");
                 }
             }
         }
@@ -84,8 +79,8 @@ private:
         glEnd();
         glFlush();
 
-        unsigned int microseconds = 30000;
-        usleep(microseconds);
+        //unsigned int microseconds = 30000;
+        //usleep(microseconds);
     }
 
 public:
@@ -108,9 +103,15 @@ public:
         glClear(GL_COLOR_BUFFER_BIT);
         glFlush();
 
+        std::vector<std::string> axis = m->getAllAxis();
+
+        if (axis.size() !=2) {
+            throw std::logic_error("Tried to render a non-2d maze in a 2d grid renderer");
+        }
+
         for (auto i : m->getMap()) {
             Node *node = i.second;
-            drawNode(node);
+            drawNode(node, axis.front(), axis.back());
         }
 
         glutMainLoop();
