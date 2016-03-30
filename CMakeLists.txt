@@ -16,12 +16,12 @@ add_subdirectory(tests)
 
 #Define executables
 ## Binary
-add_executable(binary src/binary.cpp)
+add_executable(binary_2d_grid src/binary2dgrid.cpp)
 
 ## OpenGL
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
-target_link_libraries(binary ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
+target_link_libraries(binary_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
 

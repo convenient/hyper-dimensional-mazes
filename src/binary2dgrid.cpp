@@ -1,8 +1,6 @@
 #include "mazebinary.h"
 #include "RendererGrid2D.h"
 
-using namespace std;
-
 void render() {
 
 }
