@@ -23,8 +23,5 @@ find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
-add_executable(opengl src/opengl.cpp)
-
-target_link_libraries(opengl ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
 target_link_libraries(binary ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} )
 
