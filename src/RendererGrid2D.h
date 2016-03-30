@@ -9,7 +9,7 @@
 class RendererGrid2D {
 private:
     static void drawNode(Node *node) {
-        GLfloat squareSize = 0.1;
+        GLfloat squareSize = 0.05;
 
         Point nodePosition = node->getPoint();
 
@@ -97,7 +97,7 @@ public:
 
         glutInit(&fakeargc, fakeargv);
         glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_ALPHA);
-        glutInitWindowSize(300, 300);
+        glutInitWindowSize(600, 600);
         glutInitWindowPosition(100, 100);
         glutCreateWindow(title);
         glutDisplayFunc(renderFunction);
