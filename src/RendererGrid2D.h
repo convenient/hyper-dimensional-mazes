@@ -89,7 +89,7 @@ private:
     }
 
 public:
-    static void render(Maze *m, void (*renderFunction)(void)) {
+    static void render(Maze *m, char *title, void (*renderFunction)(void)) {
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
@@ -99,7 +99,7 @@ public:
         glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_ALPHA);
         glutInitWindowSize(300, 300);
         glutInitWindowPosition(100, 100);
-        glutCreateWindow("Hello world :D");
+        glutCreateWindow(title);
         glutDisplayFunc(renderFunction);
 
 

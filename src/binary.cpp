@@ -26,7 +26,9 @@ int main(int argc, char **argv) {
 
     maze.generate();
 
-    RendererGrid2D::render(&maze, render);
+    char title[] = "Binary Maze - 2D Grid";
+
+    RendererGrid2D::render(&maze, title, render);
 
     return 0;
 }
