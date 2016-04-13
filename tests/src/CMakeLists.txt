@@ -10,6 +10,7 @@ add_executable(runTests
         agoogletest.cpp
         point.cpp
         node.cpp
+        dijkstra.cpp
         )
 
 target_link_libraries(runTests gtest gtest_main)
