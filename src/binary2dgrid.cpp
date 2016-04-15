@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
 
     MazeBinary maze;
 
-    int mazeSize = 12;
+    int mazeSize = 30;
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
 
