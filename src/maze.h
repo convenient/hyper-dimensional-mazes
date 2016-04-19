@@ -118,13 +118,10 @@ public:
     }
 
     void connectNodes(Point a, Point b) {
-        if (this->nodeExistsAtPoint(a) && this->nodeExistsAtPoint(b)) {
-            Node *nodeA = this->getNodeAtPoint(a);
-            Node *nodeB = this->getNodeAtPoint(b);
+        Node *nodeA = this->getNodeAtPoint(a);
+        Node *nodeB = this->getNodeAtPoint(b);
 
-            return this->connectNodes(nodeA, nodeB);
-        }
-        throw std::logic_error("Tried to connect two nodes which do not exist");
+        return this->connectNodes(nodeA, nodeB);
     }
 
     Node *getNodeAtPoint(Point p) {
