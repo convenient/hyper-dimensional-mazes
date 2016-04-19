@@ -12,6 +12,7 @@ class Maze {
     std::unordered_map<std::string, Node *> unvisited_map;
     std::mt19937 rng;
     bool rngSeeded = false;
+    std::vector<std::string> axis;
 
     Node *getRandomNode(std::unordered_map<std::string, Node *> map) {
 
@@ -73,28 +74,31 @@ public:
 
     std::vector<std::string> getAllAxis() {
 
-        std::map<std::string, std::string> allDefinedAxis;
+        if (this->axis.size() <=0) {
+            std::map<std::string, std::string> allDefinedAxis;
 
-        for (auto nodeItr : this->getMap()) {
-            Node *node = nodeItr.second;
-            Point p = node->getPoint();
+            for (auto nodeItr : this->getMap()) {
+                Node *node = nodeItr.second;
+                Point p = node->getPoint();
 
-            for (auto axisItr : p.getDefinedAxis()) {
-                std::string axisIdentifier = axisItr.first;
-                if (!allDefinedAxis.count(axisIdentifier)) {
-                    allDefinedAxis.insert({axisIdentifier, axisIdentifier});
+                for (auto axisItr : p.getDefinedAxis()) {
+                    std::string axisIdentifier = axisItr.first;
+                    if (!allDefinedAxis.count(axisIdentifier)) {
+                        allDefinedAxis.insert({axisIdentifier, axisIdentifier});
+                    }
                 }
             }
+
+            std::vector<std::string> axis;
+
+            for (auto i: allDefinedAxis) {
+                std::string axisIdentifier = i.first;
+                axis.push_back(axisIdentifier);
+            }
+            this->axis = axis;
         }
 
-        std::vector<std::string> axis;
-
-        for (auto i: allDefinedAxis) {
-            std::string axisIdentifier = i.first;
-            axis.push_back(axisIdentifier);
-        }
-
-        return axis;
+        return this->axis;
     }
 
     Node *createNode(Point p) {
@@ -128,6 +132,7 @@ public:
         throw std::logic_error("Tried to connect two nodes which do not exist");
     }
 
+
     void connectNodes(Node *a, Node *b) {
         if (!this->nodeExistsAtPoint(a->getPoint()) || !this->nodeExistsAtPoint(b->getPoint())) {
             throw std::logic_error("Tried to connect two nodes which do not exist");
@@ -142,6 +147,28 @@ public:
 
     unsigned long getUnvisitedNodeCount() {
         return this->unvisited_map.size();
+    }
+
+    void getNeighbourNodes(Node *node) {
+        Point point = node->getPoint();
+
+        std::vector<Node *> neighbourNodes;
+
+        std::vector<std::string> axis = this->getAllAxis();
+
+        for (auto axisIdentifier : axis) {
+            Point positive = Point::getNeighbourPoint(point, axisIdentifier, Point::positive);
+
+            if (this->nodeExistsAtPoint(positive)) {
+                neighbourNodes.push_back(this->map.at(positive.getAsString()));
+            }
+
+            Point negative = Point::getNeighbourPoint(point, axisIdentifier, Point::negative);
+
+            if (this->nodeExistsAtPoint(negative)) {
+                neighbourNodes.push_back(this->map.at(negative.getAsString()));
+            }
+        }
     }
 
 };
