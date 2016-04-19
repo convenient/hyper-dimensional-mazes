@@ -29,3 +29,37 @@ TEST(dijkstratest, base_path_find) {
     expectedPath.push_back(n2);
     ASSERT_EQ(expectedPath, shortestPath);
 }
+
+TEST(dijkstratest, simple_path_find) {
+    MazeTestCase maze;
+
+    Node *lastNode = nullptr;
+    for (int x=0; x<3; x++) {
+        for (int y=0; y<3; y++) {
+            Point p;
+            p.addPosition("x", x);
+            p.addPosition("y", y);
+
+            Node *newNode = maze.createNode(p);
+            if (lastNode == nullptr) {
+                lastNode = newNode;
+            } else {
+                lastNode->link(newNode);
+            };
+        }
+    }
+
+    Point a;
+    a.addPosition("x", 0);
+    a.addPosition("y", 0);
+
+    Point b;
+    b.addPosition("x", 2);
+    b.addPosition("y", 2);
+
+    Maze *mazePtr = &maze;
+
+    std::vector<Node *> shortestPath = Dijkstra::getPath(mazePtr, a, b);
+
+    ASSERT_EQ(2, shortestPath.size());
+}
