@@ -117,27 +117,12 @@ public:
         return false;
     }
 
-    void connectNodes(Point a, Point b) {
-        Node *nodeA = this->getNodeAtPoint(a);
-        Node *nodeB = this->getNodeAtPoint(b);
-
-        return this->connectNodes(nodeA, nodeB);
-    }
-
     Node *getNodeAtPoint(Point p) {
         if (this->nodeExistsAtPoint(p)) {
             Node *node = this->map.at(p.getAsString());
             return node;
         }
         throw std::logic_error("Node does not exist at point");
-    }
-
-    void connectNodes(Node *a, Node *b) {
-        if (!this->nodeExistsAtPoint(a->getPoint()) || !this->nodeExistsAtPoint(b->getPoint())) {
-            throw std::logic_error("Tried to connect two nodes which do not exist");
-        }
-
-        a->link(b);
     }
 
     std::unordered_map<std::string, Node *> getMap() {

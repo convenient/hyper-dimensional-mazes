@@ -27,7 +27,9 @@ public:
                 unsigned long r = (unsigned long) this->getRandomNumber(0, (int) potentialPoints.size() - 1);
 
                 Point chosenPoint = potentialPoints.at(r);
-                this->connectNodes(workingPoint, chosenPoint);
+                Node *chosenNode = this->getNodeAtPoint(chosenPoint);
+
+                workingNode->link(chosenNode);
             }
 
             this->markNodeAsVisited(workingNode);
