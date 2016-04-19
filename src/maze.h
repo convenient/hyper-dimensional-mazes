@@ -8,8 +8,8 @@
 
 class Maze {
     std::unordered_map<std::string, Node *> map;
-    std::unordered_map<std::string, Node *> visited_map;
     std::unordered_map<std::string, Node *> unvisited_map;
+
     std::mt19937 rng;
     bool rngSeeded = false;
     std::vector<std::string> axis;
@@ -57,7 +57,6 @@ public:
             std::string pointId = p.getAsString();
             if (this->unvisited_map.count(pointId)) {
                 this->unvisited_map.erase(pointId);
-                this->visited_map.insert({pointId, node});
                 return;
             }
         }
@@ -67,10 +66,6 @@ public:
     Node *getRandomUnvisitedNode() {
         return this->getRandomNode(this->unvisited_map);
     };
-
-    Node *getRandomNode() {
-        return this->getRandomNode(this->map);
-    }
 
     std::vector<std::string> getAllAxis() {
 
