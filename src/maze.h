@@ -119,14 +119,21 @@ public:
 
     void connectNodes(Point a, Point b) {
         if (this->nodeExistsAtPoint(a) && this->nodeExistsAtPoint(b)) {
-            Node *nodeA = this->map.at(a.getAsString());
-            Node *nodeB = this->map.at(b.getAsString());
+            Node *nodeA = this->getNodeAtPoint(a);
+            Node *nodeB = this->getNodeAtPoint(b);
 
             return this->connectNodes(nodeA, nodeB);
         }
         throw std::logic_error("Tried to connect two nodes which do not exist");
     }
 
+    Node *getNodeAtPoint(Point p) {
+        if (this->nodeExistsAtPoint(p)) {
+            Node *node = this->map.at(p.getAsString());
+            return node;
+        }
+        throw std::logic_error("Node does not exist at point");
+    }
 
     void connectNodes(Node *a, Node *b) {
         if (!this->nodeExistsAtPoint(a->getPoint()) || !this->nodeExistsAtPoint(b->getPoint())) {
