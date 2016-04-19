@@ -20,6 +20,12 @@ TEST(dijkstratest, base_path_find) {
 
     Maze *mazePtr = &maze;
 
-    Dijkstra::getPath(mazePtr, p1, p2);
+    std::vector<Node *> shortestPath = Dijkstra::getPath(mazePtr, p1, p2);
 
+    ASSERT_EQ(2, shortestPath.size());
+
+    std::vector<Node *> expectedPath;
+    expectedPath.push_back(n1);
+    expectedPath.push_back(n2);
+    ASSERT_EQ(expectedPath, shortestPath);
 }
