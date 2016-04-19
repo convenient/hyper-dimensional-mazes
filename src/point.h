@@ -88,6 +88,7 @@ public:
     }
 
     std::vector<std::string> getAllAxis(){
+        //TODO object caching for this method
         Point x;
         std::vector<std::string> axis = Point::getAllAxis(*this, x);
         return axis;

@@ -5,6 +5,9 @@
 
 class MazeBinary : public Maze {
 public:
+    /**
+     * A dimensionally agnostic binary maze algorithm with a bias towards the positive axis
+     */
     void generate() {
 
         std::vector<std::string> axis = this->getAllAxis();
@@ -13,21 +16,30 @@ public:
             Node *workingNode = this->getRandomUnvisitedNode();
             Point workingPoint = workingNode->getPoint();
 
-            std::vector<Point> potentialPoints;
+            std::vector<Node *> potentialNodes;
 
-            for (auto axisIdentifier : axis) {
-                Point p = Point::getNeighbourPoint(workingPoint, axisIdentifier, Point::positive);
+            std::vector<Node *> neighbourNodes = this->getNeighbourNodes(workingNode);
+            for (auto neighbourNode : neighbourNodes) {
+                for (auto axisIdentifier : axis) {
+                    Point neighbour = neighbourNode->getPoint();
+                    int axisValue = neighbour.getPositionOnAxis(axisIdentifier);
+                    int workingNodeAxisValue = workingPoint.getPositionOnAxis(axisIdentifier);
 
-                if (this->nodeExistsAtPoint(p)) {
-                    potentialPoints.push_back(p);
+                    //This greater than or less than size will define the bias of the maze
+                    //> == to the top right
+                    //< == to the bottom left
+                    if (axisValue > workingNodeAxisValue) {
+                        if (this->nodeExistsAtPoint(neighbour)) {
+                            potentialNodes.push_back(neighbourNode);
+                        }
+                    }
                 }
             }
 
-            if (potentialPoints.size() >= 1) {
-                unsigned long r = (unsigned long) this->getRandomNumber(0, (int) potentialPoints.size() - 1);
+            if (potentialNodes.size() >= 1) {
+                unsigned long r = (unsigned long) this->getRandomNumber(0, (int) potentialNodes.size() - 1);
 
-                Point chosenPoint = potentialPoints.at(r);
-                Node *chosenNode = this->getNodeAtPoint(chosenPoint);
+                Node *chosenNode = potentialNodes.at(r);
 
                 workingNode->link(chosenNode);
             }

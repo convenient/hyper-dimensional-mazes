@@ -133,7 +133,7 @@ public:
         return this->unvisited_map.size();
     }
 
-    void getNeighbourNodes(Node *node) {
+    std::vector<Node *> getNeighbourNodes(Node *node) {
         Point point = node->getPoint();
 
         std::vector<Node *> neighbourNodes;
@@ -144,15 +144,16 @@ public:
             Point positive = Point::getNeighbourPoint(point, axisIdentifier, Point::positive);
 
             if (this->nodeExistsAtPoint(positive)) {
-                neighbourNodes.push_back(this->map.at(positive.getAsString()));
+                neighbourNodes.push_back(this->getNodeAtPoint(positive));
             }
 
             Point negative = Point::getNeighbourPoint(point, axisIdentifier, Point::negative);
 
             if (this->nodeExistsAtPoint(negative)) {
-                neighbourNodes.push_back(this->map.at(negative.getAsString()));
+                neighbourNodes.push_back(this->getNodeAtPoint(negative));
             }
         }
+        return neighbourNodes;
     }
 
 };
