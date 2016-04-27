@@ -11,26 +11,27 @@ public:
      *
      * This means the shortest path will always be 2 in size, both a start and an end.
      */
-    static std::vector<Node *> getPath(Maze *maze, Point startPoint, Point endPoint) {
+    static std::vector<Node *> getPath(Node *start, Node *end) {
 
-        if (!(maze->nodeExistsAtPoint(startPoint) && maze->nodeExistsAtPoint(endPoint))) {
-            throw std::logic_error("Tried to find path between points not in maze");
-        }
-
-        std::unordered_map<std::string, Node *> unvisited = maze->getMap();
-
-        Node *start = maze->getNodeAtPoint(startPoint);
-        Node *end = maze->getNodeAtPoint(endPoint);
+        std::unordered_map<Node *, Node *> visitedNodes;
 
         std::vector<Node *> path;
         path.push_back(start);
 
-        std::vector<Node *> neighbourNodes = maze->getNeighbourNodes(start);
+        Node *workingNode = start;
 
-        for (auto neighbourNode : neighbourNodes) {
-            if (neighbourNode == end) {
-                path.push_back(neighbourNode);
+        std::vector<Node *> linkedNodes = workingNode->getLinkedNodes();
+
+        for (auto node : linkedNodes) {
+            if (node == end) {
+                path.push_back(node);
                 break;
+            }
+            if (visitedNodes.at(node)) {
+                //This node has already been visited
+                continue;
+            } else {
+                visitedNodes.insert({node, node});
             }
         }
 

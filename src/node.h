@@ -55,6 +55,17 @@ public:
         }
         return false;
     }
+
+    std::vector<Node *> getLinkedNodes() {
+        std::vector<Node *> linked;
+
+        for (auto i : this->linkedNodes) {
+            Node *n = i.first;
+            linked.push_back(n);
+        }
+
+        return linked;
+    }
 };
 
 
