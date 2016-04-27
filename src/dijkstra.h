@@ -4,6 +4,35 @@
 #include "maze.h"
 
 class Dijkstra {
+private:
+    std::unordered_map<Node *, Node *> nodeSolved;
+    std::unordered_map<Node *, double> nodeDistances;
+    std::vector<Node *> path;
+
+    void setSolved(Node *node) {
+        this->nodeSolved.insert({node, node});
+    }
+
+    bool isSolved(Node *node) {
+        return (this->nodeSolved.at(node));
+    }
+
+    void setDistance(Node *node, double distance) {
+        if (this->nodeDistances.at(node)) {
+            this->nodeDistances.erase(node);
+        }
+        this->nodeDistances.insert({node, distance});
+    }
+
+    double getDistance(Node *node) {
+        return this->nodeDistances.at(node);
+    }
+
+    void clearAll() {
+        this->nodeDistances.clear();
+        this->path.clear();
+    }
+
 public:
     /**
      * Returns a vector containing node pointers journeying from the start point to the end point
@@ -11,28 +40,37 @@ public:
      *
      * This means the shortest path will always be 2 in size, both a start and an end.
      */
-    static std::vector<Node *> getPath(Node *start, Node *end) {
+    std::vector<Node *> getPath(Node *start, Node *end) {
+        this->clearAll();
 
-        std::unordered_map<Node *, Node *> visitedNodes;
+        this->setDistance(start, 0);
+        this->setSolved(start);
 
-        std::vector<Node *> path;
-        path.push_back(start);
+        for (auto i : this->nodeSolved) {
 
-        Node *workingNode = start;
+            Node *workingNode = i.first;
+            Point workingPoint = workingNode->getPoint();
 
-        std::vector<Node *> linkedNodes = workingNode->getLinkedNodes();
+            Node closestNode = nullptr;
+            double closestDistance = 0;
+            for (auto linkedNode : workingNode->getLinkedNodes()) {
+                if (this->isSolved(linkedNode)) {
 
-        for (auto node : linkedNodes) {
-            if (node == end) {
-                path.push_back(node);
-                break;
+                } else {
+                    double distance = workingPoint.getEuclideanDistanceTo(linkedNode->getPoint());
+                    //TODO Work out the length of the arc
+                    this->setDistance(linkedNode, distance);
+
+                    if (closestNode == nullptr) {
+                        closestNode = linkedNode;
+                        closestDistance = distance;
+                    } else if (distance < closestDistance) {
+                        closestDistance = linkedNode;
+                        closestDistance = distance;
+                    }
+                }
             }
-            if (visitedNodes.at(node)) {
-                //This node has already been visited
-                continue;
-            } else {
-                visitedNodes.insert({node, node});
-            }
+            this->setSolved(closestNode);
         }
 
         return path;
