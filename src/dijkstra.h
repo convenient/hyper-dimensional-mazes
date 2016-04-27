@@ -82,6 +82,10 @@ public:
                     }
                 }
 
+                if (closestNode == nullptr) {
+                    throw std::logic_error("The two nodes are not linked, no path exists");
+                }
+
                 this->nodePath.insert({closestNode, workingNode});
                 this->setSolved(closestNode);
             }
