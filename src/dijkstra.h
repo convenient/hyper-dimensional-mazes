@@ -5,6 +5,7 @@
 
 class Dijkstra {
 private:
+    std::unordered_map<Node *, Node *> nodePath;
     std::unordered_map<Node *, Node *> nodeSolved;
     std::unordered_map<Node *, double> nodeDistances;
     std::vector<Node *> path;
@@ -14,11 +15,11 @@ private:
     }
 
     bool isSolved(Node *node) {
-        return (this->nodeSolved.at(node));
+        return (this->nodeSolved.count(node));
     }
 
     void setDistance(Node *node, double distance) {
-        if (this->nodeDistances.at(node)) {
+        if (this->nodeDistances.count(node)) {
             this->nodeDistances.erase(node);
         }
         this->nodeDistances.insert({node, distance});
@@ -30,6 +31,8 @@ private:
 
     void clearAll() {
         this->nodeDistances.clear();
+        this->nodePath.clear();
+        this->nodeSolved.clear();
         this->path.clear();
     }
 
@@ -46,34 +49,59 @@ public:
         this->setDistance(start, 0);
         this->setSolved(start);
 
-        for (auto i : this->nodeSolved) {
+        bool solved = false;
+        while (!solved) {
+            for (auto i : this->nodeSolved) {
 
-            Node *workingNode = i.first;
-            Point workingPoint = workingNode->getPoint();
+                Node *workingNode = i.first;
+                Point workingPoint = workingNode->getPoint();
 
-            Node closestNode = nullptr;
-            double closestDistance = 0;
-            for (auto linkedNode : workingNode->getLinkedNodes()) {
-                if (this->isSolved(linkedNode)) {
+                Node *closestNode = nullptr;
+                double closestDistance = 0;
+                for (auto linkedNode : workingNode->getLinkedNodes()) {
+                    if (!this->isSolved(linkedNode)) {
+                        double distance = workingPoint.getEuclideanDistanceTo(linkedNode->getPoint());
+                        distance += this->getDistance(workingNode);
 
-                } else {
-                    double distance = workingPoint.getEuclideanDistanceTo(linkedNode->getPoint());
-                    //TODO Work out the length of the arc
-                    this->setDistance(linkedNode, distance);
+                        this->setDistance(linkedNode, distance);
 
-                    if (closestNode == nullptr) {
-                        closestNode = linkedNode;
-                        closestDistance = distance;
-                    } else if (distance < closestDistance) {
-                        closestDistance = linkedNode;
-                        closestDistance = distance;
+                        if (closestNode == nullptr) {
+                            closestNode = linkedNode;
+                            closestDistance = distance;
+                        } else if (distance < closestDistance) {
+                            closestNode = linkedNode;
+                            closestDistance = distance;
+                        }
+
+                        if (linkedNode == end) {
+                            closestNode = linkedNode;
+                            closestDistance = distance;
+                            solved = true;
+                            break;
+                        }
                     }
                 }
+
+                this->nodePath.insert({closestNode, workingNode});
+                this->setSolved(closestNode);
             }
-            this->setSolved(closestNode);
         }
 
-        return path;
+        //Holy shit pointers to pointers.
+        Node **workingNodePtrPtr = &end;
+        while (true) {
+            this->path.push_back(*workingNodePtrPtr);
+            Node *workingNode = this->nodePath.at(*workingNodePtrPtr);
+            workingNodePtrPtr = &workingNode;
+            if (workingNode == start) {
+                this->path.push_back(*workingNodePtrPtr);
+                break;
+            }
+        }
+
+        std::reverse(this->path.begin(), this->path.end());
+
+        return this->path;
     }
 };
 
