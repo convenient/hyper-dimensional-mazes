@@ -43,6 +43,7 @@ public:
             unsigned seed = d.count();
 
             this->rng.seed(seed);
+            this->rngSeeded = true;
         }
 
         std::uniform_int_distribution<int> gen(min, max);
