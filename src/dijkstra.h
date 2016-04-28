@@ -50,7 +50,7 @@ public:
         this->setSolved(start);
 
         bool solved = false;
-        while (!solved) {
+        do {
             for (auto i : this->nodeSolved) {
 
                 Node *workingNode = i.first;
@@ -88,8 +88,12 @@ public:
 
                 this->nodePath.insert({closestNode, workingNode});
                 this->setSolved(closestNode);
+                if (solved) {
+                    //No need to continue looking through the linked nodes, we've got it!
+                    break;
+                }
             }
-        }
+        } while (!solved);
 
         //Holy shit pointers to pointers.
         Node **workingNodePtrPtr = &end;
