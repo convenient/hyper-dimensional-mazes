@@ -81,6 +81,19 @@ public:
         return this->getRandomNode(this->unvisited_map);
     };
 
+    std::vector<Node *> getDeadEnds() {
+        std::vector<Node *> deadEnds;
+
+        for (auto nodeItr : this->getMap()) {
+            Node *node = nodeItr.second;
+            if (node->getLinkedNodes().size() == 1) {
+                deadEnds.push_back(node);
+            }
+        }
+
+        return deadEnds;
+    }
+
     std::vector<std::string> getAllAxis() {
 
         if (this->axis.size() <=0) {

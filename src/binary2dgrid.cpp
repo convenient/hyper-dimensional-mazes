@@ -11,8 +11,20 @@ void render() {
 }
 
 void solve() {
-    Dijkstra dijkstraPathSolver;
+    std::vector<Node *> deadEnds = maze.getDeadEnds();
+    if (deadEnds.size() < 2) {
+        std::cout << "Er....not enough dead ends to solve" << std::endl;
+        return;
+    }
     std::cout << "Solving" << std::endl;
+    Dijkstra dijkstraSolver;
+
+    Node *start = deadEnds.front();
+    Node *end = deadEnds.back();
+
+    std::vector<Node *> path = dijkstraSolver.getPath(start, end);
+    std::cout << path.size() << std::endl;
+
 }
 
 void generate() {
@@ -49,6 +61,7 @@ int main(int argc, char **argv) {
         }
     }
 
+    maze.generate();
     char title[] = "Binary Maze - 2D Grid";
     RendererGrid2D::init(&maze, title, render, processKeys);
 
