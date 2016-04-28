@@ -90,8 +90,26 @@ private:
         //usleep(microseconds);
     }
 
+    static void processKeys(unsigned char key, int x, int y)
+    {
+        char charKey = tolower(key);
+
+        switch (charKey)
+        {
+            case 'q': exit(0); break;
+            case 's': solve(); break;
+        }
+    }
+
+    static void solve() {
+
+    }
+
 public:
-    static void render(Maze *m, char *title, void (*renderFunction)(void)) {
+
+    static void render(Maze *m, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
+
+//        maze = m;
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
@@ -102,8 +120,8 @@ public:
         glutInitWindowSize(600, 600);
         glutInitWindowPosition(100, 100);
         glutCreateWindow(title);
-        glutDisplayFunc(renderFunction);
-
+        glutDisplayFunc(renderFunc);
+        glutKeyboardFunc(keysFunc);
 
         //Grey background
         glClearColor(0.75, 0.75, 0.75, 1);

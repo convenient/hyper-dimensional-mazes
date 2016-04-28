@@ -4,11 +4,11 @@
 #include "maze.h"
 
 class MazeBinary : public Maze {
-public:
+private:
     /**
      * A dimensionally agnostic binary maze algorithm with a bias towards the positive axis
      */
-    void generate() {
+    void generateAlgorithm() {
 
         std::vector<std::string> axis = this->getAllAxis();
 

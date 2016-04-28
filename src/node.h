@@ -24,6 +24,10 @@ public:
         return this->point;
     }
 
+    void clearLinkedNodes() {
+        this->linkedNodes.clear();
+    }
+
     void link(Node *node) {
         if (!this->isLinked(node)) {
             this->linkedNodes.insert({node, node->getPoint()});

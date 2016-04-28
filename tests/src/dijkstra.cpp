@@ -36,7 +36,3 @@ TEST(dijkstratest, base_path_find) {
     expectedPath.push_back(n3Ptr);
     ASSERT_EQ(expectedPath, shortestPath);
 }
-
-TEST(dijkstratest, simple_path_find) {
-
-}

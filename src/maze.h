@@ -29,10 +29,23 @@ class Maze {
         return map.at(key);
     }
 
+    virtual void generateAlgorithm() = 0;
+
 public:
 
-
-    virtual void generate() = 0;
+    void generate() {
+        /*
+         * Reset all object caches etc
+         */
+        this->unvisited_map = map;
+        this->axis.clear();
+        for (auto nodeItr : this->getMap()) {
+            Node *node = nodeItr.second;
+            node->clearLinkedNodes();
+        }
+        //Generate a maze for the defined nodes!
+        this->generateAlgorithm();
+    }
 
     int getRandomNumber(int min, int max) {
         if (!this->rngSeeded) {
