@@ -18,6 +18,7 @@ void solve() {
 void generate() {
     std::cout << "Generating" << std::endl;
     maze.generate();
+    RendererGrid2D::drawMaze(mazePtr);
 }
 
 void processKeys(unsigned char key, int x, int y)
@@ -48,11 +49,8 @@ int main(int argc, char **argv) {
         }
     }
 
-    generate();
-
     char title[] = "Binary Maze - 2D Grid";
-
-    RendererGrid2D::render(&maze, title, render, processKeys);
+    RendererGrid2D::init(&maze, title, render, processKeys);
 
     return 0;
 }

@@ -14,7 +14,27 @@
 #include "maze.h"
 
 class RendererGrid2D {
-private:
+public:
+
+    static void drawMaze(Maze *m) {
+        //Grey background
+        glClearColor(0.75, 0.75, 0.75, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        std::vector<std::string> axis = m->getAllAxis();
+
+        if (axis.size() !=2) {
+            throw std::logic_error("Tried to render a non-2d maze in a 2d grid renderer");
+        }
+
+        for (auto i : m->getMap()) {
+            Node *node = i.second;
+            drawNode(node, axis.front(), axis.back());
+        }
+
+        glFlush();
+    }
+
     static void drawNode(Node *node, std::string xAxisIdentifier, std::string yAxisIdentifier) {
         GLfloat squareSize = 0.05;
 
@@ -84,32 +104,12 @@ private:
         }
 
         glEnd();
-        glFlush();
 
         //unsigned int microseconds = 30000;
         //usleep(microseconds);
     }
 
-    static void processKeys(unsigned char key, int x, int y)
-    {
-        char charKey = tolower(key);
-
-        switch (charKey)
-        {
-            case 'q': exit(0); break;
-            case 's': solve(); break;
-        }
-    }
-
-    static void solve() {
-
-    }
-
-public:
-
-    static void render(Maze *m, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
-
-//        maze = m;
+    static void init(Maze *maze, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
@@ -123,21 +123,7 @@ public:
         glutDisplayFunc(renderFunc);
         glutKeyboardFunc(keysFunc);
 
-        //Grey background
-        glClearColor(0.75, 0.75, 0.75, 1);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glFlush();
-
-        std::vector<std::string> axis = m->getAllAxis();
-
-        if (axis.size() !=2) {
-            throw std::logic_error("Tried to render a non-2d maze in a 2d grid renderer");
-        }
-
-        for (auto i : m->getMap()) {
-            Node *node = i.second;
-            drawNode(node, axis.front(), axis.back());
-        }
+        drawMaze(maze);
 
         glutMainLoop();
     }
