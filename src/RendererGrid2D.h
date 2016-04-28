@@ -19,6 +19,7 @@ public:
     static void drawMaze(Maze *m) {
         //Grey background
         glClearColor(0.75, 0.75, 0.75, 1);
+        glColor3f(0.0, 0.0, 0.0);
         glClear(GL_COLOR_BUFFER_BIT);
 
         std::vector<std::string> axis = m->getAllAxis();
@@ -33,6 +34,46 @@ public:
         }
 
         glFlush();
+    }
+
+    static void drawPath(Maze *m, std::vector<Node *> path) {
+
+        std::vector<std::string> axis = m->getAllAxis();
+        std::string xAxisIdentifier = axis.front();
+        std::string yAxisIdentifier = axis.back();
+
+        glColor3f(1.0, 0.5, 0.0);
+        for (auto node : path) {
+            drawMarker(node->getPoint(), xAxisIdentifier, yAxisIdentifier);
+        }
+
+        Node *start = path.front();
+        glColor3f(0.0, 1.0, 0.0);
+        drawMarker(start->getPoint(), xAxisIdentifier, yAxisIdentifier);
+
+        Node *end = path.back();
+        glColor3f(1.0, 0.0, 0.0);
+        drawMarker(end->getPoint(), xAxisIdentifier, yAxisIdentifier);
+
+        glFlush();
+    }
+
+    static void drawMarker(Point p, std::string xAxisIdentifier, std::string yAxisIdentifier) {
+
+        //TODO make these constants and not copypasta
+        GLfloat markerSize = 0.03;
+        GLfloat squareSize = 0.05;
+        GLfloat differenceSize = squareSize - markerSize;
+
+        GLfloat xOffset = squareSize * p.getPositionOnAxis(xAxisIdentifier);
+        GLfloat yOffset = squareSize * p.getPositionOnAxis(yAxisIdentifier);
+
+        glBegin(GL_POLYGON);
+        glVertex3f(markerSize - differenceSize + xOffset, markerSize - differenceSize + yOffset, 0.0);
+        glVertex3f(markerSize*2 - differenceSize + xOffset, markerSize - differenceSize + yOffset, 0.0);
+        glVertex3f(markerSize*2 - differenceSize + xOffset, markerSize*2 - differenceSize + yOffset, 0.0);
+        glVertex3f(markerSize - differenceSize + xOffset, markerSize*2 - differenceSize + yOffset, 0.0);
+        glEnd();
     }
 
     static void drawNode(Node *node, std::string xAxisIdentifier, std::string yAxisIdentifier) {
@@ -104,9 +145,6 @@ public:
         }
 
         glEnd();
-
-        //unsigned int microseconds = 30000;
-        //usleep(microseconds);
     }
 
     static void init(Maze *maze, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {

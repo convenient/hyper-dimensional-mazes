@@ -22,9 +22,10 @@ void solve() {
     Node *start = deadEnds.front();
     Node *end = deadEnds.back();
 
+    //TODO currently this is between the first two dead ends we have, we need to pick the longest path between dead ends
     std::vector<Node *> path = dijkstraSolver.getPath(start, end);
     std::cout << path.size() << std::endl;
-
+    RendererGrid2D::drawPath(mazePtr, path);
 }
 
 void generate() {
