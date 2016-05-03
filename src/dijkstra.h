@@ -2,6 +2,7 @@
 #define MAZES_FOR_PROGRAMMERS_DIJKSTRA_H
 
 #include "maze.h"
+#include <algorithm>
 
 class Dijkstra {
 private:
