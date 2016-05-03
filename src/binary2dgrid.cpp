@@ -24,13 +24,28 @@ void solve() {
     std::cout << "Solving" << std::endl;
     Dijkstra dijkstraSolver;
 
-    Node *start = deadEnds.front();
-    Node *end = deadEnds.back();
+    int counter = 0;
+    int complexityMaxSize = deadEnds.size() * deadEnds.size();
+    std::vector<Node *> longestPath;
+    for (auto deadEndNodeStart : deadEnds) {
+        for (auto deadEndNodeEnd : deadEnds) {
+            std::cout << counter++ << "/" << complexityMaxSize << std::endl;
 
-    //TODO currently this is between the first two dead ends we have, we need to pick the longest path between dead ends
-    std::vector<Node *> path = dijkstraSolver.getPath(start, end);
-    std::cout << path.size() << std::endl;
-    RendererGrid2D::drawPath(mazePtr, path);
+            //TODO keep track of node parings solved, so that we don't keep repeating the same path again and again.
+            if (deadEndNodeEnd == deadEndNodeStart) {
+                continue;
+            }
+            std::vector<Node *> path = dijkstraSolver.getPath(deadEndNodeStart, deadEndNodeEnd);
+            if (path.size() > longestPath.size()) {
+                longestPath = path;
+            }
+        }
+    }
+    Node *start = longestPath.front();
+    Node *end = longestPath.back();
+
+    std::cout << longestPath.size() << std::endl;
+    RendererGrid2D::drawPath(mazePtr, longestPath);
     mazeSolved = true;
 }
 
