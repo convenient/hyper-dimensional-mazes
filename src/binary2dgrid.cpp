@@ -2,6 +2,7 @@
 #include "RendererGrid2D.h"
 #include "dijkstra.h"
 #include <iostream>
+#include <sstream>
 
 MazeBinary maze;
 Maze* mazePtr = &maze;
@@ -24,12 +25,30 @@ void solve() {
     std::cout << "Solving" << std::endl;
     Dijkstra dijkstraSolver;
 
+    std::unordered_map<std::string, std::string> solvedPath;
+
     int counter = 0;
     int complexityMaxSize = deadEnds.size() * deadEnds.size();
     std::vector<Node *> longestPath;
+    //TODO replace this with a method of addressing the children by id location from within the vecotr to reduce the cost of the loops.
     for (auto deadEndNodeStart : deadEnds) {
         for (auto deadEndNodeEnd : deadEnds) {
-            std::cout << counter++ << "/" << complexityMaxSize << std::endl;
+            if (counter % 100 == 0) {
+
+                std::cout << counter++ << "/" << complexityMaxSize << std::endl;
+            }
+
+            std::stringstream ss1;
+            ss1 << deadEndNodeStart->getPoint().getAsString() << deadEndNodeEnd->getPoint().getAsString();
+            std::string id1 = ss1.str();
+
+            std::stringstream ss2;
+            ss2 << deadEndNodeEnd->getPoint().getAsString() << deadEndNodeStart->getPoint().getAsString();
+            std::string id2 = ss2.str();
+
+            if (solvedPath.count(id1) || solvedPath.count(id2)) {
+                continue;
+            }
 
             //TODO keep track of node parings solved, so that we don't keep repeating the same path again and again.
             if (deadEndNodeEnd == deadEndNodeStart) {
@@ -39,6 +58,9 @@ void solve() {
             if (path.size() > longestPath.size()) {
                 longestPath = path;
             }
+
+            solvedPath.insert({id1, id1});
+            solvedPath.insert({id2, id2});
         }
     }
     Node *start = longestPath.front();
