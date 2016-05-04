@@ -27,44 +27,31 @@ void solve() {
 
     std::unordered_map<std::string, std::string> solvedPath;
 
-    int counter = 0;
-    int complexityMaxSize = deadEnds.size() * deadEnds.size();
+    unsigned long counter = 0;
+    unsigned long todo = ((deadEnds.size() * deadEnds.size())/2) - (deadEnds.size()/2);
+
     std::vector<Node *> longestPath;
-    //TODO replace this with a method of addressing the children by id location from within the vecotr to reduce the cost of the loops.
-    for (auto deadEndNodeStart : deadEnds) {
-        for (auto deadEndNodeEnd : deadEnds) {
-            if (counter % 100 == 0) {
 
-                std::cout << counter++ << "/" << complexityMaxSize << std::endl;
-            }
+    /**
+     * Not quite All Pairs All Paths, but since A->B is the same path as B->A for shortest paths
+     * This is a good approach to half the amount of paths to be calculated.
+     */
+    for (std::size_t i = 0; i < deadEnds.size(); ++i) {
+        Node * start = deadEnds.at(i);
+        for (std::size_t j=i+1; j< deadEnds.size(); ++j) {
+            Node *end = deadEnds.at(j);
 
-            std::stringstream ss1;
-            ss1 << deadEndNodeStart->getPoint().getAsString() << deadEndNodeEnd->getPoint().getAsString();
-            std::string id1 = ss1.str();
-
-            std::stringstream ss2;
-            ss2 << deadEndNodeEnd->getPoint().getAsString() << deadEndNodeStart->getPoint().getAsString();
-            std::string id2 = ss2.str();
-
-            if (solvedPath.count(id1) || solvedPath.count(id2)) {
-                continue;
-            }
-
-            //TODO keep track of node parings solved, so that we don't keep repeating the same path again and again.
-            if (deadEndNodeEnd == deadEndNodeStart) {
-                continue;
-            }
-            std::vector<Node *> path = dijkstraSolver.getPath(deadEndNodeStart, deadEndNodeEnd);
+            std::vector<Node *> path = dijkstraSolver.getPath(start, end);
             if (path.size() > longestPath.size()) {
                 longestPath = path;
             }
 
-            solvedPath.insert({id1, id1});
-            solvedPath.insert({id2, id2});
+            std::cout << counter++ << "/" << todo << std::endl;
         }
     }
-    Node *start = longestPath.front();
-    Node *end = longestPath.back();
+
+//    Node *start = longestPath.front();
+//    Node *end = longestPath.back();
 
     std::cout << longestPath.size() << std::endl;
     RendererGrid2D::drawPath(mazePtr, longestPath);
