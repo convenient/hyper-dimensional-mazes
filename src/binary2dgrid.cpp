@@ -35,19 +35,25 @@ void solve() {
 
     std::vector<Node *> longestPath;
 
+    std::size_t num_chunks = 4;
+
     /**
      * Not quite All Pairs All Paths, but since A->B is the same path as B->A for shortest paths
      * This is a good approach to half the amount of paths to be calculated.
      */
-    for (std::size_t i = 0; i < deadEnds.size(); ++i) {
+    for (std::size_t i = 0; i <= deadEnds.size() + num_chunks; i+=num_chunks) {
+        //CHECK IF EXISTS
         Node * start = deadEnds.at(i);
-        for (std::size_t j=i+1; j< deadEnds.size(); ++j) {
-            Node *end = deadEnds.at(j);
-
-            std::vector<Node *> path = dijkstraSolver.getPath(start, end);
-            if (path.size() > longestPath.size()) {
-                longestPath = path;
-            }
+        for (std::size_t j=i+1; j<= deadEnds.size() + num_chunks; j+=num_chunks) {
+            //Check if exists
+            Node *end1 = deadEnds.at(j);
+            Node *end2 = deadEnds.at(j);
+            Node *end3 = deadEnds.at(j);
+            Node *end4 = deadEnds.at(j);
+//            std::vector<Node *> path = dijkstraSolver.getPath(start, end1);
+//            if (path.size() > longestPath.size()) {
+//                longestPath = path;
+//            }
 
             counter++;
             if (counter % 100 ==0) {
@@ -56,6 +62,7 @@ void solve() {
         }
     }
 
+    exit(0);
 //    Node *start = longestPath.front();
 //    Node *end = longestPath.back();
 
