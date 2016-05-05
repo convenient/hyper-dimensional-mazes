@@ -8,6 +8,7 @@
 class Node {
 private:
     std::unordered_map<Node*, Point> linkedNodes;
+    std::vector<Node *> linkedNodesVector;
     Point point;
 
 public:
@@ -26,6 +27,7 @@ public:
 
     void clearLinkedNodes() {
         this->linkedNodes.clear();
+        this->linkedNodesVector.clear();
     }
 
     void link(Node *node) {
@@ -61,14 +63,15 @@ public:
     }
 
     std::vector<Node *> getLinkedNodes() {
-        std::vector<Node *> linked;
 
-        for (auto i : this->linkedNodes) {
-            Node *n = i.first;
-            linked.push_back(n);
+        if (this->linkedNodesVector.size()<=0) {
+            for (auto i : this->linkedNodes) {
+                Node *n = i.first;
+                this->linkedNodesVector.push_back(n);
+            }
         }
 
-        return linked;
+        return this->linkedNodesVector;
     }
 };
 
