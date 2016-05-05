@@ -2,7 +2,7 @@
 #include "RendererGrid2D.h"
 #include "dijkstra.h"
 #include <iostream>
-#include <sstream>
+#include <thread>
 
 MazeBinary maze;
 Maze* mazePtr = &maze;
@@ -11,6 +11,11 @@ bool mazeSolved = false;
 
 void render() {
 
+}
+//http://stackoverflow.com/questions/7686939/c-simple-return-value-from-stdthread
+void threadtest(std::string msg)
+{
+    std::cout << "task1 says: " << msg;
 }
 
 void solve() {
@@ -24,8 +29,6 @@ void solve() {
     }
     std::cout << "Solving" << std::endl;
     Dijkstra dijkstraSolver;
-
-    std::unordered_map<std::string, std::string> solvedPath;
 
     unsigned long counter = 0;
     unsigned long todo = ((deadEnds.size() * deadEnds.size())/2) - (deadEnds.size()/2);
@@ -46,7 +49,10 @@ void solve() {
                 longestPath = path;
             }
 
-            std::cout << counter++ << "/" << todo << std::endl;
+            counter++;
+            if (counter % 100 ==0) {
+                std::cout << counter << "/" << todo << std::endl;
+            }
         }
     }
 
