@@ -50,17 +50,26 @@ public:
         this->setDistance(start, 0);
         this->setSolved(start);
 
+        std::unordered_map<Node *, Node *> nodeNeighboursSolvedCache;
+
         bool solved = false;
         do {
             for (auto i : this->nodeSolved) {
 
                 Node *workingNode = i.first;
+                if (nodeNeighboursSolvedCache.count(workingNode)) {
+                    continue;
+                }
+
                 Point workingPoint = workingNode->getPoint();
+
+                bool nodeNeighboursSolved = true;
 
                 Node *closestNode = nullptr;
                 double closestDistance = 0;
                 for (auto linkedNode : workingNode->getLinkedNodes()) {
                     if (!this->isSolved(linkedNode)) {
+                        nodeNeighboursSolved = false;
                         double distance = workingPoint.getEuclideanDistanceTo(linkedNode->getPoint());
                         distance += this->getDistance(workingNode);
 
@@ -81,6 +90,10 @@ public:
                             break;
                         }
                     }
+                }
+
+                if (nodeNeighboursSolved) {
+                    nodeNeighboursSolvedCache.insert({workingNode, workingNode});
                 }
 
                 if (closestNode != nullptr) {

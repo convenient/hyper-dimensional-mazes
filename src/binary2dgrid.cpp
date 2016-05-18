@@ -80,7 +80,7 @@ void processKeys(unsigned char key, int x, int y)
 
 int main(int argc, char **argv) {
 
-    int mazeSize = 30;
+    int mazeSize = 15;
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
 
