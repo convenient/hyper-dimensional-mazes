@@ -1,6 +1,5 @@
 #include <iostream>
 #include <chrono>
-#include <iostream>
 #include <thread>
 #include <future>
 #include "mazebinary.h"
