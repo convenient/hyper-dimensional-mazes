@@ -135,11 +135,11 @@ void processKeys(unsigned char key, int x, int y)
 
 int main(int argc, char **argv) {
 
-    int mazeSize = 25;
+    int mazeSize = 30;
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
 
-    std::cout << "Generating a binary maze of " << maxpart << " by " << maxpart << std::endl;
+    std::cout << "Generating a binary maze of " << mazeSize << " by " << mazeSize << std::endl;
 
     for (int x=minpart; x<maxpart; x++) {
         for (int y=minpart; y<maxpart; y++) {
