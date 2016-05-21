@@ -44,6 +44,9 @@ void solve() {
             endPoints.push_back(end);
         }
 
+        /**
+         * Dijkstras has been adjusted too, to allow a one:many solution to be computed at the same time.
+         */
         std::unordered_map<Node *, std::vector<Node *>> potentialSolvedPaths = dijkstraSolver.getPath(start, endPoints);
         for (auto potentialSolvedPath : potentialSolvedPaths) {
             std::cout << counter++ << "/" << todo << std::endl;
