@@ -69,6 +69,14 @@ public:
         return endNodesSolutions.at(end);
     }
 
+    /**
+     * Modification of dijkstras algorithm to support finding 1 node to many end nodes. This is to ease the
+     * computational expense of the all-pairs all paths problem.
+     *
+     * If we're searching from Node A to Nodes X,Y,Z they may share part of a common path. This should help sort
+     * out these commonalities partly
+     *
+     */
     std::unordered_map<Node *, std::vector<Node *>> getPath(Node *start, std::vector<Node *> ends) {
         this->clearAll();
 
@@ -76,15 +84,17 @@ public:
         this->setSolved(start);
 
         //Convert the end nodes vector into something more usable
-        std::unordered_map<Node *, std::vector<Node *> *> endNodes;
+        std::unordered_map<Node *, Node *> endNodesPending;
+        std::unordered_map<Node *, std::vector<Node *>> endNodesPaths;
+
         for (auto end : ends) {
-            if (!endNodes.count(end)) {
-                endNodes.insert({end, nullptr});
+            if (!endNodesPending.count(end)) {
+                endNodesPending.insert({end, nullptr});
             }
         }
 
         bool solved = false;
-        while (true) {
+        while (!endNodesPending.empty()) {
             for (auto solvedNodeAutoIterator : this->nodeSolved) {
 
                 Node *workingNode = solvedNodeAutoIterator.first;
@@ -113,24 +123,16 @@ public:
                     this->nodePath.insert({closestNode, workingNode});
                     this->setSolved(closestNode);
 
-                    if (endNodes.count(closestNode)) {
+                    if (endNodesPending.count(closestNode)) {
                         std::vector<Node *> path = this->generateSolvedPath(start, closestNode);
-
-                        endNodes.erase(closestNode);
-                        endNodes.insert({closestNode, &path});
-
-                        std::unordered_map<Node *, std::vector<Node *>> endNodesCleaned;
-                        for (auto solution : endNodes) {
-                            endNodesCleaned.insert({solution.first, *solution.second});
-                        }
-
-                        return endNodesCleaned;
+                        endNodesPending.erase(closestNode);
+                        endNodesPaths.insert({closestNode, path});
                     }
                 }
             }
         }
 
-
+        return endNodesPaths;
     }
 };
 
