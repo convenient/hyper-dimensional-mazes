@@ -1,9 +1,11 @@
-#include "mazebinary.h"
-#include "RendererGrid2D.h"
-#include "dijkstra.h"
 #include <iostream>
 #include <chrono>
 #include <iostream>
+#include <thread>
+#include <future>
+#include "mazebinary.h"
+#include "RendererGrid2D.h"
+#include "dijkstra.h"
 
 MazeBinary maze;
 Maze* mazePtr = &maze;
@@ -32,21 +34,38 @@ std::vector<Node *> getLongestPath(Node *start, std::vector<Node *> endPoints) {
 }
 
 std::vector<Node *> getLongestPathFromBatches(std::unordered_map<Node *, std::vector<Node *>> batches) {
-    std::vector<Node *> longesPath;
+    std::vector<Node *> longestPath;
+
     int batchSize = 1;
-    int counter = 0;
 
-    for (auto batch : batches) {
-        Node * start = batch.first;
-        std::vector<Node *> endPoints = batch.second;
+    while (!batches.empty()) {
 
-        std::vector<Node *> potentialLongestPath = getLongestPath(start, endPoints);
-        if (potentialLongestPath.size() > longesPath.size()) {
-            longesPath = potentialLongestPath;
+        std::vector<std::future<std::vector<Node *>>> futuresSolutions;
+        int counter = 0;
+
+        std::vector<Node *> batchesToRemove;
+
+        for (auto batch : batches) {
+
+            Node * start = batch.first;
+            std::vector<Node *> endPoints = batch.second;
+
+            batchesToRemove.push_back(start);
+
+            std::future<std::vector<Node *>> futurePathSolution = std::async(&getLongestPath, start, endPoints);
+            std::vector<Node *> potentialLongestPath = futurePathSolution.get();
+
+            if (potentialLongestPath.size() > longestPath.size()) {
+                longestPath = potentialLongestPath;
+            }
+        }
+
+        for (auto batchToRemove : batchesToRemove) {
+            batches.erase(batchToRemove);
         }
     }
 
-    return longesPath;
+    return longestPath;
 }
 
 void solve() {
@@ -83,12 +102,11 @@ void solve() {
     std::vector<Node *> longestPath = getLongestPathFromBatches(batches);
     batches.clear();
 
-    std::cout << longestPath.size() << std::endl;
     RendererGrid2D::drawPath(mazePtr, longestPath);
     mazeSolved = true;
 
     auto current_time = std::chrono::high_resolution_clock::now();
-    std::cout << "Solution took " << std::chrono::duration_cast<std::chrono::duration<float>>(current_time - start_time).count() << " seconds" << std::endl;
+    std::cout << "Solution took " << std::chrono::duration_cast<std::chrono::duration<float>>(current_time - start_time).count() << " seconds and has a distance of " << longestPath.size() << std::endl;
 
 }
 
