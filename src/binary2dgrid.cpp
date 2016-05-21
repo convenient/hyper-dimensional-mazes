@@ -36,7 +36,7 @@ std::vector<Node *> getLongestPath(Node *start, std::vector<Node *> endPoints) {
 std::vector<Node *> getLongestPathFromBatches(std::unordered_map<Node *, std::vector<Node *>> batches) {
     std::vector<Node *> longestPath;
 
-    int batchSize = 40;
+    int batchSize = 100;
 
     while (!batches.empty()) {
 
@@ -50,7 +50,11 @@ std::vector<Node *> getLongestPathFromBatches(std::unordered_map<Node *, std::ve
             std::vector<Node *> endPoints = batch.second;
 
             batchesToRemove.push_back(start);
-            futuresSolutions.push_back(std::async(&getLongestPath, start, endPoints));
+            futuresSolutions.push_back(std::async(std::launch::async, &getLongestPath, start, endPoints));
+
+            if (counter++ == batchSize) {
+                break;
+            }
         }
 
         for (std::size_t i = 0; i != futuresSolutions.size(); ++i) {
