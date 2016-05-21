@@ -2,7 +2,6 @@
 #include "RendererGrid2D.h"
 #include "dijkstra.h"
 #include <iostream>
-#include <sstream>
 
 MazeBinary maze;
 Maze* mazePtr = &maze;
@@ -24,8 +23,6 @@ void solve() {
     }
     std::cout << "Solving" << std::endl;
     Dijkstra dijkstraSolver;
-
-    std::unordered_map<std::string, std::string> solvedPath;
 
     unsigned long counter = 0;
     unsigned long todo = ((deadEnds.size() * deadEnds.size())/2) - (deadEnds.size()/2);
