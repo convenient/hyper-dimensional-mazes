@@ -9,7 +9,6 @@ private:
     std::unordered_map<Node *, Node *> nodePath;
     std::unordered_map<Node *, Node *> nodeSolved;
     std::unordered_map<Node *, double> nodeDistances;
-    std::vector<Node *> path;
 
     void setSolved(Node *node) {
         this->nodeSolved.insert({node, node});
@@ -34,7 +33,25 @@ private:
         this->nodeDistances.clear();
         this->nodePath.clear();
         this->nodeSolved.clear();
-        this->path.clear();
+    }
+
+    std::vector<Node *> generateSolvedPath(Node *start, Node *end) {
+        std::vector<Node *> path;
+
+        //Holy shit pointers to pointers.
+        Node **workingNodePtrPtr = &end;
+        while (true) {
+            path.push_back(*workingNodePtrPtr);
+            Node *workingNode = this->nodePath.at(*workingNodePtrPtr);
+            workingNodePtrPtr = &workingNode;
+            if (workingNode == start) {
+                path.push_back(*workingNodePtrPtr);
+                break;
+            }
+        }
+
+        std::reverse(path.begin(), path.end());
+        return path;
     }
 
 public:
@@ -45,16 +62,42 @@ public:
      * This means the shortest path will always be 2 in size, both a start and an end.
      */
     std::vector<Node *> getPath(Node *start, Node *end) {
+        std::vector<Node *> endVector;
+        endVector.push_back(end);
+        std::unordered_map<Node *, std::vector<Node *>> endNodesSolutions = this->getPath(start, endVector);
+
+        return endNodesSolutions.at(end);
+    }
+
+    /**
+     * Modification of dijkstras algorithm to support finding 1 node to many end nodes. This is to ease the
+     * computational expense of the all-pairs all paths problem.
+     *
+     * If we're searching from Node A to Nodes X,Y,Z they may share part of a common path. This should help sort
+     * out these commonalities partly
+     *
+     */
+    std::unordered_map<Node *, std::vector<Node *>> getPath(Node *start, std::vector<Node *> ends) {
         this->clearAll();
 
         this->setDistance(start, 0);
         this->setSolved(start);
 
-        bool solved = false;
-        do {
-            for (auto i : this->nodeSolved) {
+        //Convert the end nodes vector into something more usable
+        std::unordered_map<Node *, Node *> endNodesPending;
+        std::unordered_map<Node *, std::vector<Node *>> endNodesPaths;
 
-                Node *workingNode = i.first;
+        for (auto end : ends) {
+            if (!endNodesPending.count(end)) {
+                endNodesPending.insert({end, nullptr});
+            }
+        }
+
+        bool solved = false;
+        while (!endNodesPending.empty()) {
+            for (auto solvedNodeAutoIterator : this->nodeSolved) {
+
+                Node *workingNode = solvedNodeAutoIterator.first;
                 Point workingPoint = workingNode->getPoint();
 
                 Node *closestNode = nullptr;
@@ -73,42 +116,23 @@ public:
                             closestNode = linkedNode;
                             closestDistance = distance;
                         }
-
-                        if (linkedNode == end) {
-                            closestNode = linkedNode;
-                            closestDistance = distance;
-                            solved = true;
-                            break;
-                        }
                     }
                 }
 
                 if (closestNode != nullptr) {
                     this->nodePath.insert({closestNode, workingNode});
                     this->setSolved(closestNode);
-                    if (solved) {
-                        //No need to continue looking through the linked nodes, we've got it!
-                        break;
+
+                    if (endNodesPending.count(closestNode)) {
+                        std::vector<Node *> path = this->generateSolvedPath(start, closestNode);
+                        endNodesPending.erase(closestNode);
+                        endNodesPaths.insert({closestNode, path});
                     }
                 }
             }
-        } while (!solved);
-
-        //Holy shit pointers to pointers.
-        Node **workingNodePtrPtr = &end;
-        while (true) {
-            this->path.push_back(*workingNodePtrPtr);
-            Node *workingNode = this->nodePath.at(*workingNodePtrPtr);
-            workingNodePtrPtr = &workingNode;
-            if (workingNode == start) {
-                this->path.push_back(*workingNodePtrPtr);
-                break;
-            }
         }
 
-        std::reverse(this->path.begin(), this->path.end());
-
-        return this->path;
+        return endNodesPaths;
     }
 };
 

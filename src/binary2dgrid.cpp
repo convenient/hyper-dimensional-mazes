@@ -2,23 +2,6 @@
 #include "RendererGrid2D.h"
 #include "dijkstra.h"
 #include <iostream>
-#include <thread>
-
-#include <future>
-
-void simplefunc(Node *start, Node *end)
-{
-    if (end == nullptr) {
-        return;
-    }
-    std::cout << "calculating " << std::endl;
-
-    Dijkstra dijkstraSolver;
-    std::vector<Node *> path = dijkstraSolver.getPath(start, end);
-
-
-//    return path;
-}
 
 MazeBinary maze;
 Maze* mazePtr = &maze;
@@ -46,58 +29,32 @@ void solve() {
 
     std::vector<Node *> longestPath;
 
-    std::size_t num_chunks = 2;
-
     /**
      * Not quite All Pairs All Paths, but since A->B is the same path as B->A for shortest paths
      * This is a good approach to half the amount of paths to be calculated.
      */
-    for (std::size_t i = 0; i <= deadEnds.size(); i+=num_chunks) {
-        //CHECK IF EXISTS
-        if (i > deadEnds.size()) {
-            break;
+    for (std::size_t i = 0; i < deadEnds.size(); ++i) {
+        Node * start = deadEnds.at(i);
+        std::vector<Node *> endPoints;
+        for (std::size_t j=i+1; j< deadEnds.size(); ++j) {
+            Node *end = deadEnds.at(j);
+            endPoints.push_back(end);
         }
-        Node *start = deadEnds.at(i);
-        for (std::size_t j=i+1; j<= deadEnds.size() + num_chunks; j+=num_chunks) {
-            //Check if exists
-            Node *end1 = nullptr;
-            Node *end2 = nullptr;
 
-            if (j <= deadEnds.size()) {
-                end1 = deadEnds.at(j);
+        /**
+         * Dijkstras has been adjusted too, to allow a one:many solution to be computed at the same time.
+         */
+        std::unordered_map<Node *, std::vector<Node *>> potentialSolvedPaths = dijkstraSolver.getPath(start, endPoints);
+        for (auto potentialSolvedPath : potentialSolvedPaths) {
+            std::cout << counter++ << "/" << todo << std::endl;
+            std::vector<Node *> potentialPath = potentialSolvedPath.second;
+            if (potentialPath.size() > longestPath.size()) {
+                longestPath = potentialPath;
             }
-            if (j+1 <= deadEnds.size()) {
-                end2 = deadEnds.at(j+1);
-            }
-
-            std::thread t1(simplefunc(start, end1)), t2(simplefunc(start, end2));
-
-            t1.join();
-            t2.join();
-
-//
-//            auto future1 = std::async(simplefunc, start, end1);
-//            auto future2 = std::async(simplefunc, start, end2);
-//
-//            std::vector<Node *> path1 = future1.get();
-//            std::vector<Node *> path2 = future2.get();
-//
-//            if (path1.size() > path2.size() && path1.size() > longestPath.size()) {
-//                longestPath = path1;
-//            } else if (path2.size() > path1.size() && path2.size() > longestPath.size()) {
-//                longestPath = path1;
-//            }
-
-            counter++;
-//            if (counter % 100 ==0) {
-                std::cout << counter << "/" << todo << std::endl;
-//            }
         }
+
+        std::cout << counter++ << "/" << todo << std::endl;
     }
-
-    exit(0);
-//    Node *start = longestPath.front();
-//    Node *end = longestPath.back();
 
     std::cout << longestPath.size() << std::endl;
     RendererGrid2D::drawPath(mazePtr, longestPath);
