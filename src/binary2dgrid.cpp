@@ -1,6 +1,7 @@
 #include <iostream>
 #include "mazebinary.h"
 #include "RendererGrid2D.h"
+#include "RendererText.h"
 MazeBinary maze;
 Maze* mazePtr = &maze;
 #include "handler.h"
@@ -25,6 +26,7 @@ void processKeys(unsigned char key, int x, int y)
         case 's': {
             std::vector<Node *> path = solve();
             RendererGrid2D::drawPath(mazePtr, path);
+            RendererText::drawPath(path);
         }
             break;
         default:
