@@ -15,10 +15,20 @@ void processKeys(unsigned char key, int x, int y)
 
     switch (charKey)
     {
-        case 'q': exit(0); break;
-        case 'g': generate(); RendererGrid2D::drawMaze(mazePtr); break;
-        case 's': solve(); break;
-        default: break;
+        case 'q':
+            exit(0);
+            break;
+        case 'g':
+            generate();
+            RendererGrid2D::drawMaze(mazePtr);
+            break;
+        case 's': {
+            std::vector<Node *> path = solve();
+            RendererGrid2D::drawPath(mazePtr, path);
+        }
+            break;
+        default:
+            break;
     }
 }
 

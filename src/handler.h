@@ -64,14 +64,16 @@ std::vector<Node *> getLongestPathFromBatches(std::unordered_map<Node *, std::ve
     return longestPath;
 }
 
-void solve() {
+std::vector<Node *> solve() {
+    std::vector<Node *> longestPath;
+
     if (mazeSolved) {
-        return;
+        return longestPath;
     }
     std::vector<Node *> deadEnds = maze.getDeadEnds();
     if (deadEnds.size() < 2) {
         std::cout << "Er....not enough dead ends to solve" << std::endl;
-        return;
+        return longestPath;
     }
     std::cout << "Solving" << std::endl;
 
@@ -95,15 +97,15 @@ void solve() {
         batches.insert({start, endPoints});
     }
 
-    std::vector<Node *> longestPath = getLongestPathFromBatches(batches);
+    longestPath = getLongestPathFromBatches(batches);
     batches.clear();
 
-    RendererGrid2D::drawPath(mazePtr, longestPath);
     mazeSolved = true;
 
     auto current_time = std::chrono::high_resolution_clock::now();
     std::cout << "Solution took " << std::chrono::duration_cast<std::chrono::duration<float>>(current_time - start_time).count() << " seconds and has a distance of " << longestPath.size() << std::endl;
 
+    return longestPath;
 }
 
 void generate() {
