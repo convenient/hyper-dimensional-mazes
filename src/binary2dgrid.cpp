@@ -38,20 +38,23 @@ void solve() {
      */
     for (std::size_t i = 0; i < deadEnds.size(); ++i) {
         Node * start = deadEnds.at(i);
+        std::vector<Node *> endPoints;
         for (std::size_t j=i+1; j< deadEnds.size(); ++j) {
             Node *end = deadEnds.at(j);
-
-            std::vector<Node *> path = dijkstraSolver.getPath(start, end);
-            if (path.size() > longestPath.size()) {
-                longestPath = path;
-            }
-
-            std::cout << counter++ << "/" << todo << std::endl;
+            endPoints.push_back(end);
         }
-    }
 
-//    Node *start = longestPath.front();
-//    Node *end = longestPath.back();
+        std::unordered_map<Node *, std::vector<Node *>> potentialSolvedPaths = dijkstraSolver.getPath(start, endPoints);
+        for (auto potentialSolvedPath : potentialSolvedPaths) {
+            std::cout << counter++ << "/" << todo << std::endl;
+            std::vector<Node *> potentialPath = potentialSolvedPath.second;
+            if (potentialPath.size() > longestPath.size()) {
+                longestPath = potentialPath;
+            }
+        }
+
+        std::cout << counter++ << "/" << todo << std::endl;
+    }
 
     std::cout << longestPath.size() << std::endl;
     RendererGrid2D::drawPath(mazePtr, longestPath);
@@ -80,7 +83,7 @@ void processKeys(unsigned char key, int x, int y)
 
 int main(int argc, char **argv) {
 
-    int mazeSize = 15;
+    int mazeSize = 30;
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
 
