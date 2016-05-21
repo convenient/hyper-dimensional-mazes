@@ -9,7 +9,6 @@ private:
     std::unordered_map<Node *, Node *> nodePath;
     std::unordered_map<Node *, Node *> nodeSolved;
     std::unordered_map<Node *, double> nodeDistances;
-    std::vector<Node *> path;
 
     void setSolved(Node *node) {
         this->nodeSolved.insert({node, node});
@@ -34,7 +33,25 @@ private:
         this->nodeDistances.clear();
         this->nodePath.clear();
         this->nodeSolved.clear();
-        this->path.clear();
+    }
+
+    std::vector<Node *> generateSolvedPath(Node *start, Node *end) {
+        std::vector<Node *> path;
+
+        //Holy shit pointers to pointers.
+        Node **workingNodePtrPtr = &end;
+        while (true) {
+            path.push_back(*workingNodePtrPtr);
+            Node *workingNode = this->nodePath.at(*workingNodePtrPtr);
+            workingNodePtrPtr = &workingNode;
+            if (workingNode == start) {
+                path.push_back(*workingNodePtrPtr);
+                break;
+            }
+        }
+
+        std::reverse(path.begin(), path.end());
+        return path;
     }
 
 public:
@@ -45,31 +62,38 @@ public:
      * This means the shortest path will always be 2 in size, both a start and an end.
      */
     std::vector<Node *> getPath(Node *start, Node *end) {
+        std::vector<Node *> endVector;
+        endVector.push_back(end);
+        std::unordered_map<Node *, std::vector<Node *>> endNodesSolutions = this->getPath(start, endVector);
+
+        return endNodesSolutions.at(end);
+    }
+
+    std::unordered_map<Node *, std::vector<Node *>> getPath(Node *start, std::vector<Node *> ends) {
         this->clearAll();
 
         this->setDistance(start, 0);
         this->setSolved(start);
 
-        std::unordered_map<Node *, Node *> nodeNeighboursSolvedCache;
+        //Convert the end nodes vector into something more usable
+        std::unordered_map<Node *, std::vector<Node *> *> endNodes;
+        for (auto end : ends) {
+            if (!endNodes.count(end)) {
+                endNodes.insert({end, nullptr});
+            }
+        }
 
         bool solved = false;
-        do {
-            for (auto i : this->nodeSolved) {
+        while (true) {
+            for (auto solvedNodeAutoIterator : this->nodeSolved) {
 
-                Node *workingNode = i.first;
-                if (nodeNeighboursSolvedCache.count(workingNode)) {
-                    continue;
-                }
-
+                Node *workingNode = solvedNodeAutoIterator.first;
                 Point workingPoint = workingNode->getPoint();
-
-                bool nodeNeighboursSolved = true;
 
                 Node *closestNode = nullptr;
                 double closestDistance = 0;
                 for (auto linkedNode : workingNode->getLinkedNodes()) {
                     if (!this->isSolved(linkedNode)) {
-                        nodeNeighboursSolved = false;
                         double distance = workingPoint.getEuclideanDistanceTo(linkedNode->getPoint());
                         distance += this->getDistance(workingNode);
 
@@ -82,46 +106,31 @@ public:
                             closestNode = linkedNode;
                             closestDistance = distance;
                         }
-
-                        if (linkedNode == end) {
-                            closestNode = linkedNode;
-                            closestDistance = distance;
-                            solved = true;
-                            break;
-                        }
                     }
-                }
-
-                if (nodeNeighboursSolved) {
-                    nodeNeighboursSolvedCache.insert({workingNode, workingNode});
                 }
 
                 if (closestNode != nullptr) {
                     this->nodePath.insert({closestNode, workingNode});
                     this->setSolved(closestNode);
-                    if (solved) {
-                        //No need to continue looking through the linked nodes, we've got it!
-                        break;
+
+                    if (endNodes.count(closestNode)) {
+                        std::vector<Node *> path = this->generateSolvedPath(start, closestNode);
+
+                        endNodes.erase(closestNode);
+                        endNodes.insert({closestNode, &path});
+
+                        std::unordered_map<Node *, std::vector<Node *>> endNodesCleaned;
+                        for (auto solution : endNodes) {
+                            endNodesCleaned.insert({solution.first, *solution.second});
+                        }
+
+                        return endNodesCleaned;
                     }
                 }
             }
-        } while (!solved);
-
-        //Holy shit pointers to pointers.
-        Node **workingNodePtrPtr = &end;
-        while (true) {
-            this->path.push_back(*workingNodePtrPtr);
-            Node *workingNode = this->nodePath.at(*workingNodePtrPtr);
-            workingNodePtrPtr = &workingNode;
-            if (workingNode == start) {
-                this->path.push_back(*workingNodePtrPtr);
-                break;
-            }
         }
 
-        std::reverse(this->path.begin(), this->path.end());
 
-        return this->path;
     }
 };
 
