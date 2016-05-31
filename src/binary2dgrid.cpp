@@ -37,6 +37,7 @@ void processKeys(unsigned char key, int x, int y)
 int main(int argc, char **argv) {
 
     int mazeSize = 30;
+    //Offset the node position to make rendering easier and map to nice opengl stuff.
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
 
