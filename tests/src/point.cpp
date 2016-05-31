@@ -85,3 +85,29 @@ TEST(point_test, get_neighbour_points) {
     ASSERT_EQ("(x:0)(y:1)", c.getAsString());
     ASSERT_EQ("(x:0)(y:-1)", d.getAsString());
 }
+
+TEST(point_test, get_text_difference) {
+    Point testA;
+    testA.addPosition("x", 0);
+    testA.addPosition("y", 0);
+
+    Point testB;
+    testB.addPosition("x", 1);
+    testB.addPosition("y", 2);
+
+    std::string differenceDescription = testA.getDifferenceDescription(testB);
+    ASSERT_EQ("positive 1 on x, positive 2 on y", differenceDescription);
+}
+
+TEST(point_test, get_text_difference_negative) {
+    Point testA;
+    testA.addPosition("x", 0);
+    testA.addPosition("y", 0);
+
+    Point testB;
+    testB.addPosition("x", -1);
+    testB.addPosition("y", 2);
+
+    std::string differenceDescription = testA.getDifferenceDescription(testB);
+    ASSERT_EQ("negative 1 on x, positive 2 on y", differenceDescription);
+}

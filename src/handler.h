@@ -96,13 +96,17 @@ std::vector<Node *> solve() {
         }
         batches.insert({start, endPoints});
     }
+    auto current_time = std::chrono::high_resolution_clock::now();
+
+    std::cout << "Batches created in " << std::chrono::duration_cast<std::chrono::duration<float>>(current_time - start_time).count() << " seconds" << std::endl;
 
     longestPath = getLongestPathFromBatches(batches);
     batches.clear();
 
     mazeSolved = true;
 
-    auto current_time = std::chrono::high_resolution_clock::now();
+    current_time = std::chrono::high_resolution_clock::now();
+
     std::cout << "Solution took " << std::chrono::duration_cast<std::chrono::duration<float>>(current_time - start_time).count() << " seconds and has a distance of " << longestPath.size() << std::endl;
 
     return longestPath;

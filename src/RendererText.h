@@ -1,6 +1,7 @@
 #ifndef MAZES_FOR_PROGRAMMERS_RENDERERTEXT_H
 #define MAZES_FOR_PROGRAMMERS_RENDERERTEXT_H
 #include <iostream>
+#include <iomanip>
 
 class RendererText {
 public:
@@ -12,15 +13,19 @@ public:
         int counter = 0;
         Node *previousNode = nullptr;
         for (auto node : path) {
-            std::cout << ++counter << "/" << path.size() << "\t\t\t\t";
+
+            std::cout << std::setw(80) << std::left;
+
             if (node == start) {
-                std::cout << "Start at\t\t";
+                std::cout << "start at";
             } else if (node == end) {
-                std::cout << "End at  \t\t";
+                std::cout << "finish at";
             } else {
-                std::cout << "Move to \t\t";
+                std::cout << previousNode->getPoint().getDifferenceDescription(node->getPoint());
             }
-            std::cout << node->getPoint().getAsString() << std::endl;
+
+            previousNode = node;
+            std::cout  << node->getPoint().getAsString() << std::endl;
         }
     }
 };

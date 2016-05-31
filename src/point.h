@@ -87,6 +87,35 @@ public:
         return this->point;
     }
 
+    std::string getDifferenceDescription(Point p) {
+        std::stringstream description;
+
+        bool descriptionPopulated = false;
+
+        for (auto axis : this->getAllAxis()) {
+            int thisPosition = this->getPositionOnAxis(axis);
+            int otherPosition = p.getPositionOnAxis(axis);
+            int difference = abs(thisPosition - otherPosition);
+
+            if (difference !=0) {
+                if (descriptionPopulated) {
+                    description << ", ";
+                }
+                std::string direction = "ohgodno";
+                if (thisPosition < otherPosition) {
+                    direction = "positive";
+                } else if (thisPosition > otherPosition) {
+                    direction = "negative";
+                }
+                description << direction << " " << difference << " on " << axis;
+
+                descriptionPopulated = true;
+            }
+        }
+
+        return description.str();
+    }
+
     std::vector<std::string> getAllAxis(){
         //TODO object caching for this method
         Point x;
