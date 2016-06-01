@@ -81,13 +81,18 @@ public:
         return this->getRandomNode(this->unvisited_map);
     };
 
-    std::vector<Node *> getDeadEnds() {
+    std::vector<Node *> getPotentialEntraceExitNodes() {
         std::vector<Node *> deadEnds;
 
         for (auto nodeItr : this->getMap()) {
             Node *node = nodeItr.second;
+            //We are connected to only one other node, this means it is a dead end
             if (node->getLinkedNodes().size() == 1) {
-                deadEnds.push_back(node);
+                //The number of nodes surrounding you is different than the number of potential nodes surrounding you
+                //This means it's an "edge" node
+                if (this->getNeighbourNodes(node).size() != this->getNeighbourPoints(node->getPoint()).size()) {
+                    deadEnds.push_back(node);
+                }
             }
         }
 
@@ -160,26 +165,31 @@ public:
         return this->unvisited_map.size();
     }
 
+    std::vector<Point> getNeighbourPoints(Point point) {
+        std::vector<Point> neighbourPoints;
+
+        for (auto axisIdentifier : this->getAllAxis()) {
+            Point positive = Point::getNeighbourPoint(point, axisIdentifier, Point::positive);
+            Point negative = Point::getNeighbourPoint(point, axisIdentifier, Point::negative);
+            neighbourPoints.push_back(positive);
+            neighbourPoints.push_back(negative);
+        }
+
+        return neighbourPoints;
+    }
+
     std::vector<Node *> getNeighbourNodes(Node *node) {
         Point point = node->getPoint();
 
+        std::vector<Point> neighbourPoints = this->getNeighbourPoints(point);
         std::vector<Node *> neighbourNodes;
 
-        std::vector<std::string> axis = this->getAllAxis();
-
-        for (auto axisIdentifier : axis) {
-            Point positive = Point::getNeighbourPoint(point, axisIdentifier, Point::positive);
-
-            if (this->nodeExistsAtPoint(positive)) {
-                neighbourNodes.push_back(this->getNodeAtPoint(positive));
-            }
-
-            Point negative = Point::getNeighbourPoint(point, axisIdentifier, Point::negative);
-
-            if (this->nodeExistsAtPoint(negative)) {
-                neighbourNodes.push_back(this->getNodeAtPoint(negative));
+        for (auto potentialNeighbourPoint : neighbourPoints) {
+            if (this->nodeExistsAtPoint(potentialNeighbourPoint)) {
+                neighbourNodes.push_back(this->getNodeAtPoint(potentialNeighbourPoint));
             }
         }
+
         return neighbourNodes;
     }
 

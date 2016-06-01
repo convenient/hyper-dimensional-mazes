@@ -70,7 +70,7 @@ std::vector<Node *> solve() {
     if (mazeSolved) {
         return longestPath;
     }
-    std::vector<Node *> deadEnds = maze.getDeadEnds();
+    std::vector<Node *> deadEnds = maze.getPotentialEntraceExitNodes();
     if (deadEnds.size() < 2) {
         std::cout << "Er....not enough dead ends to solve" << std::endl;
         return longestPath;
