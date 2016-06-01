@@ -38,6 +38,10 @@ public:
 
     static void drawPath(Maze *m, std::vector<Node *> path) {
 
+        if (path.size() <=2) {
+            return;
+        }
+
         std::vector<std::string> axis = m->getAllAxis();
         std::string xAxisIdentifier = axis.front();
         std::string yAxisIdentifier = axis.back();

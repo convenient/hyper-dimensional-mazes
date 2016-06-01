@@ -7,6 +7,10 @@ class RendererText {
 public:
     static void drawPath(std::vector<Node *> path) {
 
+        if (path.size() <= 2) {
+            return;
+        }
+
         Node *start = path.front();
         Node *end = path.back();
 
