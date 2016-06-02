@@ -4,6 +4,7 @@
 #include "RendererText.h"
 MazeBinary maze;
 Maze* mazePtr = &maze;
+std::vector<Node *> solution;
 #include "handler.h"
 
 void render() {
@@ -21,12 +22,12 @@ void processKeys(unsigned char key, int x, int y)
             break;
         case 'g':
             generate();
-            RendererGrid2D::drawMaze(mazePtr);
+//            RendererGrid2D::drawMaze(mazePtr);
             break;
         case 's': {
-            std::vector<Node *> path = solve();
-            RendererGrid2D::drawPath(mazePtr, path);
-            RendererText::drawPath(path);
+//            std::vector<Node *> path = solve();
+//            RendererGrid2D::drawPath(mazePtr, path);
+//            RendererText::drawPath(path);
         }
             break;
         default:

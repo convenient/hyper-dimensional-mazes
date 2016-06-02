@@ -14,13 +14,17 @@
 #include "maze.h"
 
 class RendererGrid2D {
+    Maze *m;
+
 public:
 
-    static void drawMaze(Maze *m) {
+    void drawMaze() {
         //Grey background
         glClearColor(0.75, 0.75, 0.75, 1);
         glColor3f(0.0, 0.0, 0.0);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        Maze *m = this->m;
 
         std::vector<std::string> axis = m->getAllAxis();
 
@@ -80,7 +84,10 @@ public:
         glEnd();
     }
 
-    static void drawNode(Node *node, std::string xAxisIdentifier, std::string yAxisIdentifier) {
+    void drawNode(Node *node, std::string xAxisIdentifier, std::string yAxisIdentifier) {
+
+        Maze *m = this->m;
+
         GLfloat squareSize = 0.05;
 
         Point nodePosition = node->getPoint();
@@ -151,7 +158,7 @@ public:
         glEnd();
     }
 
-    static void init(Maze *maze, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
+    RendererGrid2D (Maze *maze, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
@@ -164,9 +171,9 @@ public:
         glutCreateWindow(title);
         glutDisplayFunc(renderFunc);
         glutKeyboardFunc(keysFunc);
+    }
 
-        drawMaze(maze);
-
+    void startOpenGl() {
         glutMainLoop();
     }
 };

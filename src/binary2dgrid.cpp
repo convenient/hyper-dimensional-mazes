@@ -21,12 +21,12 @@ void processKeys(unsigned char key, int x, int y)
             break;
         case 'g':
             generate();
-            RendererGrid2D::drawMaze(mazePtr);
+//            RendererGrid2D::drawMaze(mazePtr);
             break;
         case 's': {
             std::vector<Node *> path = solve();
-            RendererGrid2D::drawPath(mazePtr, path);
-            RendererText::drawPath(path);
+//            RendererGrid2D::drawPath(mazePtr, path);
+//            RendererText::drawPath(path);
         }
             break;
         default:
@@ -54,7 +54,9 @@ int main(int argc, char **argv) {
 
     maze.generate();
     char title[] = "Binary Maze - 2D Grid";
-    RendererGrid2D::init(&maze, title, render, processKeys);
+    RendererGrid2D rendererGrid2D(&maze, title, render, processKeys);
+    rendererGrid2D.drawMaze();
+    rendererGrid2D.startOpenGl();
 
     return 0;
 }
