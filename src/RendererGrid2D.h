@@ -147,7 +147,6 @@ public:
     RendererGrid2D (Maze *maze, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
 
         this->m = maze;
-
         std::vector<std::string> axis = m->getAllAxis();
 
         if (axis.size() !=2) {

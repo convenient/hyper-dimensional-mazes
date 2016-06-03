@@ -4,6 +4,7 @@
 #include "RendererText.h"
 MazeBinary maze;
 Maze* mazePtr = &maze;
+RendererGrid2D *rendererGrid2DPtr;
 #include "handler.h"
 
 void render() {
@@ -21,12 +22,12 @@ void processKeys(unsigned char key, int x, int y)
             break;
         case 'g':
             generate();
-//            RendererGrid2D::drawMaze(mazePtr);
+            rendererGrid2DPtr->drawMaze();
             break;
         case 's': {
             std::vector<Node *> path = solve();
-//            RendererGrid2D::drawPath(mazePtr, path);
-//            RendererText::drawPath(path);
+            rendererGrid2DPtr->drawPath(path);
+            RendererText::drawPath(path);
         }
             break;
         default:
@@ -54,7 +55,10 @@ int main(int argc, char **argv) {
 
     maze.generate();
     char title[] = "Binary Maze - 2D Grid";
+
     RendererGrid2D rendererGrid2D(&maze, title, render, processKeys);
+    rendererGrid2DPtr = &rendererGrid2D;
+
     rendererGrid2D.drawMaze();
     rendererGrid2D.startOpenGl();
 
