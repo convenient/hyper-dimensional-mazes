@@ -16,6 +16,10 @@
 class RendererGrid2D {
     Maze *m;
 
+    GLfloat squareSize = 0.05;
+    GLfloat markerSize = 0.03;
+
+
 public:
 
     void drawMaze() {
@@ -40,7 +44,7 @@ public:
         glFlush();
     }
 
-    static void drawPath(Maze *m, std::vector<Node *> path) {
+    void drawPath(Maze *m, std::vector<Node *> path) {
 
         if (path.size() <=2) {
             return;
@@ -66,11 +70,7 @@ public:
         glFlush();
     }
 
-    static void drawMarker(Point p, std::string xAxisIdentifier, std::string yAxisIdentifier) {
-
-        //TODO make these constants and not copypasta
-        GLfloat markerSize = 0.03;
-        GLfloat squareSize = 0.05;
+    void drawMarker(Point p, std::string xAxisIdentifier, std::string yAxisIdentifier) {
         GLfloat differenceSize = squareSize - markerSize;
 
         GLfloat xOffset = squareSize * p.getPositionOnAxis(xAxisIdentifier);
@@ -87,8 +87,6 @@ public:
     void drawNode(Node *node, std::string xAxisIdentifier, std::string yAxisIdentifier) {
 
         Maze *m = this->m;
-
-        GLfloat squareSize = 0.05;
 
         Point nodePosition = node->getPoint();
 
@@ -159,6 +157,8 @@ public:
     }
 
     RendererGrid2D (Maze *maze, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
+
+        this->m = maze;
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
