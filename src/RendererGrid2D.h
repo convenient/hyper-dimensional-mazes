@@ -19,6 +19,8 @@ class RendererGrid2D {
     GLfloat squareSize = 0.05;
     GLfloat markerSize = 0.03;
 
+    std::string xAxisIdentifier;
+    std::string yAxisIdentifier;
 
 public:
 
@@ -28,49 +30,37 @@ public:
         glColor3f(0.0, 0.0, 0.0);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        Maze *m = this->m;
-
-        std::vector<std::string> axis = m->getAllAxis();
-
-        if (axis.size() !=2) {
-            throw std::logic_error("Tried to render a non-2d maze in a 2d grid renderer");
-        }
-
-        for (auto i : m->getMap()) {
+        for (auto i : this->m->getMap()) {
             Node *node = i.second;
-            drawNode(node, axis.front(), axis.back());
+            drawNode(node);
         }
 
         glFlush();
     }
 
-    void drawPath(Maze *m, std::vector<Node *> path) {
+    void drawPath(std::vector<Node *> path) {
 
         if (path.size() <=2) {
             return;
         }
 
-        std::vector<std::string> axis = m->getAllAxis();
-        std::string xAxisIdentifier = axis.front();
-        std::string yAxisIdentifier = axis.back();
-
         glColor3f(1.0, 0.5, 0.0);
         for (auto node : path) {
-            drawMarker(node->getPoint(), xAxisIdentifier, yAxisIdentifier);
+            drawMarker(node->getPoint());
         }
 
         Node *start = path.front();
         glColor3f(0.0, 1.0, 0.0);
-        drawMarker(start->getPoint(), xAxisIdentifier, yAxisIdentifier);
+        drawMarker(start->getPoint());
 
         Node *end = path.back();
         glColor3f(1.0, 0.0, 0.0);
-        drawMarker(end->getPoint(), xAxisIdentifier, yAxisIdentifier);
+        drawMarker(end->getPoint());
 
         glFlush();
     }
 
-    void drawMarker(Point p, std::string xAxisIdentifier, std::string yAxisIdentifier) {
+    void drawMarker(Point p) {
         GLfloat differenceSize = squareSize - markerSize;
 
         GLfloat xOffset = squareSize * p.getPositionOnAxis(xAxisIdentifier);
@@ -84,9 +74,7 @@ public:
         glEnd();
     }
 
-    void drawNode(Node *node, std::string xAxisIdentifier, std::string yAxisIdentifier) {
-
-        Maze *m = this->m;
+    void drawNode(Node *node) {
 
         Point nodePosition = node->getPoint();
 
@@ -159,6 +147,15 @@ public:
     RendererGrid2D (Maze *maze, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
 
         this->m = maze;
+
+        std::vector<std::string> axis = m->getAllAxis();
+
+        if (axis.size() !=2) {
+            throw std::logic_error("Tried to render a non-2d maze in a 2d grid renderer");
+        }
+
+        xAxisIdentifier = axis.front();
+        yAxisIdentifier = axis.back();
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
