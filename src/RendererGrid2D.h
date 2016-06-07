@@ -38,25 +38,35 @@ public:
         glFlush();
     }
 
+    /**
+     * Draw the path between the first and last node.
+     */
     void drawPath(std::vector<Node *> path) {
 
         if (path.size() <=2) {
             return;
         }
 
+        path.erase(path.begin());
+        path.erase(path.end() -1);
+
         glColor3f(1.0, 0.5, 0.0);
         for (auto node : path) {
             drawMarker(node->getPoint());
         }
 
-        Node *start = path.front();
+        glFlush();
+    }
+
+    void drawStartNode(Node *node) {
         glColor3f(0.0, 1.0, 0.0);
-        drawMarker(start->getPoint());
+        drawMarker(node->getPoint());
+        glFlush();
+    }
 
-        Node *end = path.back();
+    void drawEndNode(Node *node) {
         glColor3f(1.0, 0.0, 0.0);
-        drawMarker(end->getPoint());
-
+        drawMarker(node->getPoint());
         glFlush();
     }
 

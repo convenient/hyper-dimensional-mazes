@@ -14,7 +14,13 @@ void render() {
 
 void draw() {
     rendererGrid2DPtr->drawMaze();
+    Node *startNode = getStartNode();
+    Node *endNode = getEndNode();
 
+    rendererGrid2DPtr->drawStartNode(startNode);
+    rendererGrid2DPtr->drawEndNode(endNode);
+
+    RendererText::drawNodeGoal(startNode, endNode);
 }
 
 void processKeys(unsigned char key, int x, int y)
@@ -27,11 +33,12 @@ void processKeys(unsigned char key, int x, int y)
             exit(0);
             break;
         case 'g':
-            rendererGrid2DPtr->drawMaze();
+            generate();
+            draw();
             break;
         case 's': {
-            rendererGrid2DPtr->drawPath(solvedPath);
-            RendererText::drawPath(solvedPath);
+            rendererGrid2DPtr->drawPath(getSolvedPath());
+            RendererText::drawPath(getSolvedPath());
         }
             break;
         default:

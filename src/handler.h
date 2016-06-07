@@ -120,4 +120,16 @@ void generate() {
     mazeSolved = false;
 }
 
+Node *getStartNode() {
+    return solvedPath.front();
+}
+
+Node *getEndNode() {
+    return solvedPath.back();
+}
+
+std::vector<Node *> getSolvedPath() {
+    return solvedPath;
+}
+
 #endif //MAZES_FOR_PROGRAMMERS_HANDLER_H

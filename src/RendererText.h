@@ -32,6 +32,11 @@ public:
             std::cout  << node->getPoint().getAsString() << std::endl;
         }
     }
+
+    static void drawNodeGoal(Node *start, Node *end) {
+        std::cout << start->getPoint().getAsString() << " to " << end->getPoint().getAsString() << std::endl;
+    }
+
 };
 
 #endif //MAZES_FOR_PROGRAMMERS_RENDERERTEXT_H
