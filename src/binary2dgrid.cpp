@@ -11,6 +11,12 @@ void render() {
 
 }
 
+
+void draw() {
+    rendererGrid2DPtr->drawMaze();
+
+}
+
 void processKeys(unsigned char key, int x, int y)
 {
     unsigned char charKey = tolower(key);
@@ -21,13 +27,11 @@ void processKeys(unsigned char key, int x, int y)
             exit(0);
             break;
         case 'g':
-            generate();
             rendererGrid2DPtr->drawMaze();
             break;
         case 's': {
-            std::vector<Node *> path = solve();
-            rendererGrid2DPtr->drawPath(path);
-            RendererText::drawPath(path);
+            rendererGrid2DPtr->drawPath(solvedPath);
+            RendererText::drawPath(solvedPath);
         }
             break;
         default:
@@ -53,14 +57,14 @@ int main(int argc, char **argv) {
         }
     }
 
-    maze.generate();
+    generate();
     char title[] = "Binary Maze - 2D Grid";
 
     //TODO make way of rendering entrance and exist as part of the generator
     RendererGrid2D rendererGrid2D(&maze, title, render, processKeys);
     rendererGrid2DPtr = &rendererGrid2D;
 
-    rendererGrid2D.drawMaze();
+    draw();
     rendererGrid2D.startOpenGl();
 
     return 0;

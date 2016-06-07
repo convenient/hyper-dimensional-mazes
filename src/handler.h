@@ -7,6 +7,7 @@
 #include <iostream>
 
 bool mazeSolved = false;
+std::vector<Node *> solvedPath;
 
 std::vector<Node *> getLongestPath(Node *start, std::vector<Node *> endPoints) {
     Dijkstra dijkstraSolver;
@@ -75,7 +76,7 @@ std::vector<Node *> solve() {
         std::cout << "Er....not enough dead ends to solve" << std::endl;
         return longestPath;
     }
-    std::cout << "Solving" << std::endl;
+    std::cout << "Ensuring solution" << std::endl;
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
@@ -115,6 +116,7 @@ std::vector<Node *> solve() {
 void generate() {
     std::cout << "Generating" << std::endl;
     maze.generate();
+    solvedPath = solve();
     mazeSolved = false;
 }
 
