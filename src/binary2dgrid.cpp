@@ -56,6 +56,7 @@ int main(int argc, char **argv) {
     maze.generate();
     char title[] = "Binary Maze - 2D Grid";
 
+    //TODO make way of rendering entrance and exist as part of the generator
     RendererGrid2D rendererGrid2D(&maze, title, render, processKeys);
     rendererGrid2DPtr = &rendererGrid2D;
 
