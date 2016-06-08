@@ -1,5 +1,4 @@
 #include "RendererGrid2D.h"
-RendererGrid2D *rendererGrid2DPtr;
 #include <iostream>
 #include "mazebinary.h"
 #include "RendererText.h"
@@ -10,31 +9,7 @@ void render() {
 
 }
 
-void processKeys(unsigned char key, int x, int y)
-{
-    unsigned char charKey = tolower(key);
 
-    switch (charKey)
-    {
-        case 'q':
-            exit(0);
-            break;
-        case 'g':
-            rendererGrid2DPtr->m->generate();
-            rendererGrid2DPtr->drawMaze();
-//                openGlMazePtr->generate();
-//            generate();
-//            draw();
-            break;
-        case 's': {
-//            rendererGrid2DPtr->drawPath(getSolvedPath());
-//            RendererText::drawPath(getSolvedPath());
-        }
-            break;
-        default:
-            break;
-    }
-}
 
 
 //void draw() {
