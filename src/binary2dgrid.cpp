@@ -1,11 +1,39 @@
+#include "RendererGrid2D.h"
+RendererGrid2D *rendererGrid2DPtr;
 #include <iostream>
 #include "mazebinary.h"
-#include "RendererGrid2D.h"
 #include "RendererText.h"
 #include "Solver.h"
 
+
 void render() {
 
+}
+
+void processKeys(unsigned char key, int x, int y)
+{
+    unsigned char charKey = tolower(key);
+
+    switch (charKey)
+    {
+        case 'q':
+            exit(0);
+            break;
+        case 'g':
+            rendererGrid2DPtr->m->generate();
+            rendererGrid2DPtr->drawMaze();
+//                openGlMazePtr->generate();
+//            generate();
+//            draw();
+            break;
+        case 's': {
+//            rendererGrid2DPtr->drawPath(getSolvedPath());
+//            RendererText::drawPath(getSolvedPath());
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 
@@ -20,14 +48,13 @@ void render() {
 //    RendererText::drawNodeGoal(startNode, endNode);
 //}
 
-
 int main(int argc, char **argv) {
 
     Maze *mazePtr = new MazeBinary;
     Solver *solver = new Solver(mazePtr);
 
     char title[] = "Binary Maze - 2D Grid";
-    RendererGrid2D *rendererGrid2DPtr = new RendererGrid2D(mazePtr, title, render);
+    rendererGrid2DPtr = new RendererGrid2D(mazePtr, title, render);
 
     int mazeSize = 30;
     //Offset the node position to make rendering easier and map to nice opengl stuff.

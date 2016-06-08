@@ -12,10 +12,10 @@
 #endif
 
 #include "maze.h"
-Maze *openGlMazePtr;
+
+void processKeys(unsigned char key, int x, int y);
 
 class RendererGrid2D {
-    Maze *m;
 
     GLfloat squareSize = 0.05;
     GLfloat markerSize = 0.03;
@@ -25,7 +25,21 @@ class RendererGrid2D {
 
     bool axisInitialised = false;
 
+    static RendererGrid2D* currentInstance;
+
+    static void drawCallback()
+    {
+        currentInstance->drawMaze();
+    }
+
+    void setupDrawCallback()
+    {
+        currentInstance = this;
+        ::glutDisplayFunc(RendererGrid2D::drawCallback);
+    }
+
 public:
+    Maze *m;
 
     void drawMaze() {
         if (!this->axisInitialised) {
@@ -169,34 +183,9 @@ public:
         glEnd();
     }
 
-    static void processKeys(unsigned char key, int x, int y)
-    {
-        unsigned char charKey = tolower(key);
-
-        switch (charKey)
-        {
-            case 'q':
-                exit(0);
-                break;
-            case 'g':
-                openGlMazePtr->generate();
-//            generate();
-//            draw();
-                break;
-            case 's': {
-//            rendererGrid2DPtr->drawPath(getSolvedPath());
-//            RendererText::drawPath(getSolvedPath());
-            }
-                break;
-            default:
-                break;
-        }
-    }
-
     RendererGrid2D (Maze *maze, char *title, void (*renderFunc)(void)) {
 
         this->m = maze;
-        openGlMazePtr = maze;
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
@@ -208,13 +197,15 @@ public:
         glutInitWindowPosition(100, 100);
         glutCreateWindow(title);
         glutDisplayFunc(renderFunc);
-        glutKeyboardFunc(&RendererGrid2D::processKeys);
+        glutKeyboardFunc(&processKeys);
+
     }
 
     void startOpenGl() {
         glutMainLoop();
     }
 };
+
 
 
 #endif //MAZES_FOR_PROGRAMMERS_RENDERERGRID2D_H
