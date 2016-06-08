@@ -13,7 +13,7 @@
 
 #include "maze.h"
 class RendererGrid2D;
-RendererGrid2D *rendererGrid2DPtr;
+RendererGrid2D *superSecretOpenGlHackyPointer;
 
 
 void processKeys(unsigned char key, int x, int y);
@@ -196,8 +196,8 @@ public:
                 exit(0);
                 break;
             case 'g':
-                rendererGrid2DPtr->m->generate();
-                rendererGrid2DPtr->drawMaze();
+                superSecretOpenGlHackyPointer->m->generate();
+                superSecretOpenGlHackyPointer->drawMaze();
                 break;
             case 's': {
 //                rendererGrid2DPtr->drawPath(getSolvedPath());
@@ -225,6 +225,7 @@ public:
         glutDisplayFunc(renderFunc);
         glutKeyboardFunc(&processKeys);
 
+        superSecretOpenGlHackyPointer = this;
     }
 
     void startOpenGl() {

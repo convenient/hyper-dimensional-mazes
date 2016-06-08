@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     Solver *solver = new Solver(mazePtr);
 
     char title[] = "Binary Maze - 2D Grid";
-    rendererGrid2DPtr = new RendererGrid2D(mazePtr, title, render);
+    RendererGrid2D *rendererGrid2DPtr = new RendererGrid2D(mazePtr, title, render);
 
     int mazeSize = 30;
     //Offset the node position to make rendering easier and map to nice opengl stuff.
