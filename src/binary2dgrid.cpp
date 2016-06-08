@@ -20,28 +20,6 @@ void render() {
 //    RendererText::drawNodeGoal(startNode, endNode);
 //}
 
-void processKeys(unsigned char key, int x, int y)
-{
-    unsigned char charKey = tolower(key);
-
-    switch (charKey)
-    {
-        case 'q':
-            exit(0);
-            break;
-        case 'g':
-//            generate();
-//            draw();
-            break;
-        case 's': {
-//            rendererGrid2DPtr->drawPath(getSolvedPath());
-//            RendererText::drawPath(getSolvedPath());
-        }
-            break;
-        default:
-            break;
-    }
-}
 
 int main(int argc, char **argv) {
 
@@ -49,7 +27,7 @@ int main(int argc, char **argv) {
     Solver *solver = new Solver(mazePtr);
 
     char title[] = "Binary Maze - 2D Grid";
-    RendererGrid2D *rendererGrid2DPtr = new RendererGrid2D(mazePtr, title, render, processKeys);
+    RendererGrid2D *rendererGrid2DPtr = new RendererGrid2D(mazePtr, title, render);
 
     int mazeSize = 30;
     //Offset the node position to make rendering easier and map to nice opengl stuff.

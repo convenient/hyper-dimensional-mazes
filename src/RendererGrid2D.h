@@ -12,6 +12,7 @@
 #endif
 
 #include "maze.h"
+Maze *openGlMazePtr;
 
 class RendererGrid2D {
     Maze *m;
@@ -168,9 +169,34 @@ public:
         glEnd();
     }
 
-    RendererGrid2D (Maze *maze, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
+    static void processKeys(unsigned char key, int x, int y)
+    {
+        unsigned char charKey = tolower(key);
+
+        switch (charKey)
+        {
+            case 'q':
+                exit(0);
+                break;
+            case 'g':
+                openGlMazePtr->generate();
+//            generate();
+//            draw();
+                break;
+            case 's': {
+//            rendererGrid2DPtr->drawPath(getSolvedPath());
+//            RendererText::drawPath(getSolvedPath());
+            }
+                break;
+            default:
+                break;
+        }
+    }
+
+    RendererGrid2D (Maze *maze, char *title, void (*renderFunc)(void)) {
 
         this->m = maze;
+        openGlMazePtr = maze;
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
@@ -182,7 +208,7 @@ public:
         glutInitWindowPosition(100, 100);
         glutCreateWindow(title);
         glutDisplayFunc(renderFunc);
-        glutKeyboardFunc(keysFunc);
+        glutKeyboardFunc(&RendererGrid2D::processKeys);
     }
 
     void startOpenGl() {
