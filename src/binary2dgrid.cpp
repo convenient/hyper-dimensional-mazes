@@ -2,26 +2,23 @@
 #include "mazebinary.h"
 #include "RendererGrid2D.h"
 #include "RendererText.h"
-MazeBinary maze;
-Maze* mazePtr = &maze;
-RendererGrid2D *rendererGrid2DPtr;
-#include "handler.h"
+#include "Solver.h"
 
 void render() {
 
 }
 
 
-void draw() {
-    rendererGrid2DPtr->drawMaze();
-    Node *startNode = getStartNode();
-    Node *endNode = getEndNode();
-
-    rendererGrid2DPtr->drawStartNode(startNode);
-    rendererGrid2DPtr->drawEndNode(endNode);
-
-    RendererText::drawNodeGoal(startNode, endNode);
-}
+//void draw() {
+//    rendererGrid2DPtr->drawMaze();
+//    Node *startNode = getStartNode();
+//    Node *endNode = getEndNode();
+//
+//    rendererGrid2DPtr->drawStartNode(startNode);
+//    rendererGrid2DPtr->drawEndNode(endNode);
+//
+//    RendererText::drawNodeGoal(startNode, endNode);
+//}
 
 void processKeys(unsigned char key, int x, int y)
 {
@@ -33,12 +30,12 @@ void processKeys(unsigned char key, int x, int y)
             exit(0);
             break;
         case 'g':
-            generate();
-            draw();
+//            generate();
+//            draw();
             break;
         case 's': {
-            rendererGrid2DPtr->drawPath(getSolvedPath());
-            RendererText::drawPath(getSolvedPath());
+//            rendererGrid2DPtr->drawPath(getSolvedPath());
+//            RendererText::drawPath(getSolvedPath());
         }
             break;
         default:
@@ -47,6 +44,12 @@ void processKeys(unsigned char key, int x, int y)
 }
 
 int main(int argc, char **argv) {
+
+    Maze *mazePtr = new MazeBinary;
+    Solver *solver = new Solver(mazePtr);
+
+    char title[] = "Binary Maze - 2D Grid";
+    RendererGrid2D *rendererGrid2DPtr = new RendererGrid2D(mazePtr, title, render, processKeys);
 
     int mazeSize = 30;
     //Offset the node position to make rendering easier and map to nice opengl stuff.
@@ -60,19 +63,14 @@ int main(int argc, char **argv) {
             Point p;
             p.addPosition("x", x);
             p.addPosition("y", y);
-            maze.createNode(p);
+            mazePtr->createNode(p);
         }
     }
 
-    generate();
-    char title[] = "Binary Maze - 2D Grid";
+    mazePtr->generate();
 
-    //TODO make way of rendering entrance and exist as part of the generator
-    RendererGrid2D rendererGrid2D(&maze, title, render, processKeys);
-    rendererGrid2DPtr = &rendererGrid2D;
-
-    draw();
-    rendererGrid2D.startOpenGl();
+    rendererGrid2DPtr->drawMaze();
+    rendererGrid2DPtr->startOpenGl();
 
     return 0;
 }

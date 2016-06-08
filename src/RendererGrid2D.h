@@ -22,9 +22,23 @@ class RendererGrid2D {
     std::string xAxisIdentifier;
     std::string yAxisIdentifier;
 
+    bool axisInitialised = false;
+
 public:
 
     void drawMaze() {
+        if (!this->axisInitialised) {
+            std::vector<std::string> axis = m->getAllAxis();
+
+            if (axis.size() !=2) {
+                throw std::logic_error("Tried to render a non-2d maze in a 2d grid renderer");
+            }
+
+            xAxisIdentifier = axis.front();
+            yAxisIdentifier = axis.back();
+            this->axisInitialised = true;
+        }
+
         //Grey background
         glClearColor(0.75, 0.75, 0.75, 1);
         glColor3f(0.0, 0.0, 0.0);
@@ -157,14 +171,6 @@ public:
     RendererGrid2D (Maze *maze, char *title, void (*renderFunc)(void), void (*keysFunc)(unsigned char key, int x, int y)) {
 
         this->m = maze;
-        std::vector<std::string> axis = m->getAllAxis();
-
-        if (axis.size() !=2) {
-            throw std::logic_error("Tried to render a non-2d maze in a 2d grid renderer");
-        }
-
-        xAxisIdentifier = axis.front();
-        yAxisIdentifier = axis.back();
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
