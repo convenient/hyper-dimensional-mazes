@@ -12,6 +12,7 @@
 #endif
 
 #include "maze.h"
+#include "solver.h"
 class RendererGrid2D;
 RendererGrid2D *superSecretOpenGlHackyPointer;
 
@@ -28,20 +29,10 @@ class RendererGrid2D {
 
     bool axisInitialised = false;
 
-    static RendererGrid2D* currentInstance;
+    void (*generateCallback)(Maze *);
+    void (*solveCallback)(Maze *);
+    Solver *solver;
 
-    static void drawCallback()
-    {
-        currentInstance->drawMaze();
-    }
-
-    void setupDrawCallback()
-    {
-        currentInstance = this;
-        ::glutDisplayFunc(RendererGrid2D::drawCallback);
-    }
-
-public:
     Maze *m;
 
     void drawMaze() {
@@ -196,22 +187,41 @@ public:
                 exit(0);
                 break;
             case 'g':
-                superSecretOpenGlHackyPointer->m->generate();
-                superSecretOpenGlHackyPointer->drawMaze();
+                superSecretOpenGlHackyPointer->generate();
                 break;
-            case 's': {
-//                rendererGrid2DPtr->drawPath(getSolvedPath());
-//                RendererText::drawPath(getSolvedPath());
-            }
+            case 's':
+                superSecretOpenGlHackyPointer->solve();
                 break;
             default:
                 break;
         }
     }
 
-    RendererGrid2D (Maze *maze, char *title, void (*renderFunc)(void)) {
+public:
+
+    void generate() {
+        m->generate();
+
+        this->solver->setMazeUnsolved();
+        std::vector<Node *> solution = this->solver->solve();
+        this->drawMaze();
+        this->drawStartNode(solution.front());
+        this->drawEndNode(solution.back());
+        this->generateCallback(m);
+    }
+
+    void solve() {
+
+    }
+
+    static void render() {
+
+    }
+
+    RendererGrid2D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *), void (*solveCallbackFunc)(Maze *)) {
 
         this->m = maze;
+        this->solver = solver;
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
@@ -222,8 +232,11 @@ public:
         glutInitWindowSize(600, 600);
         glutInitWindowPosition(100, 100);
         glutCreateWindow(title);
-        glutDisplayFunc(renderFunc);
+        glutDisplayFunc(&render);
         glutKeyboardFunc(&processKeys);
+
+        generateCallback = generateCallbackFunc;
+        solveCallback = solveCallbackFunc;
 
         superSecretOpenGlHackyPointer = this;
     }

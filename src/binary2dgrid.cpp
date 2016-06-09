@@ -23,15 +23,23 @@ void render() {
 //    RendererText::drawNodeGoal(startNode, endNode);
 //}
 
+void generateCallback(Maze *) {
+    std::cout << "Generate callback triggered " << std::endl;
+}
+
+void solveCallback(Maze *) {
+    std::cout << "Solve callback triggered " << std::endl;
+}
+
 int main(int argc, char **argv) {
 
     Maze *mazePtr = new MazeBinary;
     Solver *solver = new Solver(mazePtr);
 
     char title[] = "Binary Maze - 2D Grid";
-    RendererGrid2D *rendererGrid2DPtr = new RendererGrid2D(mazePtr, title, render);
+    RendererGrid2D *rendererGrid2DPtr = new RendererGrid2D(mazePtr, solver, title, generateCallback, solveCallback);
 
-    int mazeSize = 30;
+    int mazeSize = 3;
     //Offset the node position to make rendering easier and map to nice opengl stuff.
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
@@ -47,9 +55,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    mazePtr->generate();
-
-    rendererGrid2DPtr->drawMaze();
+    rendererGrid2DPtr->generate();
     rendererGrid2DPtr->startOpenGl();
 
     return 0;
