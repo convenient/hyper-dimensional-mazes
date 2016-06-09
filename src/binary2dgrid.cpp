@@ -1,27 +1,8 @@
-#include "RendererGrid2D.h"
 #include <iostream>
 #include "mazebinary.h"
 #include "RendererText.h"
 #include "Solver.h"
-
-
-void render() {
-
-}
-
-
-
-
-//void draw() {
-//    rendererGrid2DPtr->drawMaze();
-//    Node *startNode = getStartNode();
-//    Node *endNode = getEndNode();
-//
-//    rendererGrid2DPtr->drawStartNode(startNode);
-//    rendererGrid2DPtr->drawEndNode(endNode);
-//
-//    RendererText::drawNodeGoal(startNode, endNode);
-//}
+#include "RendererGrid2D.h"
 
 void generateCallback(Maze *m, Solver *s) {
     RendererText::drawNodeGoal(s->getStartNode(), s->getEndNode());
