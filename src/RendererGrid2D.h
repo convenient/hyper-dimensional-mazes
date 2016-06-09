@@ -29,8 +29,8 @@ class RendererGrid2D {
 
     bool axisInitialised = false;
 
-    void (*generateCallback)(Maze *);
-    void (*solveCallback)(Maze *);
+    void (*generateCallback)(Maze *m, Solver *s);
+    void (*solveCallback)(Maze *m, Solver *s);
     Solver *solver;
 
     Maze *m;
@@ -197,28 +197,33 @@ class RendererGrid2D {
         }
     }
 
+    static void render() {
+
+    }
+
 public:
 
     void generate() {
         m->generate();
 
-        this->solver->setMazeUnsolved();
-        std::vector<Node *> solution = this->solver->solve();
+        solver->setMazeUnsolved();
+        std::vector<Node *> solution = solver->solve();
+
         this->drawMaze();
-        this->drawStartNode(solution.front());
-        this->drawEndNode(solution.back());
-        this->generateCallback(m);
+
+        this->drawStartNode(solver->getStartNode());
+        this->drawEndNode(solver->getEndNode());
+
+        this->generateCallback(m, solver);
     }
 
     void solve() {
-
+        std::vector<Node *> solution = this->solver->solve();
+        this->drawPath(solution);
+        this->solveCallback(m, this->solver);
     }
 
-    static void render() {
-
-    }
-
-    RendererGrid2D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *), void (*solveCallbackFunc)(Maze *)) {
+    RendererGrid2D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s)) {
 
         this->m = maze;
         this->solver = solver;

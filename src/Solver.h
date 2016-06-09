@@ -77,7 +77,7 @@ public:
         std::vector<Node *> longestPath;
 
         if (this->mazeSolved) {
-            return longestPath;
+            return this->solvedPath;
         }
         std::vector<Node *> deadEnds = this->maze->getPotentialEntraceExitNodes();
         if (deadEnds.size() < 2) {
@@ -107,8 +107,6 @@ public:
         }
         auto current_time = std::chrono::high_resolution_clock::now();
 
-        std::cout << "Batches created in " << std::chrono::duration_cast<std::chrono::duration<float>>(current_time - start_time).count() << " seconds" << std::endl;
-
         longestPath = getLongestPathFromBatches(batches);
         batches.clear();
 
@@ -118,7 +116,16 @@ public:
 
         std::cout << "Solution took " << std::chrono::duration_cast<std::chrono::duration<float>>(current_time - start_time).count() << " seconds and has a distance of " << longestPath.size() << std::endl;
 
-        return longestPath;
+        this->solvedPath = longestPath;
+        return this->solvedPath;
+    }
+
+    Node *getStartNode() {
+        return this->solve().front();
+    }
+
+    Node *getEndNode() {
+        return this->solve().back();
     }
 
     void setMazeUnsolved() {
