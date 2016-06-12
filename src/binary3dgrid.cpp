@@ -27,17 +27,24 @@ int main(int argc, char **argv) {
 
     std::cout << "Generating a binary maze of " << mazeSize << " by " << mazeSize << std::endl;
 
-    for (int x=minpart; x<maxpart; x++) {
-        for (int y=minpart; y<maxpart; y++) {
-            for (int z=minpart; z<maxpart; z++) {
-                Point p;
-                p.addPosition("x", x);
-                p.addPosition("y", y);
-                p.addPosition("z", z);
-                mazePtr->createNode(p);
-            }
-        }
-    }
+//    for (int x=minpart; x<maxpart; x++) {
+//        for (int y=minpart; y<maxpart; y++) {
+//            for (int z=minpart; z<maxpart; z++) {
+//                Point p;
+//                p.addPosition("x", x);
+//                p.addPosition("y", y);
+//                p.addPosition("z", z);
+//                mazePtr->createNode(p);
+//            }
+//        }
+//    }
+
+    Point p;
+    p.addPosition("x", 0);
+    p.addPosition("y", 0);
+    p.addPosition("z", 0);
+    mazePtr->createNode(p);
+
 
     rendererGridPtr->generate();
     rendererGridPtr->startOpenGl();

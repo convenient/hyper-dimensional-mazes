@@ -25,6 +25,7 @@ class RendererGrid3D {
 
     std::string xAxisIdentifier;
     std::string yAxisIdentifier;
+    std::string zAxisIdentifier;
 
     bool axisInitialised = false;
 
@@ -42,8 +43,10 @@ class RendererGrid3D {
                 throw std::logic_error("Tried to render a non-3d maze in a 3d grid renderer");
             }
 
-            xAxisIdentifier = axis.front();
-            yAxisIdentifier = axis.back();
+            xAxisIdentifier = axis.at(0);
+            yAxisIdentifier = axis.at(1);
+            zAxisIdentifier = axis.at(2);
+
             this->axisInitialised = true;
         }
 
@@ -116,64 +119,53 @@ class RendererGrid3D {
         GLfloat xOffset = squareSize * nodePositionX;
         GLfloat yOffset = squareSize * nodePositionY;
 
-        bool isLinkedUp = false;
-        bool isLinkedDown = false;
-        bool isLinkedLeft = false;
-        bool isLinkedRight = false;
+        glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+        // Top face (y = 1.0f)
+        // Define vertices in counter-clockwise (CCW) order with normal pointing out
+        glColor3f(0.0f, 1.0f, 0.0f);     // Green
+        glVertex3f( squareSize, squareSize, -squareSize);
+        glVertex3f(-squareSize, squareSize, -squareSize);
+        glVertex3f(-squareSize, squareSize,  squareSize);
+        glVertex3f( squareSize, squareSize,  squareSize);
 
-        //Foreach point adjacent to the current node
-        std::vector<Point> neighbouringPoints = nodePosition.getNeighbouringPoints();
-        for (auto p : neighbouringPoints) {
-            if (node->isLinked(p)) {
+        // Bottom face (y = -1.0f)
+        glColor3f(1.0f, 0.5f, 0.0f);     // Orange
+        glVertex3f( squareSize, -squareSize,  squareSize);
+        glVertex3f(-squareSize, -squareSize,  squareSize);
+        glVertex3f(-squareSize, -squareSize, -squareSize);
+        glVertex3f( squareSize, -squareSize, -squareSize);
 
-                int tmpNodePositionX = p.getPositionOnAxis(xAxisIdentifier);
-                int tmpNodePositionY = p.getPositionOnAxis(yAxisIdentifier);
+        // Front face  (z = 1.0f)
+        glColor3f(1.0f, 0.0f, 0.0f);     // Red
+        glVertex3f( squareSize,  squareSize, squareSize);
+        glVertex3f(-squareSize,  squareSize, squareSize);
+        glVertex3f(-squareSize, -squareSize, squareSize);
+        glVertex3f( squareSize, -squareSize, squareSize);
 
-                if (tmpNodePositionX == nodePositionX) {
-                    if (tmpNodePositionY > nodePositionY) {
-                        isLinkedUp = true;
-                    } else {
-                        isLinkedDown = true;
-                    }
-                } else if (tmpNodePositionY == nodePositionY) {
-                    if (tmpNodePositionX > nodePositionX) {
-                        isLinkedRight = true;
-                    } else {
-                        isLinkedLeft = true;
-                    }
-                } else {
-                    throw std::logic_error("Could not figure out how nodes are linked");
-                }
-            }
-        }
+        // Back face (z = -1.0f)
+        glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
+        glVertex3f( squareSize, -squareSize, -squareSize);
+        glVertex3f(-squareSize, -squareSize, -squareSize);
+        glVertex3f(-squareSize,  squareSize, -squareSize);
+        glVertex3f( squareSize,  squareSize, -squareSize);
 
-        glBegin(GL_LINES);
+        // Left face (x = -1.0f)
+        glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+        glVertex3f(-squareSize,  squareSize,  squareSize);
+        glVertex3f(-squareSize,  squareSize, -squareSize);
+        glVertex3f(-squareSize, -squareSize, -squareSize);
+        glVertex3f(-squareSize, -squareSize,  squareSize);
 
-        if (!isLinkedDown) {
-            //Horizontal line bottom
-            glVertex2f(squareSize + xOffset, yOffset);
-            glVertex2f(xOffset, yOffset);
-        }
+        // Right face (x = 1.0f)
+        glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
+        glVertex3f(squareSize,  squareSize, -squareSize);
+        glVertex3f(squareSize,  squareSize,  squareSize);
+        glVertex3f(squareSize, -squareSize,  squareSize);
+        glVertex3f(squareSize, -squareSize, -squareSize);
+        glEnd();  // End of drawing color-cube
 
-        if (!isLinkedLeft) {
-            //Vertical line left
-            glVertex2f(xOffset, yOffset);
-            glVertex2f(xOffset, squareSize + yOffset);
-        }
+        glFlush();
 
-        if (!isLinkedUp) {
-            //Horizontal line top
-            glVertex2f(squareSize + xOffset, squareSize + yOffset);
-            glVertex2f(xOffset, squareSize + yOffset);
-        }
-
-        if (!isLinkedRight) {
-            //Vertical line right
-            glVertex2f(squareSize + xOffset, squareSize + yOffset);
-            glVertex2f(squareSize + xOffset, yOffset);
-        }
-
-        glEnd();
     }
 
     static void processKeys(unsigned char key, int x, int y)
@@ -203,17 +195,17 @@ class RendererGrid3D {
 public:
 
     void generate() {
-        m->generate();
+//        m->generate();
 
-        solver->setMazeUnsolved();
-        std::vector<Node *> solution = solver->solve();
+//        solver->setMazeUnsolved();
+//        std::vector<Node *> solution = solver->solve();
 
         this->drawMaze();
 
-        this->drawStartNode(solver->getStartNode());
-        this->drawEndNode(solver->getEndNode());
-
-        this->generateCallback(m, solver);
+//        this->drawStartNode(solver->getStartNode());
+//        this->drawEndNode(solver->getEndNode());
+//
+//        this->generateCallback(m, solver);
     }
 
     void solve() {
@@ -243,6 +235,10 @@ public:
         solveCallback = solveCallbackFunc;
 
         superSecretOpenGlHackyPointer = this;
+
+        gluLookAt(0, 0, 0,
+                  0, 0,-1,
+                  0, 1, 0);
     }
 
     void startOpenGl() {
