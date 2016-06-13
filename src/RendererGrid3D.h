@@ -23,6 +23,10 @@ class RendererGrid3D {
     GLfloat squareSize = 0.05;
     GLfloat markerSize = 0.03;
 
+    GLdouble eyeX = 0;
+    GLdouble eyeY = 0;
+    GLdouble eyeZ = 0;
+
     std::string xAxisIdentifier;
     std::string yAxisIdentifier;
     std::string zAxisIdentifier;
@@ -172,6 +176,8 @@ class RendererGrid3D {
     {
         unsigned char charKey = tolower(key);
 
+        GLdouble size = 0.5;
+
         switch (charKey)
         {
             case 'q':
@@ -183,9 +189,29 @@ class RendererGrid3D {
             case 's':
                 superSecretOpenGlHackyPointer->solve();
                 break;
+            case 'i':
+                superSecretOpenGlHackyPointer->eyeX+=size;
+            case 'o':
+                superSecretOpenGlHackyPointer->eyeY+=size;
+            case 'p':
+                superSecretOpenGlHackyPointer->eyeZ+=size;
+            case 'b':
+                superSecretOpenGlHackyPointer->eyeX-=size;
+            case 'n':
+                superSecretOpenGlHackyPointer->eyeY-=size;
+            case 'm':
+                superSecretOpenGlHackyPointer->eyeZ-=size;
             default:
                 break;
         }
+
+
+        std::cout << "resetting gluLookAt" << std::endl;
+        gluLookAt(0, 0, 0,
+                  0, 0,-1,
+                  0, 1, 0);
+        glEnd(); /// !!!!!! replaced glFlush
+        glutSwapBuffers();
     }
 
     static void render() {
@@ -236,7 +262,7 @@ public:
 
         superSecretOpenGlHackyPointer = this;
 
-        gluLookAt(0, 0, 0,
+        gluLookAt(0, 0.5, 0,
                   0, 0,-1,
                   0, 1, 0);
     }
