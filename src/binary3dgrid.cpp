@@ -46,7 +46,6 @@ int main(int argc, char **argv) {
     mazePtr->createNode(p);
 
 
-    rendererGridPtr->generate();
     rendererGridPtr->startOpenGl();
 
     return 0;

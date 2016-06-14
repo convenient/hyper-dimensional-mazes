@@ -23,9 +23,11 @@ class RendererGrid3D {
     GLfloat squareSize = 0.05;
     GLfloat markerSize = 0.03;
 
-    GLdouble eyeX = 0;
-    GLdouble eyeY = 0;
-    GLdouble eyeZ = 0;
+    bool rotate = false;
+
+    GLfloat rotationXaxis;
+    GLfloat rotationYaxis;
+    GLfloat rotationZaxis;
 
     std::string xAxisIdentifier;
     std::string yAxisIdentifier;
@@ -53,11 +55,6 @@ class RendererGrid3D {
 
             this->axisInitialised = true;
         }
-
-        //Grey background
-        glClearColor(0.75, 0.75, 0.75, 1);
-        glColor3f(0.0, 0.0, 0.0);
-        glClear(GL_COLOR_BUFFER_BIT);
 
         for (auto i : this->m->getMap()) {
             Node *node = i.second;
@@ -168,8 +165,6 @@ class RendererGrid3D {
         glVertex3f(squareSize, -squareSize, -squareSize);
         glEnd();  // End of drawing color-cube
 
-        glFlush();
-
     }
 
     static void processKeys(unsigned char key, int x, int y)
@@ -190,60 +185,41 @@ class RendererGrid3D {
                 superSecretOpenGlHackyPointer->solve();
                 break;
             case 'r':
-                superSecretOpenGlHackyPointer->eyeX = 0;
-                superSecretOpenGlHackyPointer->eyeY = 0;
-                superSecretOpenGlHackyPointer->eyeZ = 0;
-                glutPostRedisplay();
-                break;
-            case 'i':
-                superSecretOpenGlHackyPointer->eyeX+=size;
-                glutPostRedisplay();
-                break;
-            case 'o':
-                superSecretOpenGlHackyPointer->eyeY+=size;
-                glutPostRedisplay();
-                break;
-            case 'p':
-                superSecretOpenGlHackyPointer->eyeZ+=size;
-                glutPostRedisplay();
-                break;
-            case 'b':
-                superSecretOpenGlHackyPointer->eyeX-=size;
-                glutPostRedisplay();
-                break;
-            case 'n':
-                superSecretOpenGlHackyPointer->eyeY-=size;
-                glutPostRedisplay();
-                break;
-            case 'm':
-                superSecretOpenGlHackyPointer->eyeZ-=size;
-                glutPostRedisplay();
+                if (superSecretOpenGlHackyPointer->rotate) {
+                    superSecretOpenGlHackyPointer->rotate = false;
+                } else {
+                    superSecretOpenGlHackyPointer->rotate = true;
+                }
                 break;
             default:
                 break;
         }
     }
 
+    static void idleFunction() {
+        if (superSecretOpenGlHackyPointer->rotate) {
+            glLoadIdentity();
+
+            glRotatef(superSecretOpenGlHackyPointer->rotationXaxis, 1.0f, 0.0f, 0.0f); /* Rotate On The X Axis */
+            glRotatef(superSecretOpenGlHackyPointer->rotationYaxis, 0.0f, 1.0f, 0.0f); /* Rotate On The Y Axis */
+            glRotatef(superSecretOpenGlHackyPointer->rotationZaxis, 0.0f, 0.0f, 1.0f); /* Rotate On The Z Axis */
+
+            /* Rotate Cube */
+            superSecretOpenGlHackyPointer->rotationXaxis += 0.3f;
+            superSecretOpenGlHackyPointer->rotationYaxis += 0.2f;
+
+            glutPostRedisplay();
+        }
+    }
+
     static void render() {
+        //Grey background
+        glColor3f(0.0, 0.0, 0.0);
+        glClearColor(0.75, 0.75, 0.75, 1);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glMatrixMode(GL_PROJECTION);
-
-        gluPerspective( 45.0f, ( GLfloat )600 / ( GLfloat )600, 0.0f, 1000.0f );
-
-        GLdouble eyex = superSecretOpenGlHackyPointer->eyeX;
-        GLdouble eyey = superSecretOpenGlHackyPointer->eyeY;
-        GLdouble eyez = superSecretOpenGlHackyPointer->eyeZ;
-
-        std::cout << eyex << ", " << eyey << ", " << eyez << std::endl;
-
-        gluLookAt(eyex, eyey, eyez,
-                  0, 0, -1,
-                  0, 1, 0);
-
         superSecretOpenGlHackyPointer->drawMaze();
-
     }
 
 public:
@@ -284,7 +260,7 @@ public:
         glutCreateWindow(title);
         glutDisplayFunc(&render);
         glutKeyboardFunc(&processKeys);
-
+        glutIdleFunc(&idleFunction);
         generateCallback = generateCallbackFunc;
         solveCallback = solveCallbackFunc;
 
