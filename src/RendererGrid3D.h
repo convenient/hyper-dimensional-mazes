@@ -120,6 +120,16 @@ class RendererGrid3D {
         GLfloat xOffset = squareSize * nodePositionX;
         GLfloat yOffset = squareSize * nodePositionY;
 
+//        glBegin(GL_POLYGON);
+//
+//        glColor3f( 1.0, 0.0, 0.0 );     glVertex3f(  0.5, -0.5, -0.5 );      // P1 is red
+//        glColor3f( 0.0, 1.0, 0.0 );     glVertex3f(  0.5,  0.5, -0.5 );      // P2 is green
+//        glColor3f( 0.0, 0.0, 1.0 );     glVertex3f( -0.5,  0.5, -0.5 );      // P3 is blue
+//        glColor3f( 1.0, 0.0, 1.0 );     glVertex3f( -0.5, -0.5, -0.5 );      // P4 is purple
+//
+//        glEnd();
+
+
         glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
         // Top face (y = 1.0f)
         // Define vertices in counter-clockwise (CCW) order with normal pointing out
@@ -218,6 +228,7 @@ class RendererGrid3D {
         glClearColor(0.75, 0.75, 0.75, 1);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
 
         superSecretOpenGlHackyPointer->drawMaze();
     }
@@ -254,7 +265,7 @@ public:
         int fakeargc = 1;
 
         glutInit(&fakeargc, fakeargv);
-        glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_ALPHA);
+        glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_ALPHA | GLUT_DEPTH);
         glutInitWindowSize(600, 600);
         glutInitWindowPosition(100, 100);
         glutCreateWindow(title);
