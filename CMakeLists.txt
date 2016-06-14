@@ -14,6 +14,7 @@ add_subdirectory(tests)
 
 #Define executables
 ## Binary
+add_executable(opengltest src/opengl-test.cpp)
 add_executable(binary_2d_grid src/binary2dgrid.cpp)
 add_executable(binary_3d_grid src/binary3dgrid.cpp)
 add_executable(binary_4d src/binary4d.cpp)

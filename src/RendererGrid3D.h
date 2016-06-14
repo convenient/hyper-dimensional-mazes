@@ -176,7 +176,7 @@ class RendererGrid3D {
     {
         unsigned char charKey = tolower(key);
 
-        GLdouble size = 0.5;
+        GLdouble size = 0.01;
 
         switch (charKey)
         {
@@ -189,32 +189,60 @@ class RendererGrid3D {
             case 's':
                 superSecretOpenGlHackyPointer->solve();
                 break;
+            case 'r':
+                superSecretOpenGlHackyPointer->eyeX = 0;
+                superSecretOpenGlHackyPointer->eyeY = 0;
+                superSecretOpenGlHackyPointer->eyeZ = 0;
+                glutPostRedisplay();
+                break;
             case 'i':
                 superSecretOpenGlHackyPointer->eyeX+=size;
+                glutPostRedisplay();
+                break;
             case 'o':
                 superSecretOpenGlHackyPointer->eyeY+=size;
+                glutPostRedisplay();
+                break;
             case 'p':
                 superSecretOpenGlHackyPointer->eyeZ+=size;
+                glutPostRedisplay();
+                break;
             case 'b':
                 superSecretOpenGlHackyPointer->eyeX-=size;
+                glutPostRedisplay();
+                break;
             case 'n':
                 superSecretOpenGlHackyPointer->eyeY-=size;
+                glutPostRedisplay();
+                break;
             case 'm':
                 superSecretOpenGlHackyPointer->eyeZ-=size;
+                glutPostRedisplay();
+                break;
             default:
                 break;
         }
-
-
-        std::cout << "resetting gluLookAt" << std::endl;
-        gluLookAt(0, 0, 0,
-                  0, 0,-1,
-                  0, 1, 0);
-        glEnd(); /// !!!!!! replaced glFlush
-        glutSwapBuffers();
     }
 
     static void render() {
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glMatrixMode(GL_PROJECTION);
+
+        gluPerspective( 45.0f, ( GLfloat )600 / ( GLfloat )600, 0.0f, 1000.0f );
+
+        GLdouble eyex = superSecretOpenGlHackyPointer->eyeX;
+        GLdouble eyey = superSecretOpenGlHackyPointer->eyeY;
+        GLdouble eyez = superSecretOpenGlHackyPointer->eyeZ;
+
+        std::cout << eyex << ", " << eyey << ", " << eyez << std::endl;
+
+        gluLookAt(eyex, eyey, eyez,
+                  0, 0, -1,
+                  0, 1, 0);
+
+        superSecretOpenGlHackyPointer->drawMaze();
 
     }
 
@@ -261,10 +289,6 @@ public:
         solveCallback = solveCallbackFunc;
 
         superSecretOpenGlHackyPointer = this;
-
-        gluLookAt(0, 0.5, 0,
-                  0, 0,-1,
-                  0, 1, 0);
     }
 
     void startOpenGl() {
