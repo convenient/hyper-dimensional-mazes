@@ -116,12 +116,14 @@ class RendererGrid3D {
 
         int nodePositionX = nodePosition.getPositionOnAxis(xAxisIdentifier);
         int nodePositionY = nodePosition.getPositionOnAxis(yAxisIdentifier);
+        int nodePositionZ = nodePosition.getPositionOnAxis(zAxisIdentifier);
 
         //*1 will make the cubes intersect
         //*2 would make the cubes side by side with no buffer
         //*3 will make them have a distance of half a cube from eachother
         GLfloat xOffset = squareSize * nodePositionX * 3;
         GLfloat yOffset = squareSize * nodePositionY * 3;
+        GLfloat zOffset = squareSize * nodePositionZ * 3;
 
 //        glBegin(GL_POLYGON);
 //
@@ -137,45 +139,45 @@ class RendererGrid3D {
         // Top face (y = 1.0f)
         // Define vertices in counter-clockwise (CCW) order with normal pointing out
         glColor3f(0.0f, 1.0f, 0.0f);     // Green
-        glVertex3f( squareSize +xOffset, squareSize +yOffset, -squareSize);
-        glVertex3f(-squareSize +xOffset, squareSize +yOffset, -squareSize);
-        glVertex3f(-squareSize +xOffset, squareSize +yOffset,  squareSize);
-        glVertex3f( squareSize +xOffset, squareSize +yOffset,  squareSize);
+        glVertex3f( squareSize +xOffset, squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset, squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset, squareSize +yOffset,  squareSize +zOffset);
+        glVertex3f( squareSize +xOffset, squareSize +yOffset,  squareSize +zOffset);
 
         // Bottom face (y = -1.0f)
         glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-        glVertex3f( squareSize +xOffset, -squareSize +yOffset,  squareSize);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset,  squareSize);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize);
-        glVertex3f( squareSize +xOffset, -squareSize +yOffset, -squareSize);
+        glVertex3f( squareSize +xOffset, -squareSize +yOffset,  squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset,  squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f( squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
 
         // Front face  (z = 1.0f)
         glColor3f(1.0f, 0.0f, 0.0f);     // Red
-        glVertex3f( squareSize +xOffset,  squareSize +yOffset, squareSize);
-        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, squareSize);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, squareSize);
-        glVertex3f( squareSize +xOffset, -squareSize +yOffset, squareSize);
+        glVertex3f( squareSize +xOffset,  squareSize +yOffset, squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, squareSize +zOffset);
+        glVertex3f( squareSize +xOffset, -squareSize +yOffset, squareSize +zOffset);
 
         // Back face (z = -1.0f)
         glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-        glVertex3f( squareSize +xOffset, -squareSize +yOffset, -squareSize);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize);
-        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, -squareSize);
-        glVertex3f( squareSize +xOffset,  squareSize +yOffset, -squareSize);
+        glVertex3f( squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f( squareSize +xOffset,  squareSize +yOffset, -squareSize +zOffset);
 
         // Left face (x = -1.0f)
         glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-        glVertex3f(-squareSize +xOffset,  squareSize +yOffset,  squareSize);
-        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, -squareSize);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset,  squareSize);
+        glVertex3f(-squareSize +xOffset,  squareSize +yOffset,  squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset,  squareSize +zOffset);
 
         // Right face (x = 1.0f)
         glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-        glVertex3f(squareSize +xOffset,  squareSize +yOffset, -squareSize);
-        glVertex3f(squareSize +xOffset,  squareSize +yOffset,  squareSize);
-        glVertex3f(squareSize +xOffset, -squareSize +yOffset,  squareSize);
-        glVertex3f(squareSize +xOffset, -squareSize +yOffset, -squareSize);
+        glVertex3f(squareSize +xOffset,  squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f(squareSize +xOffset,  squareSize +yOffset,  squareSize +zOffset);
+        glVertex3f(squareSize +xOffset, -squareSize +yOffset,  squareSize +zOffset);
+        glVertex3f(squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
         glEnd();  // End of drawing color-cube
 
     }
@@ -212,8 +214,8 @@ class RendererGrid3D {
     static void idleFunction() {
         if (superSecretOpenGlHackyPointer->rotate) {
             /* Rotate Cube */
-            superSecretOpenGlHackyPointer->rotationXaxis += 0.3f;
-            superSecretOpenGlHackyPointer->rotationYaxis += 0.2f;
+            superSecretOpenGlHackyPointer->rotationXaxis += 0.075f;
+            superSecretOpenGlHackyPointer->rotationYaxis += 0.05f;
 
             glutPostRedisplay();
         }

@@ -27,42 +27,50 @@ int main(int argc, char **argv) {
 
     std::cout << "Generating a binary maze of " << mazeSize << " by " << mazeSize << std::endl;
 
-//    for (int x=minpart; x<maxpart; x++) {
-//        for (int y=minpart; y<maxpart; y++) {
-//            for (int z=minpart; z<maxpart; z++) {
-//                Point p;
-//                p.addPosition("x", x);
-//                p.addPosition("y", y);
-//                p.addPosition("z", z);
-//                mazePtr->createNode(p);
-//            }
-//        }
-//    }
-
-    Point p;
-    p.addPosition("x", 0);
-    p.addPosition("y", 0);
-    p.addPosition("z", 0);
-    mazePtr->createNode(p);
-
-    Point p2;
-    p2.addPosition("x", 0);
-    p2.addPosition("y", 1);
-    p2.addPosition("z", 0);
-    mazePtr->createNode(p2);
-
-    Point p3;
-    p3.addPosition("x", 1);
-    p3.addPosition("y", 0);
-    p3.addPosition("z", 0);
-    mazePtr->createNode(p3);
+    for (int x=minpart; x<maxpart; x++) {
+        for (int y=minpart; y<maxpart; y++) {
+            for (int z=minpart; z<maxpart; z++) {
+                Point p;
+                p.addPosition("x", x);
+                p.addPosition("y", y);
+                p.addPosition("z", z);
+                mazePtr->createNode(p);
+            }
+        }
+    }
 
 
-    Point p4;
-    p4.addPosition("x", 5);
-    p4.addPosition("y", 0);
-    p4.addPosition("z", 0);
-    mazePtr->createNode(p4);
+
+//    Point p;
+//    p.addPosition("x", 0);
+//    p.addPosition("y", 0);
+//    p.addPosition("z", 0);
+//    mazePtr->createNode(p);
+//
+//    Point p2;
+//    p2.addPosition("x", 0);
+//    p2.addPosition("y", 1);
+//    p2.addPosition("z", 0);
+//    mazePtr->createNode(p2);
+//
+//    Point p3;
+//    p3.addPosition("x", 1);
+//    p3.addPosition("y", 0);
+//    p3.addPosition("z", 0);
+//    mazePtr->createNode(p3);
+//
+//
+//    Point p4;
+//    p4.addPosition("x", 5);
+//    p4.addPosition("y", 0);
+//    p4.addPosition("z", 0);
+//    mazePtr->createNode(p4);
+//
+//    Point p5;
+//    p5.addPosition("x", 5);
+//    p5.addPosition("y", 5);
+//    p5.addPosition("z", 5);
+//    mazePtr->createNode(p5);
 
     rendererGridPtr->startOpenGl();
 
