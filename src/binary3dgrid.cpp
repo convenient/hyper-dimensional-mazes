@@ -45,6 +45,24 @@ int main(int argc, char **argv) {
     p.addPosition("z", 0);
     mazePtr->createNode(p);
 
+    Point p2;
+    p2.addPosition("x", 0);
+    p2.addPosition("y", 1);
+    p2.addPosition("z", 0);
+    mazePtr->createNode(p2);
+
+    Point p3;
+    p3.addPosition("x", 1);
+    p3.addPosition("y", 0);
+    p3.addPosition("z", 0);
+    mazePtr->createNode(p3);
+
+
+    Point p4;
+    p4.addPosition("x", 5);
+    p4.addPosition("y", 0);
+    p4.addPosition("z", 0);
+    mazePtr->createNode(p4);
 
     rendererGridPtr->startOpenGl();
 

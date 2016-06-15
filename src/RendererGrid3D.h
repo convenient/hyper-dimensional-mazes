@@ -20,7 +20,7 @@ void processKeys(unsigned char key, int x, int y);
 
 class RendererGrid3D {
 
-    GLfloat squareSize = 0.05;
+    GLfloat squareSize = 0.03;
     GLfloat markerSize = 0.03;
 
     bool rotate = false;
@@ -117,8 +117,11 @@ class RendererGrid3D {
         int nodePositionX = nodePosition.getPositionOnAxis(xAxisIdentifier);
         int nodePositionY = nodePosition.getPositionOnAxis(yAxisIdentifier);
 
-        GLfloat xOffset = squareSize * nodePositionX;
-        GLfloat yOffset = squareSize * nodePositionY;
+        //*1 will make the cubes intersect
+        //*2 would make the cubes side by side with no buffer
+        //*3 will make them have a distance of half a cube from eachother
+        GLfloat xOffset = squareSize * nodePositionX * 3;
+        GLfloat yOffset = squareSize * nodePositionY * 3;
 
 //        glBegin(GL_POLYGON);
 //
@@ -134,45 +137,45 @@ class RendererGrid3D {
         // Top face (y = 1.0f)
         // Define vertices in counter-clockwise (CCW) order with normal pointing out
         glColor3f(0.0f, 1.0f, 0.0f);     // Green
-        glVertex3f( squareSize, squareSize, -squareSize);
-        glVertex3f(-squareSize, squareSize, -squareSize);
-        glVertex3f(-squareSize, squareSize,  squareSize);
-        glVertex3f( squareSize, squareSize,  squareSize);
+        glVertex3f( squareSize +xOffset, squareSize +yOffset, -squareSize);
+        glVertex3f(-squareSize +xOffset, squareSize +yOffset, -squareSize);
+        glVertex3f(-squareSize +xOffset, squareSize +yOffset,  squareSize);
+        glVertex3f( squareSize +xOffset, squareSize +yOffset,  squareSize);
 
         // Bottom face (y = -1.0f)
         glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-        glVertex3f( squareSize, -squareSize,  squareSize);
-        glVertex3f(-squareSize, -squareSize,  squareSize);
-        glVertex3f(-squareSize, -squareSize, -squareSize);
-        glVertex3f( squareSize, -squareSize, -squareSize);
+        glVertex3f( squareSize +xOffset, -squareSize +yOffset,  squareSize);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset,  squareSize);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize);
+        glVertex3f( squareSize +xOffset, -squareSize +yOffset, -squareSize);
 
         // Front face  (z = 1.0f)
         glColor3f(1.0f, 0.0f, 0.0f);     // Red
-        glVertex3f( squareSize,  squareSize, squareSize);
-        glVertex3f(-squareSize,  squareSize, squareSize);
-        glVertex3f(-squareSize, -squareSize, squareSize);
-        glVertex3f( squareSize, -squareSize, squareSize);
+        glVertex3f( squareSize +xOffset,  squareSize +yOffset, squareSize);
+        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, squareSize);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, squareSize);
+        glVertex3f( squareSize +xOffset, -squareSize +yOffset, squareSize);
 
         // Back face (z = -1.0f)
         glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-        glVertex3f( squareSize, -squareSize, -squareSize);
-        glVertex3f(-squareSize, -squareSize, -squareSize);
-        glVertex3f(-squareSize,  squareSize, -squareSize);
-        glVertex3f( squareSize,  squareSize, -squareSize);
+        glVertex3f( squareSize +xOffset, -squareSize +yOffset, -squareSize);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize);
+        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, -squareSize);
+        glVertex3f( squareSize +xOffset,  squareSize +yOffset, -squareSize);
 
         // Left face (x = -1.0f)
         glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-        glVertex3f(-squareSize,  squareSize,  squareSize);
-        glVertex3f(-squareSize,  squareSize, -squareSize);
-        glVertex3f(-squareSize, -squareSize, -squareSize);
-        glVertex3f(-squareSize, -squareSize,  squareSize);
+        glVertex3f(-squareSize +xOffset,  squareSize +yOffset,  squareSize);
+        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, -squareSize);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize);
+        glVertex3f(-squareSize +xOffset, -squareSize +yOffset,  squareSize);
 
         // Right face (x = 1.0f)
         glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-        glVertex3f(squareSize,  squareSize, -squareSize);
-        glVertex3f(squareSize,  squareSize,  squareSize);
-        glVertex3f(squareSize, -squareSize,  squareSize);
-        glVertex3f(squareSize, -squareSize, -squareSize);
+        glVertex3f(squareSize +xOffset,  squareSize +yOffset, -squareSize);
+        glVertex3f(squareSize +xOffset,  squareSize +yOffset,  squareSize);
+        glVertex3f(squareSize +xOffset, -squareSize +yOffset,  squareSize);
+        glVertex3f(squareSize +xOffset, -squareSize +yOffset, -squareSize);
         glEnd();  // End of drawing color-cube
 
     }
@@ -208,12 +211,6 @@ class RendererGrid3D {
 
     static void idleFunction() {
         if (superSecretOpenGlHackyPointer->rotate) {
-            glLoadIdentity();
-
-            glRotatef(superSecretOpenGlHackyPointer->rotationXaxis, 1.0f, 0.0f, 0.0f); /* Rotate On The X Axis */
-            glRotatef(superSecretOpenGlHackyPointer->rotationYaxis, 0.0f, 1.0f, 0.0f); /* Rotate On The Y Axis */
-            glRotatef(superSecretOpenGlHackyPointer->rotationZaxis, 0.0f, 0.0f, 1.0f); /* Rotate On The Z Axis */
-
             /* Rotate Cube */
             superSecretOpenGlHackyPointer->rotationXaxis += 0.3f;
             superSecretOpenGlHackyPointer->rotationYaxis += 0.2f;
@@ -228,7 +225,12 @@ class RendererGrid3D {
         glClearColor(0.75, 0.75, 0.75, 1);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLoadIdentity();
         glEnable(GL_DEPTH_TEST);
+
+        glRotatef(superSecretOpenGlHackyPointer->rotationXaxis, 1.0f, 0.0f, 0.0f); /* Rotate On The X Axis */
+        glRotatef(superSecretOpenGlHackyPointer->rotationYaxis, 0.0f, 1.0f, 0.0f); /* Rotate On The Y Axis */
+        glRotatef(superSecretOpenGlHackyPointer->rotationZaxis, 0.0f, 0.0f, 1.0f); /* Rotate On The Z Axis */
 
         superSecretOpenGlHackyPointer->drawMaze();
     }
