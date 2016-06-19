@@ -21,9 +21,8 @@ void processKeys(unsigned char key, int x, int y);
 class RendererGrid3D {
 
     GLfloat squareSize = 0.03;
-    GLfloat markerSize = 0.03;
 
-    GLfloat rotateMultiplier = 1;
+    GLfloat rotateMultiplier = 4;
 
     bool showingSolution = false;
 
@@ -144,11 +143,15 @@ class RendererGrid3D {
     }
 
     void drawStartNode() {
-        drawCube(solver->getStartNode()->getPoint(), squareSize, startCubeColours);
+        Node *start = solver->getStartNode();
+        drawCube(start->getPoint(), squareSize, startCubeColours);
+        drawConnectors(start);
     }
 
     void drawEndNode() {
-        drawCube(solver->getEndNode()->getPoint(), squareSize, endCubeColours);
+        Node *end = solver->getEndNode();
+        drawCube(end->getPoint(), squareSize, endCubeColours);
+        drawConnectors(end);
     }
 
     void drawNode(Node *node) {
@@ -210,7 +213,7 @@ class RendererGrid3D {
             }
         }
 
-        GLfloat connectorCubeSize = squareSize/2;
+        GLfloat connectorCubeSize = squareSize/1.25f;
         if (isLinkedXPos) {
             drawCube(nodePosition, connectorCubeSize, standardCubeColours, true, xAxisIdentifier, +1);
         }
