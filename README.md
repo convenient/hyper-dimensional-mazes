@@ -1,5 +1,5 @@
 # mazes-for-programmers
-C++ / OpenGL implementation based very loosely on the topics covered in the [Mazes for Programmers book](https://pragprog.com/book/jbmaze/mazes-for-programmers).
+A C++ and OpenGL implementation of different varieties of N-Dimensional mazes. All based very loosely on the topics covered in the [Mazes for Programmers](https://pragprog.com/book/jbmaze/mazes-for-programmers) book.
 
 What this repo attempts to achieve is the following:
 
