@@ -4,12 +4,18 @@
 #include "Solver.h"
 #include "RendererGrid3D.h"
 
+bool showTextSolution = false;
+
 void generateCallback(Maze *m, Solver *s) {
+    showTextSolution = true;
     RendererText::drawNodeGoal(s->getStartNode(), s->getEndNode());
 }
 
 void solveCallback(Maze *m, Solver *s) {
-    RendererText::drawPath(s->solve());
+    if (showTextSolution) {
+        RendererText::drawPath(s->solve());
+        showTextSolution = false;
+    }
 }
 
 int main(int argc, char **argv) {
@@ -20,7 +26,7 @@ int main(int argc, char **argv) {
     char title[] = "Binary Maze - 3D Grid";
     RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 
-    int mazeSize = 10;
+    int mazeSize = 4;
     //Offset the node position to make rendering easier and map to nice opengl stuff.
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
@@ -29,13 +35,13 @@ int main(int argc, char **argv) {
 
     for (int x=minpart; x<maxpart; x++) {
         for (int y=minpart; y<maxpart; y++) {
-//            for (int z=minpart; z<maxpart; z++) {
+            for (int z=minpart; z<maxpart; z++) {
                 Point p;
                 p.addPosition("x", x);
                 p.addPosition("y", y);
-//                p.addPosition("z", z);
+                p.addPosition("z", z);
                 mazePtr->createNode(p);
-//            }
+            }
         }
     }
 
