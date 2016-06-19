@@ -20,7 +20,7 @@ void processKeys(unsigned char key, int x, int y);
 
 class RendererGrid3D {
 
-    GLfloat squareSize = 0.03;
+    GLfloat squareSize = 0.06;
     GLfloat markerSize = 0.03;
 
     bool rotate = false;
@@ -45,13 +45,17 @@ class RendererGrid3D {
         if (!this->axisInitialised) {
             std::vector<std::string> axis = m->getAllAxis();
 
-            if (axis.size() !=3) {
-                throw std::logic_error("Tried to render a non-3d maze in a 3d grid renderer");
+            if (axis.size() == 3) {
+                xAxisIdentifier = axis.at(0);
+                yAxisIdentifier = axis.at(1);
+                zAxisIdentifier = axis.at(2);
+            } else if (axis.size() == 2) {
+                xAxisIdentifier = axis.at(0);
+                yAxisIdentifier = axis.at(1);
+                zAxisIdentifier = "totally_not_a_real_axis_identifier";
+            } else {
+                throw std::logic_error("Tried to render a non-3d or a non-3d maze");
             }
-
-            xAxisIdentifier = axis.at(0);
-            yAxisIdentifier = axis.at(1);
-            zAxisIdentifier = axis.at(2);
 
             this->axisInitialised = true;
         }
@@ -113,17 +117,109 @@ class RendererGrid3D {
     void drawNode(Node *node) {
 
         Point nodePosition = node->getPoint();
+        drawCube(nodePosition, squareSize);
+        drawConnectors(node);
+    }
 
+    void drawConnectors(Node *node) {
+
+        Point nodePosition = node->getPoint();
         int nodePositionX = nodePosition.getPositionOnAxis(xAxisIdentifier);
         int nodePositionY = nodePosition.getPositionOnAxis(yAxisIdentifier);
         int nodePositionZ = nodePosition.getPositionOnAxis(zAxisIdentifier);
 
+        bool isLinkedXPos = false;
+        bool isLinkedXNeg = false;
+        bool isLinkedYPos = false;
+        bool isLinkedYNeg = false;
+        bool isLinkedZPos = false;
+        bool isLinkedZNeg = false;
+
+        //Foreach point adjacent to the current node
+        std::vector<Point> neighbouringPoints = nodePosition.getNeighbouringPoints();
+        for (auto p : neighbouringPoints) {
+            if (node->isLinked(p)) {
+                int tmpNodePositionX = p.getPositionOnAxis(xAxisIdentifier);
+                int tmpNodePositionY = p.getPositionOnAxis(yAxisIdentifier);
+                int tmpNodePositionZ = p.getPositionOnAxis(zAxisIdentifier);
+
+                bool xSame = tmpNodePositionX == nodePositionX;
+                bool ySame = tmpNodePositionY == nodePositionY;
+                bool zSame = tmpNodePositionZ == nodePositionZ;
+
+                if (xSame && zSame) {
+                    if (tmpNodePositionY > nodePositionY) {
+                        isLinkedYPos = true;
+                    } else if (tmpNodePositionY < nodePositionY) {
+                        isLinkedYNeg = true;
+                    }
+                }
+
+                if (ySame && zSame) {
+                    if (tmpNodePositionX > nodePositionX) {
+                        isLinkedXPos = true;
+                    } else if (tmpNodePositionX < nodePositionX) {
+                        isLinkedXNeg = true;
+                    }
+                }
+
+                if (xSame && ySame) {
+                    if (tmpNodePositionZ > nodePositionZ) {
+                        isLinkedZPos = true;
+                    } else if (tmpNodePositionZ < nodePositionZ) {
+                        isLinkedZNeg = true;
+                    }
+                }
+
+            }
+        }
+
+        GLfloat connectorCubeSize = squareSize/2;
+        if (isLinkedXPos) {
+            drawCube(nodePosition, connectorCubeSize, true, xAxisIdentifier, +1);
+        }
+        if (isLinkedXNeg) {
+            drawCube(nodePosition, connectorCubeSize, true, xAxisIdentifier, -1);
+        }
+        if (isLinkedYPos) {
+            drawCube(nodePosition, connectorCubeSize, true, yAxisIdentifier, +1);
+        }
+        if (isLinkedYNeg) {
+            drawCube(nodePosition, connectorCubeSize, true, yAxisIdentifier, -1);
+        }
+        if (isLinkedZPos) {
+            drawCube(nodePosition, connectorCubeSize, true, zAxisIdentifier, +1);
+        }
+        if (isLinkedZNeg) {
+            drawCube(nodePosition, connectorCubeSize, true, zAxisIdentifier, -1);
+        }
+    }
+
+    void drawCube(Point p, GLfloat size, bool connector = false, std::string connectorAxisIdentifier = "", int connectorOffset = 0) {
+
         //*1 will make the cubes intersect
         //*2 would make the cubes side by side with no buffer
         //*3 will make them have a distance of half a cube from eachother
-        GLfloat xOffset = squareSize * nodePositionX * 3;
-        GLfloat yOffset = squareSize * nodePositionY * 3;
-        GLfloat zOffset = squareSize * nodePositionZ * 3;
+        GLfloat xOffset = squareSize * p.getPositionOnAxis(xAxisIdentifier) * 3;
+        GLfloat yOffset = squareSize * p.getPositionOnAxis(yAxisIdentifier) * 3;
+        GLfloat zOffset = squareSize * p.getPositionOnAxis(zAxisIdentifier) * 3;
+
+        if (connector) {
+            if (connectorAxisIdentifier == yAxisIdentifier) {
+                yOffset += connectorOffset * squareSize;
+                yOffset += connectorOffset * size;
+            }
+
+            if (connectorAxisIdentifier == xAxisIdentifier) {
+                xOffset += connectorOffset * squareSize;
+                xOffset += connectorOffset * size;
+            }
+
+            if (connectorAxisIdentifier == zAxisIdentifier) {
+                zOffset += connectorOffset * squareSize;
+                zOffset += connectorOffset * size;
+            }
+        }
 
 //        glBegin(GL_POLYGON);
 //
@@ -139,48 +235,48 @@ class RendererGrid3D {
         // Top face (y = 1.0f)
         // Define vertices in counter-clockwise (CCW) order with normal pointing out
         glColor3f(0.0f, 1.0f, 0.0f);     // Green
-        glVertex3f( squareSize +xOffset, squareSize +yOffset, -squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset, squareSize +yOffset, -squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset, squareSize +yOffset,  squareSize +zOffset);
-        glVertex3f( squareSize +xOffset, squareSize +yOffset,  squareSize +zOffset);
+        glVertex3f( size +xOffset, size +yOffset, -size +zOffset);
+        glVertex3f(-size +xOffset, size +yOffset, -size +zOffset);
+        glVertex3f(-size +xOffset, size +yOffset,  size +zOffset);
+        glVertex3f( size +xOffset, size +yOffset,  size +zOffset);
 
         // Bottom face (y = -1.0f)
         glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-        glVertex3f( squareSize +xOffset, -squareSize +yOffset,  squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset,  squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
-        glVertex3f( squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f( size +xOffset, -size +yOffset,  size +zOffset);
+        glVertex3f(-size +xOffset, -size +yOffset,  size +zOffset);
+        glVertex3f(-size +xOffset, -size +yOffset, -size +zOffset);
+        glVertex3f( size +xOffset, -size +yOffset, -size +zOffset);
 
         // Front face  (z = 1.0f)
         glColor3f(1.0f, 0.0f, 0.0f);     // Red
-        glVertex3f( squareSize +xOffset,  squareSize +yOffset, squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, squareSize +zOffset);
-        glVertex3f( squareSize +xOffset, -squareSize +yOffset, squareSize +zOffset);
+        glVertex3f( size +xOffset,  size +yOffset, size +zOffset);
+        glVertex3f(-size +xOffset,  size +yOffset, size +zOffset);
+        glVertex3f(-size +xOffset, -size +yOffset, size +zOffset);
+        glVertex3f( size +xOffset, -size +yOffset, size +zOffset);
 
         // Back face (z = -1.0f)
         glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-        glVertex3f( squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, -squareSize +zOffset);
-        glVertex3f( squareSize +xOffset,  squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f( size +xOffset, -size +yOffset, -size +zOffset);
+        glVertex3f(-size +xOffset, -size +yOffset, -size +zOffset);
+        glVertex3f(-size +xOffset,  size +yOffset, -size +zOffset);
+        glVertex3f( size +xOffset,  size +yOffset, -size +zOffset);
 
         // Left face (x = -1.0f)
         glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-        glVertex3f(-squareSize +xOffset,  squareSize +yOffset,  squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset,  squareSize +yOffset, -squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
-        glVertex3f(-squareSize +xOffset, -squareSize +yOffset,  squareSize +zOffset);
+        glVertex3f(-size +xOffset,  size +yOffset,  size +zOffset);
+        glVertex3f(-size +xOffset,  size +yOffset, -size +zOffset);
+        glVertex3f(-size +xOffset, -size +yOffset, -size +zOffset);
+        glVertex3f(-size +xOffset, -size +yOffset,  size +zOffset);
 
         // Right face (x = 1.0f)
         glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-        glVertex3f(squareSize +xOffset,  squareSize +yOffset, -squareSize +zOffset);
-        glVertex3f(squareSize +xOffset,  squareSize +yOffset,  squareSize +zOffset);
-        glVertex3f(squareSize +xOffset, -squareSize +yOffset,  squareSize +zOffset);
-        glVertex3f(squareSize +xOffset, -squareSize +yOffset, -squareSize +zOffset);
+        glVertex3f(size +xOffset,  size +yOffset, -size +zOffset);
+        glVertex3f(size +xOffset,  size +yOffset,  size +zOffset);
+        glVertex3f(size +xOffset, -size +yOffset,  size +zOffset);
+        glVertex3f(size +xOffset, -size +yOffset, -size +zOffset);
         glEnd();  // End of drawing color-cube
-
     }
+
 
     static void processKeys(unsigned char key, int x, int y)
     {
@@ -230,9 +326,9 @@ class RendererGrid3D {
         glLoadIdentity();
         glEnable(GL_DEPTH_TEST);
 
-        glRotatef(superSecretOpenGlHackyPointer->rotationXaxis, 1.0f, 0.0f, 0.0f); /* Rotate On The X Axis */
-        glRotatef(superSecretOpenGlHackyPointer->rotationYaxis, 0.0f, 1.0f, 0.0f); /* Rotate On The Y Axis */
-        glRotatef(superSecretOpenGlHackyPointer->rotationZaxis, 0.0f, 0.0f, 1.0f); /* Rotate On The Z Axis */
+        glRotatef(superSecretOpenGlHackyPointer->rotationXaxis, 1.0f, 0.0f, 0.0f);
+        glRotatef(superSecretOpenGlHackyPointer->rotationYaxis, 0.0f, 1.0f, 0.0f);
+        glRotatef(superSecretOpenGlHackyPointer->rotationZaxis, 0.0f, 0.0f, 1.0f);
 
         superSecretOpenGlHackyPointer->drawMaze();
     }
@@ -240,7 +336,7 @@ class RendererGrid3D {
 public:
 
     void generate() {
-//        m->generate();
+        m->generate();
 
 //        solver->setMazeUnsolved();
 //        std::vector<Node *> solution = solver->solve();
