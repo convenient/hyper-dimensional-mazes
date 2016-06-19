@@ -2,14 +2,20 @@
 #include "mazebinary.h"
 #include "RendererText.h"
 #include "Solver.h"
-#include "RendererGrid2D.h"
+#include "RendererGrid3D.h"
+
+bool showTextSolution = false;
 
 void generateCallback(Maze *m, Solver *s) {
+    showTextSolution = true;
     RendererText::drawNodeGoal(s->getStartNode(), s->getEndNode());
 }
 
 void solveCallback(Maze *m, Solver *s) {
-    RendererText::drawPath(s->solve());
+    if (showTextSolution) {
+        RendererText::drawPath(s->solve());
+        showTextSolution = false;
+    }
 }
 
 int main(int argc, char **argv) {
@@ -18,9 +24,9 @@ int main(int argc, char **argv) {
     Solver *solver = new Solver(mazePtr);
 
     char title[] = "Binary Maze - 2D Grid";
-    RendererGrid2D *rendererGrid2DPtr = new RendererGrid2D(mazePtr, solver, title, generateCallback, solveCallback);
+    RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 
-    int mazeSize = 30;
+    int mazeSize = 18;
     //Offset the node position to make rendering easier and map to nice opengl stuff.
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
@@ -36,8 +42,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    rendererGrid2DPtr->generate();
-    rendererGrid2DPtr->startOpenGl();
+    rendererGridPtr->startOpenGl();
 
     return 0;
 }

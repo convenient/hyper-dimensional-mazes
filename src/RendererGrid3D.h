@@ -22,15 +22,15 @@ class RendererGrid3D {
 
     GLfloat squareSize = 0.03;
 
-    GLfloat rotateMultiplier = 4;
+    GLfloat rotateMultiplier = -8;
 
     bool showingSolution = false;
 
     bool rotate = false;
 
-    GLfloat rotationXaxis;
-    GLfloat rotationYaxis;
-    GLfloat rotationZaxis;
+    GLfloat rotationXaxis = 1065.0f;
+    GLfloat rotationYaxis = 701.0f;
+    GLfloat rotationZaxis = 0.0f;
 
     std::string xAxisIdentifier;
     std::string yAxisIdentifier;
