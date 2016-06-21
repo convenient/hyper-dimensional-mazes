@@ -28,8 +28,8 @@ class RendererGrid3D {
 
     bool rotate = false;
 
-    GLfloat rotationXaxis = 1065.0f;
-    GLfloat rotationYaxis = 701.0f;
+    GLfloat rotationXaxis = 0.0f;
+    GLfloat rotationYaxis = 0.0f;
     GLfloat rotationZaxis = 0.0f;
 
     std::string xAxisIdentifier;
@@ -47,6 +47,7 @@ class RendererGrid3D {
     std::vector<std::vector<float>> standardCubeColours;
     std::vector<std::vector<float>> endCubeColours;
     std::vector<std::vector<float>> startCubeColours;
+    std::vector<std::vector<float>> connectorCubeColours;
 
     void initColours() {
         std::vector<float> orangish;
@@ -54,6 +55,7 @@ class RendererGrid3D {
         std::vector<float> yellow;
         std::vector<float> red;
         std::vector<float> green;
+        std::vector<float> grey;
 
         yellow.push_back(1.0f);
         yellow.push_back(1.0f);
@@ -75,6 +77,10 @@ class RendererGrid3D {
         green.push_back(1.0f);
         green.push_back(0.0f);
 
+        grey.push_back(0.5f);
+        grey.push_back(0.5f);
+        grey.push_back(0.5f);
+
         standardCubeColours.push_back(orange);
         standardCubeColours.push_back(orangish);
         standardCubeColours.push_back(yellow);
@@ -86,6 +92,10 @@ class RendererGrid3D {
         startCubeColours.push_back(green);
         startCubeColours.push_back(green);
         startCubeColours.push_back(green);
+
+        connectorCubeColours.push_back(grey);
+        connectorCubeColours.push_back(grey);
+        connectorCubeColours.push_back(grey);
 
     }
 
@@ -213,24 +223,24 @@ class RendererGrid3D {
             }
         }
 
-        GLfloat connectorCubeSize = squareSize/1.25f;
+        GLfloat connectorCubeSize = squareSize/4.0f;
         if (isLinkedXPos) {
-            drawCube(nodePosition, connectorCubeSize, standardCubeColours, true, xAxisIdentifier, +1);
+            drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, +1);
         }
         if (isLinkedXNeg) {
-            drawCube(nodePosition, connectorCubeSize, standardCubeColours, true, xAxisIdentifier, -1);
+            drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, -1);
         }
         if (isLinkedYPos) {
-            drawCube(nodePosition, connectorCubeSize, standardCubeColours, true, yAxisIdentifier, +1);
+            drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, +1);
         }
         if (isLinkedYNeg) {
-            drawCube(nodePosition, connectorCubeSize, standardCubeColours, true, yAxisIdentifier, -1);
+            drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, -1);
         }
         if (isLinkedZPos) {
-            drawCube(nodePosition, connectorCubeSize, standardCubeColours, true, zAxisIdentifier, +1);
+            drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, +1);
         }
         if (isLinkedZNeg) {
-            drawCube(nodePosition, connectorCubeSize, standardCubeColours, true, zAxisIdentifier, -1);
+            drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, -1);
         }
     }
 
