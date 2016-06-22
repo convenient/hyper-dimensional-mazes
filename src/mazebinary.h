@@ -12,11 +12,6 @@ private:
 
         std::vector<std::string> axis = this->getAllAxis();
 
-        std::map<std::string, int> axisBias;
-        for (auto axisIdentifier : axis) {
-            axisBias.insert({axisIdentifier, this->getRandomNumber(0, 1)});
-        }
-
         while (this->getUnvisitedNodeCount() > 0) {
             Node *workingNode = this->getRandomUnvisitedNode();
             Point workingPoint = workingNode->getPoint();
@@ -31,19 +26,10 @@ private:
                     int workingNodeAxisValue = workingPoint.getPositionOnAxis(axisIdentifier);
 
                     //This greater than or less than size will define the bias of the maze
-                    //Binary mazes will always have a "flat" side per axis, the < or > sign defines this
-                    bool shouldAdd = false;
-                    if (axisBias.at(axisIdentifier) == 0) {
-                        if (axisValue > workingNodeAxisValue) {
-                            shouldAdd = true;
-                        }
-                    } else {
-                        if (axisValue < workingNodeAxisValue) {
-                            shouldAdd = true;
-                        }
-                    }
-
-                    if (shouldAdd) {
+                    //> == to the top right
+                    //< == to the bottom left
+                    //Todo find programattic way of varying the axis bias
+                    if (axisValue > workingNodeAxisValue) {
                         if (this->nodeExistsAtPoint(neighbour)) {
                             potentialNodes.push_back(neighbourNode);
                         }
