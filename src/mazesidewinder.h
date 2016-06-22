@@ -12,55 +12,27 @@ private:
 
         std::vector<std::string> axis = this->getAllAxis();
 
-        std::map<std::string, int> axisBias;
-        for (auto axisIdentifier : axis) {
-            axisBias.insert({axisIdentifier, this->getRandomNumber(0, 1)});
-        }
+        std::string rowIteratorIdentifier = axis.at(0);
 
-        while (this->getUnvisitedNodeCount() > 0) {
-            Node *workingNode = this->getRandomUnvisitedNode();
-            Point workingPoint = workingNode->getPoint();
+        std::cout << rowIteratorIdentifier << std::endl;
 
-            std::vector<Node *> potentialNodes;
+        //TODO make this agnostic
+        Point point;
+        point.addPosition("x", -9);
+        point.addPosition("y", -9);
 
-            std::vector<Node *> neighbourNodes = this->getNeighbourNodes(workingNode);
-            for (auto neighbourNode : neighbourNodes) {
-                for (auto axisIdentifier : axis) {
-                    Point neighbour = neighbourNode->getPoint();
-                    int axisValue = neighbour.getPositionOnAxis(axisIdentifier);
-                    int workingNodeAxisValue = workingPoint.getPositionOnAxis(axisIdentifier);
+        Node *startNode = this->getNodeAtPoint(point);
 
-                    //This greater than or less than size will define the bias of the maze
-                    //Binary mazes will always have a "flat" side per axis, the < or > sign defines this
-                    bool shouldAdd = false;
-                    if (axisBias.at(axisIdentifier) == 0) {
-                        if (axisValue > workingNodeAxisValue) {
-                            shouldAdd = true;
-                        }
-                    } else {
-                        if (axisValue < workingNodeAxisValue) {
-                            shouldAdd = true;
-                        }
-                    }
+//http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm
+//        Work through the grid row-wise, starting with the cell at 0,0. Initialize the “run” set to be empty.
+//                Add the current cell to the “run” set.
+//                For the current cell, randomly decide whether to carve east or not.
+//        If a passage was carved, make the new cell the current cell and repeat steps 2-4.
+//        If a passage was not carved, choose any one of the cells in the run set and carve a passage north. Then empty the run set, set the next cell in the row to be the current cell, and repeat steps 2-5.
+//        Continue until all rows have been processed.
 
-                    if (shouldAdd) {
-                        if (this->nodeExistsAtPoint(neighbour)) {
-                            potentialNodes.push_back(neighbourNode);
-                        }
-                    }
-                }
-            }
 
-            if (potentialNodes.size() >= 1) {
-                unsigned long r = (unsigned long) this->getRandomNumber(0, (int) potentialNodes.size() - 1);
-
-                Node *chosenNode = potentialNodes.at(r);
-
-                workingNode->link(chosenNode);
-            }
-
-            this->markNodeAsVisited(workingNode);
-        }
+                exit();
     }
 };
 
