@@ -20,6 +20,8 @@ add_executable(binary_4d src/binary4d.cpp)
 
 #Sidewinder
 add_executable(sidewinder_2d_grid src/sidewinder2dgrid.cpp)
+add_executable(sidewinder_3d_grid src/sidewinder3dgrid.cpp)
+add_executable(sidewinder_4d src/sidewinder4d.cpp)
 
 ## OpenGL
 find_package(OpenGL REQUIRED)
@@ -27,6 +29,8 @@ find_package(GLUT REQUIRED)
 include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
 target_link_libraries(sidewinder_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(sidewinder_3d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(sidewinder_4d pthread)
 target_link_libraries(binary_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(binary_3d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(binary_4d pthread)
