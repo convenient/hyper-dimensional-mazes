@@ -19,7 +19,7 @@ private:
             std::string rowIteratorAxisIdentifier = axis[i];
             std::string nextAxisIdentifier = axis[i+1];
 
-            std::map<int, std::map<std::string, Node*>*> organisedNodes;
+            std::map<int, std::map<int, Node*>*> organisedNodes;
 
             //Sort the nodes to be organised by this axis, and the remaining sub-axis
             for (auto node : this->getMap()) {
@@ -32,16 +32,16 @@ private:
                 int positionAtRowIdentifier = tmpPoint.getPositionOnAxis(rowIteratorAxisIdentifier);
 
                 if (organisedNodes.count(positionAtRowIdentifier)) {
-                    std::map<std::string, Node*> *nodesOnRow = organisedNodes.at(positionAtRowIdentifier);
-                    nodesOnRow->insert({n->getPoint().getAsString(), n});
+                    std::map<int, Node*> *nodesOnRow = organisedNodes.at(positionAtRowIdentifier);
+                    nodesOnRow->insert({n->getPoint().getPositionOnAxis(nextAxisIdentifier), n});
                 } else {
-                    std::map<std::string, Node*> *nodesOnRow = new std::map<std::string, Node*>();
-                    nodesOnRow->insert({n->getPoint().getAsString(), n});
+                    std::map<int, Node*> *nodesOnRow = new std::map<int, Node*>();
+                    nodesOnRow->insert({n->getPoint().getPositionOnAxis(nextAxisIdentifier), n});
                     organisedNodes.insert({positionAtRowIdentifier, nodesOnRow});
                 }
             }
 
-            //TODO sort the inner arrays properly
+            bool firstRow = true;
 
             //Iterator over the nodes that have been organised in row and order
             //For each item in row
@@ -50,30 +50,35 @@ private:
 
                 for (auto subMap : *element.second) {
                     Node *node = subMap.second;
-                    std::cout << node->getPoint().getAsString() << std::endl;
+
+                    //The first row is a special case and always forms a long column
+                    if (firstRow) {
+                        Point nextNodePoint = Point::getNeighbourPoint(node->getPoint(), nextAxisIdentifier, Point::positive);
+                        if (this->nodeExistsAtPoint(nextNodePoint)) {
+                            Node *nextNode = this->getNodeAtPoint(nextNodePoint);
+                            node->link(nextNode);
+                        }
+                        continue;
+                    }
 
                     carvedPath.push_back(node);
 
-                    Point nextNodePoint = Point::getNeighbourPoint(node->getPoint(), rowIteratorAxisIdentifier, Point::negative);
+                    Point nextNodePoint = Point::getNeighbourPoint(node->getPoint(), nextAxisIdentifier, Point::positive);
                     if (!this->nodeExistsAtPoint(nextNodePoint)) {
-                        //Handles the special case at the edge of the maze
-                        //Draws the flat edge
-                        this->processCarveSet(&carvedPath, nextAxisIdentifier);
+                        this->processCarveSet(&carvedPath, rowIteratorAxisIdentifier);
                         continue;
                     }
-//                    std::cout << "Should " << node->getPoint().getAsString() << " link to " << nextNodePoint.getAsString() << std::endl;
 
-//                    if (this->getRandomNumber(0, 1)) {
-//                        std::cout << "random\t\t" << node->getPoint().getAsString() << " -> " << nextNodePoint.getAsString() << std::endl;
-//                        Node *nextNode = this->getNodeAtPoint(nextNodePoint);
-//                        node->link(nextNode);
-//                    } else {
-//                        this->processCarveSet(&carvedPath, nextAxisIdentifier);
-//                    }
+                    if (this->getRandomNumber(0, 1)) {
+                        Node *nextNode = this->getNodeAtPoint(nextNodePoint);
+                        node->link(nextNode);
+                    } else {
+                        this->processCarveSet(&carvedPath, rowIteratorAxisIdentifier);
+                    }
 
                     this->markNodeAsVisited(node);
                 }
-                exit(0);
+                firstRow = false;
             }
 
         }
@@ -82,12 +87,11 @@ private:
     void processCarveSet(std::vector<Node *>* carvedPath, std::string axisIdentifier) {
         Node *randomNodeFromCarveSet = carvedPath->at(this->getRandomNumber(0, carvedPath->size()-1));
 
-        Point tmpPoint = Point::getNeighbourPoint(randomNodeFromCarveSet->getPoint(), axisIdentifier, Point::positive);
+        Point tmpPoint = Point::getNeighbourPoint(randomNodeFromCarveSet->getPoint(), axisIdentifier, Point::negative);
 
         if (this->nodeExistsAtPoint(tmpPoint)) {
 
             Node *nextNode = this->getNodeAtPoint(tmpPoint);
-            std::cout << "carveset\t" << randomNodeFromCarveSet->getPoint().getAsString() << " -> " << nextNode->getPoint().getAsString() << std::endl;
             randomNodeFromCarveSet->link(nextNode);
             carvedPath->clear();
         }
