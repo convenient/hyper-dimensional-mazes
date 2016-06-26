@@ -77,6 +77,15 @@ public:
         throw std::logic_error("Tried to mark a node as visited when it does not exist");
     }
 
+    bool nodeIsVisited(Node *node) {
+        Point p = node->getPoint();
+        if (this->nodeExistsAtPoint(p)) {
+            std::string pointId = p.getAsString();
+            return !(this->unvisited_map.count(pointId));
+        }
+        throw std::logic_error("Tried to mark a node as visited when it does not exist");
+    }
+
     Node *getRandomUnvisitedNode() {
         return this->getRandomNode(this->unvisited_map);
     };
