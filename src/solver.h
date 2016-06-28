@@ -13,9 +13,10 @@ private:
     bool mazeSolved = false;
     std::vector<Node *> solvedPath;
 
-    static std::vector<Node *> getLongestPath(Node *start, std::vector<Node *> endPoints) {
+    static std::vector<Node *> getLongestPath(unsigned long numberOfNodes, Node *start, std::vector<Node *> endPoints) {
         Dijkstra dijkstraSolver;
 
+        dijkstraSolver.setNumberOfNodes(numberOfNodes);
         std::vector<Node *> longestPath;
 
         std::unordered_map<Node *, std::vector<Node *>> potentialSolvedPaths =
@@ -46,7 +47,7 @@ private:
                 std::vector<Node *> endPoints = batch.second;
 
                 batchesToRemove.push_back(start);
-                futuresSolutions.push_back(std::async(std::launch::async, &getLongestPath, start, endPoints));
+                futuresSolutions.push_back(std::async(std::launch::async, &getLongestPath, maze->getMap().size(), start, endPoints));
 
                 if (counter++ == batchSize) {
                     break;

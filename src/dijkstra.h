@@ -10,6 +10,12 @@ private:
     std::unordered_map<Node *, Node *> nodeSolved;
     std::unordered_map<Node *, double> nodeDistances;
 
+    unsigned long numberOfNodes;
+
+    unsigned long getNumberOfNodes() {
+        return this->numberOfNodes;
+    }
+
     void setSolved(Node *node) {
         this->nodeSolved.insert({node, node});
     }
@@ -55,6 +61,11 @@ private:
     }
 
 public:
+
+    void setNumberOfNodes(unsigned long number) {
+        this->numberOfNodes = number;
+    }
+
     /**
      * Returns a vector containing node pointers journeying from the start point to the end point
      * Including both the start point and the end point.
@@ -93,7 +104,8 @@ public:
             }
         }
 
-        bool solved = false;
+        unsigned long failureCount = 0;
+
         while (!endNodesPending.empty()) {
             for (auto solvedNodeAutoIterator : this->nodeSolved) {
 
@@ -129,6 +141,12 @@ public:
                         endNodesPaths.insert({closestNode, path});
                     }
                 }
+
+            }
+
+            failureCount++;
+            if (failureCount >= this->getNumberOfNodes()) {
+                throw std::logic_error("Cannot find path, not all nodes are connected.");
             }
         }
 
