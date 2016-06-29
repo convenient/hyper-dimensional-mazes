@@ -3,6 +3,11 @@
 
 #include "maze.h"
 
+bool compareNodesByPoint(Node* a, Node* b)
+{
+    return a->getPoint().getAsString() < b->getPoint().getAsString();
+}
+
 class MazeSidewinder : public Maze {
 private:
 
@@ -23,8 +28,11 @@ private:
             sortedNodes.push_back(n);
         }
 
+
         //TODO get sorted vector working
-        std::sort(sortedNodes.begin(), sortedNodes.end());
+        std::sort(sortedNodes.begin(), sortedNodes.end(), compareNodesByPoint);
+
+
 
 
         exit(0);
