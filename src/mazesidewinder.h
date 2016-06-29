@@ -5,12 +5,30 @@
 
 class MazeSidewinder : public Maze {
 private:
+
+    /**
+     * http://stackoverflow.com/questions/1380463/sorting-a-vector-of-custom-objects
+     */
+
     /**
      * A dimensionally agnostic sidewinder maze algorithm
      */
     void generateAlgorithm() {
 
         std::vector<std::string> axis = this->getAllAxis();
+
+        std::vector<Node *> sortedNodes;
+        for (auto node : this->getMap()) {
+            Node *n = node.second;
+            sortedNodes.push_back(n);
+        }
+
+        //TODO get sorted vector working
+        std::sort(sortedNodes.begin(), sortedNodes.end());
+
+
+        exit(0);
+
 
         for(std::vector<int>::size_type i = 0; i != axis.size(); i++) {
             if (axis.size() <= i+1 ) {
