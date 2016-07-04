@@ -5,7 +5,31 @@
 
 bool compareNodesByPoint(Node* a, Node* b)
 {
-    return a->getPoint().getAsString() < b->getPoint().getAsString();
+    //Nodes are the same, return false
+    if (a == b) {
+        return false;
+    }
+
+    Point aPoint = a->getPoint();
+    Point bPoint = b->getPoint();
+
+    std::vector<std::string> axis = Point::getAllAxis(aPoint, bPoint);
+
+    for (auto axisIdentifier : axis) {
+        int aVal = aPoint.getPositionOnAxis(axisIdentifier);
+        int bVal = bPoint.getPositionOnAxis(axisIdentifier);
+        if (aVal == bVal) {
+            //These points are equal at this identifier, sk
+            continue;
+        }
+
+        return (aVal < bVal);
+    }
+
+    std::cout << aPoint.getAsString() << std::endl;
+    std::cout << bPoint.getAsString() << std::endl;
+
+    std::cout << "These nodes are at the same exact point, this should never happen" << std::endl;
 }
 
 class MazeSidewinder : public Maze {
@@ -29,11 +53,11 @@ private:
         }
 
 
-        //TODO get sorted vector working
         std::sort(sortedNodes.begin(), sortedNodes.end(), compareNodesByPoint);
-
-
-
+        
+        for (auto node : sortedNodes) {
+            std::cout << node->getPoint().getAsString() << std::endl;
+        }
 
         exit(0);
 
