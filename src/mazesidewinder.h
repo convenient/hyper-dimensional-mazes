@@ -2,6 +2,7 @@
 #define MAZES_FOR_PROGRAMMERS_MAZESIDEWINDER_H
 
 #include "maze.h"
+#include <algorithm>
 
 bool compareNodesByPoint(Node* a, Node* b)
 {
@@ -52,33 +53,62 @@ private:
             sortedNodes.push_back(n);
         }
 
-
         std::sort(sortedNodes.begin(), sortedNodes.end(), compareNodesByPoint);
 
-        for (auto node : sortedNodes) {
-            std::cout << node->getPoint().getAsString() << std::endl;
+        std::string firstAxis = axis.front();
+        std::vector<std::string> remainingAxis;
+        for (auto axisIdentifier : axis) {
+            if (axisIdentifier != firstAxis) {
+                remainingAxis.push_back(axisIdentifier);
+            }
         }
 
-        std::string firstAxis = axis.front();
-
-        std::cout << firstAxis << std::endl;
         int rowPosition = sortedNodes.front()->getPoint().getPositionOnAxis(firstAxis);
-        std::cout << rowPosition << std::endl;
 
         //Iterator over the nodes that have been organised in row and order
         //For each item in row
+        std::vector<Node *> carvedPath;
         for (auto node : sortedNodes) {
+            if (this->getUnvisitedNodeCount() <= 0) {
+                std::cout << "visited all nodes " << std::endl;
+                break;
+            }
+            this->markNodeAsVisited(node);
             int nodeRowPosition = node->getPoint().getPositionOnAxis(firstAxis);
             if (nodeRowPosition != rowPosition) {
-                std::cout <<  " " << std::endl;
+                //End of a row
+                //std::cout <<  " " << std::endl;
+
                 rowPosition = nodeRowPosition;
-            } else {
-                std::cout << node->getPoint().getAsString() << " ";
+//                this->processCarveSet(&carvedPath, firstAxis);
             }
+
+            //else {
+                carvedPath.push_back(node);
+
+                std::vector<Point> potentialPoints;
+                for (auto axisIdentifier : remainingAxis) {
+                    Point nextNodePoint = Point::getNeighbourPoint(node->getPoint(), axisIdentifier, Point::positive);
+                    if (this->nodeExistsAtPoint(nextNodePoint)) {
+                        if (!this->nodeIsVisited(this->getNodeAtPoint(nextNodePoint))) {
+                            potentialPoints.push_back(nextNodePoint);
+                        }
+                    }
+                }
+
+                if (potentialPoints.size() > 0 && this->getRandomNumber(0, 1)) {
+                    Node *nextNode = this->getNodeAtPoint(potentialPoints.front());
+                    node->link(nextNode);
+                } else {
+                    this->processCarveSet(&carvedPath, firstAxis);
+                }
+
+                //std::cout << node->getPoint().getAsString() << "\t";
+//            }
 
         }
 
-
+        return;
         exit(0);
 
 
@@ -169,3 +199,4 @@ private:
 };
 
 #endif //MAZES_FOR_PROGRAMMERS_MAZESIDEWINDER_H
+
