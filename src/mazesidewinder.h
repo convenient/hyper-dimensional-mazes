@@ -54,10 +54,30 @@ private:
 
 
         std::sort(sortedNodes.begin(), sortedNodes.end(), compareNodesByPoint);
-        
+
         for (auto node : sortedNodes) {
             std::cout << node->getPoint().getAsString() << std::endl;
         }
+
+        std::string firstAxis = axis.front();
+
+        std::cout << firstAxis << std::endl;
+        int rowPosition = sortedNodes.front()->getPoint().getPositionOnAxis(firstAxis);
+        std::cout << rowPosition << std::endl;
+
+        //Iterator over the nodes that have been organised in row and order
+        //For each item in row
+        for (auto node : sortedNodes) {
+            int nodeRowPosition = node->getPoint().getPositionOnAxis(firstAxis);
+            if (nodeRowPosition != rowPosition) {
+                std::cout <<  " " << std::endl;
+                rowPosition = nodeRowPosition;
+            } else {
+                std::cout << node->getPoint().getAsString() << " ";
+            }
+
+        }
+
 
         exit(0);
 
