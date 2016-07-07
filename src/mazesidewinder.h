@@ -86,6 +86,7 @@ private:
 //                    this->processCarveSet(&carvedPath, firstAxis);
 //                }
                 firstRow = false;
+                carvedPath.clear();
             }
 
             //else {
@@ -107,7 +108,7 @@ private:
                     std::cout << "first row linking " << node->getPoint().getAsString() << " -> " << nextNode->getPoint().getAsString() << std::endl;
                     node->link(nextNode);
                 } else {
-                    std::cout << node->getPoint().getAsString() << " nothing to link to" << std::endl;
+                    std::cout << "FIRST ROW DONE " << std::endl;
                 }
                 continue;
             }
@@ -124,85 +125,11 @@ private:
             }
 
         }
-
-        return;
-        exit(0);
-
-
-        for(std::vector<int>::size_type i = 0; i != axis.size(); i++) {
-            if (axis.size() <= i+1 ) {
-                break;
-            }
-            std::string rowIteratorAxisIdentifier = axis[i];
-            std::string nextAxisIdentifier = axis[i+1];
-
-            std::map<int, std::map<int, Node*>*> organisedNodes;
-
-            //Sort the nodes to be organised by this axis, and the remaining sub-axis
-            for (auto node : this->getMap()) {
-                Node *n = node.second;
-                if (this->nodeIsVisited(n)) {
-                    continue;
-                }
-                Point tmpPoint = n->getPoint();
-
-                int positionAtRowIdentifier = tmpPoint.getPositionOnAxis(rowIteratorAxisIdentifier);
-
-                if (organisedNodes.count(positionAtRowIdentifier)) {
-                    std::map<int, Node*> *nodesOnRow = organisedNodes.at(positionAtRowIdentifier);
-                    nodesOnRow->insert({n->getPoint().getPositionOnAxis(nextAxisIdentifier), n});
-                } else {
-                    std::map<int, Node*> *nodesOnRow = new std::map<int, Node*>();
-                    nodesOnRow->insert({n->getPoint().getPositionOnAxis(nextAxisIdentifier), n});
-                    organisedNodes.insert({positionAtRowIdentifier, nodesOnRow});
-                }
-            }
-
-            bool firstRow = true;
-
-            //Iterator over the nodes that have been organised in row and order
-            //For each item in row
-            for (auto element : organisedNodes) {
-                std::vector<Node *> carvedPath;
-
-                for (auto subMap : *element.second) {
-                    Node *node = subMap.second;
-
-                    //The first row is a special case and always forms a long column
-                    if (firstRow) {
-                        Point nextNodePoint = Point::getNeighbourPoint(node->getPoint(), nextAxisIdentifier, Point::positive);
-                        if (this->nodeExistsAtPoint(nextNodePoint)) {
-                            Node *nextNode = this->getNodeAtPoint(nextNodePoint);
-                            node->link(nextNode);
-                        }
-                        continue;
-                    }
-
-                    carvedPath.push_back(node);
-
-                    Point nextNodePoint = Point::getNeighbourPoint(node->getPoint(), nextAxisIdentifier, Point::positive);
-                    if (!this->nodeExistsAtPoint(nextNodePoint)) {
-                        this->processCarveSet(&carvedPath, rowIteratorAxisIdentifier);
-                        continue;
-                    }
-
-                    if (this->getRandomNumber(0, 1)) {
-                        Node *nextNode = this->getNodeAtPoint(nextNodePoint);
-                        node->link(nextNode);
-                    } else {
-                        this->processCarveSet(&carvedPath, rowIteratorAxisIdentifier);
-                    }
-
-                    this->markNodeAsVisited(node);
-                }
-                firstRow = false;
-            }
-
-        }
     }
 
     void processCarveSet(std::vector<Node *>* carvedPath, std::string axisIdentifier) {
         Node *randomNodeFromCarveSet = carvedPath->at(this->getRandomNumber(0, carvedPath->size()-1));
+        carvedPath->clear();
 
         Point tmpPoint = Point::getNeighbourPoint(randomNodeFromCarveSet->getPoint(), axisIdentifier, Point::negative);
 
@@ -210,10 +137,10 @@ private:
 
             Node *nextNode = this->getNodeAtPoint(tmpPoint);
             randomNodeFromCarveSet->link(nextNode);
-            carvedPath->clear();
         } else {
+            std::cout << "FAIL TO CARVE " << randomNodeFromCarveSet->getPoint().getAsString() << " failed to " << tmpPoint.getAsString() << std::endl;
             //TODO figure out this
-            std::cout << "Carve set failure!" << std::endl;
+//            std::cout << "Carve set failure!" << std::endl;
         }
     }
 };
