@@ -76,19 +76,6 @@ private:
             }
             this->markNodeAsVisited(node);
 
-            int nodeRowPosition = node->getPoint().getPositionOnAxis(firstAxis);
-            if (nodeRowPosition != rowPosition) {
-                //End of a row
-                //std::cout <<  " " << std::endl;
-
-                rowPosition = nodeRowPosition;
-//                if (firstRow) {
-//                    this->processCarveSet(&carvedPath, firstAxis);
-//                }
-                firstRow = false;
-                carvedPath.clear();
-            }
-
             //else {
             carvedPath.push_back(node);
 
@@ -108,6 +95,7 @@ private:
                     std::cout << "first row linking " << node->getPoint().getAsString() << " -> " << nextNode->getPoint().getAsString() << std::endl;
                     node->link(nextNode);
                 } else {
+                    firstRow = false;
                     std::cout << "FIRST ROW DONE " << std::endl;
                 }
                 continue;
@@ -115,6 +103,7 @@ private:
 
             if (potentialPoints.size() <= 0) {
                 std::cout << "No viable neighbours for " << node->getPoint().getAsString() << std::endl;
+//                std::cout << carvedPath.size() << " < carveset size" << std::endl;
             }
 
             if (potentialPoints.size() > 0 && this->getRandomNumber(0, 1)) {
@@ -122,6 +111,14 @@ private:
                 node->link(nextNode);
             } else {
                 this->processCarveSet(&carvedPath, firstAxis);
+            }
+
+            int nodeRowPosition = node->getPoint().getPositionOnAxis(firstAxis);
+            if (nodeRowPosition != rowPosition) {
+                rowPosition = nodeRowPosition;
+//                std::cout << carvedPath.size() << " < carveset size" << std::endl;
+                carvedPath.clear();
+//                this->processCarveSet(&carvedPath, firstAxis);
             }
 
         }
