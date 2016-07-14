@@ -10,6 +10,8 @@ class Maze {
     std::unordered_map<std::string, Node *> map;
     std::unordered_map<std::string, Node *> unvisited_map;
 
+    unsigned long seed = 0;
+
     std::mt19937 rng;
     bool rngSeeded = false;
     std::vector<std::string> axis;
@@ -33,6 +35,19 @@ class Maze {
 
 public:
 
+    void setSeed(unsigned long seed) {
+        this->seed = seed;
+    }
+
+    unsigned long getSeed() {
+        if (this->seed == 0) {
+            this->seed =
+                    std::chrono::duration_cast<std::chrono::milliseconds>
+                            (std::chrono::system_clock::now().time_since_epoch()).count();
+        }
+        return this->seed;
+    }
+
     void generate() {
         /*
          * Reset all object caches etc
@@ -49,11 +64,9 @@ public:
 
     int getRandomNumber(int min, int max) {
         if (!this->rngSeeded) {
-            typedef std::chrono::high_resolution_clock myclock;
-            myclock::time_point beginning = myclock::now();
 
-            myclock::duration d = myclock::now() - beginning;
-            unsigned seed = d.count();
+            unsigned long seed = this->getSeed();
+            std::cout << "Using seed: " << seed << std::endl;
 
             this->rng.seed(seed);
             this->rngSeeded = true;

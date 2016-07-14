@@ -23,10 +23,15 @@ int main(int argc, char **argv) {
     Maze *mazePtr = new MazeSidewinder;
     Solver *solver = new Solver(mazePtr);
 
-    char title[] = "Sidwinder Maze - 3D Grid";
+    if (argc == 2) {
+        unsigned long seed =  strtoul (argv[1], NULL, 0);
+        mazePtr->setSeed(seed);
+    }
+
+    char title[] = "Sidewinder Maze - 3D Grid";
     RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 
-    int mazeSize = 3;
+    int mazeSize = 4;
     //Offset the node position to make rendering easier and map to nice opengl stuff.
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
