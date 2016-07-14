@@ -70,13 +70,14 @@ private:
         bool firstRow = true;
         std::vector<Node *> carvedPath;
         for (auto node : sortedNodes) {
+            std::cout << "###################################" << std::endl;
+            std::cout << node->getPoint().getAsString() << std::endl;
             if (this->getUnvisitedNodeCount() <= 0) {
                 std::cout << "visited all nodes " << std::endl;
                 break;
             }
             this->markNodeAsVisited(node);
 
-            //else {
             carvedPath.push_back(node);
 
             std::vector<Point> potentialPoints;
