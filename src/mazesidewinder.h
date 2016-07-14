@@ -30,7 +30,7 @@ bool compareNodesByPoint(Node* a, Node* b)
     std::cout << aPoint.getAsString() << std::endl;
     std::cout << bPoint.getAsString() << std::endl;
 
-    std::cout << "These nodes are at the same exact point, this should never happen" << std::endl;
+    throw std::logic_error("These nodes are at the same exact point, this should never happen");
 }
 
 class MazeSidewinder : public Maze {
