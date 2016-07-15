@@ -166,8 +166,22 @@ class RendererGrid3D {
 
     void drawNode(Node *node) {
         Point nodePosition = node->getPoint();
-        drawCube(nodePosition, squareSize, standardCubeColours);
-        drawConnectors(node);
+
+        /**
+         * Paint node for debugging purposes
+         */
+        Point test;
+        test.addPosition("x", -1);
+        test.addPosition("y", -1);
+        test.addPosition("z", -1);
+
+        if (test.getAsString() == nodePosition.getAsString()) {
+            drawCube(nodePosition, squareSize, endCubeColours);
+            drawConnectors(node);
+        } else {
+            drawCube(nodePosition, squareSize, standardCubeColours);
+            drawConnectors(node);
+        }
     }
 
     void drawConnectors(Node *node) {
