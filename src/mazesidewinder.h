@@ -93,8 +93,7 @@ private:
             if (firstRow) {
                 if (potentialPoints.size() > 0) {
                     Node *nextNode = this->getNodeAtPoint(potentialPoints.front());
-                    std::cout << "first row linking to " << nextNode->getPoint().getAsString() << std::endl;
-                    node->link(nextNode);
+                    this->link(node, nextNode);
                 } else {
                     firstRow = false;
                     std::cout << "FIRST ROW DONE " << std::endl;
@@ -115,13 +114,17 @@ private:
 
             if (potentialPoints.size() > 0 && this->getRandomNumber(0, 1)) {
                 Node *nextNode = this->getNodeAtPoint(potentialPoints.front());
-                std::cout << "linking to " << nextNode->getPoint().getAsString() << std::endl;
-                node->link(nextNode);
+                this->link(node, nextNode);
             } else {
                 this->processCarveSet(&carvedPath, firstAxis);
             }
 
         }
+    }
+
+    void link(Node *a, Node *b) {
+        std::cout << a->getPoint().getAsString() << "\tlinking to\t" << b->getPoint().getAsString() << std::endl;
+        a->link(b);
     }
 
     void processCarveSet(std::vector<Node *>* carvedPath, std::string axisIdentifier) {
@@ -133,8 +136,7 @@ private:
 
         if (this->nodeExistsAtPoint(tmpPoint)) {
             Node *nextNode = this->getNodeAtPoint(tmpPoint);
-            std::cout << "linking to " << nextNode->getPoint().getAsString() << std::endl;
-            randomNodeFromCarveSet->link(nextNode);
+            this->link(randomNodeFromCarveSet, nextNode);
         } else {
             std::cout << "FAIL TO CARVE " << randomNodeFromCarveSet->getPoint().getAsString() << " failed to " << tmpPoint.getAsString() << std::endl;
             //TODO figure out this

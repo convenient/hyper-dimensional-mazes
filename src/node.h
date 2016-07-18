@@ -31,6 +31,9 @@ public:
     }
 
     void link(Node *node) {
+        if (node == this) {
+            throw new std::logic_error("a node cannot link to itself!");
+        }
         if (!this->isLinked(node)) {
             this->linkedNodes.insert({node, node->getPoint()});
             node->link(this);
