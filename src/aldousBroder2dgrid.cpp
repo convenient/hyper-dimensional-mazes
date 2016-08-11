@@ -8,13 +8,13 @@ bool showTextSolution = false;
 
 void generateCallback(Maze *m, Solver *s) {
     showTextSolution = true;
-    //RendererText::drawNodeGoal(s->getStartNode(), s->getEndNode());
+    RendererText::drawNodeGoal(s->getStartNode(), s->getEndNode());
 }
 
 void solveCallback(Maze *m, Solver *s) {
     if (showTextSolution) {
-//        RendererText::drawPath(s->solve());
-//        showTextSolution = false;
+        RendererText::drawPath(s->solve());
+        showTextSolution = false;
     }
 }
 
