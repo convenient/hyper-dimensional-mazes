@@ -23,6 +23,12 @@ add_executable(sidewinder_2d_grid src/sidewinder2dgrid.cpp)
 add_executable(sidewinder_3d_grid src/sidewinder3dgrid.cpp)
 add_executable(sidewinder_4d src/sidewinder4d.cpp)
 
+#Aldous Broder
+add_executable(aldous_broder_2d_grid src/aldousBroder2dgrid.cpp)
+add_executable(aldous_broder_3d_grid src/aldousBroder3dgrid.cpp)
+add_executable(aldous_broder_4d src/aldousBroder4d.cpp)
+
+
 ## OpenGL
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
@@ -34,3 +40,6 @@ target_link_libraries(sidewinder_4d pthread)
 target_link_libraries(binary_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(binary_3d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(binary_4d pthread)
+target_link_libraries(aldous_broder_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(aldous_broder_3d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(aldous_broder_4d pthread)
