@@ -28,8 +28,6 @@ int main(int argc, char **argv) {
         mazePtr->setSeed(seed);
     }
 
-    mazePtr->setSeed(1468502658735);
-
     char title[] = "Sidewinder Maze - 3D Grid";
     RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 

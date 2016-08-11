@@ -70,8 +70,6 @@ private:
         Node *previousNode = nullptr;
         for (auto node : sortedNodes) {
 
-//            std::cout << "#############################" << std::endl;
-//            std::cout << node->getPoint().getAsString() << std::endl;
             if (this->getUnvisitedNodeCount() <= 0) {
                 break;
             }
@@ -88,7 +86,6 @@ private:
                 }
                 if (!neighbourNode) {
                     if (!carvedPath.empty()) {
-                        std::cout << "end of the line!" << std::endl;
                         this->processCarveSet(&carvedPath, axis);
                     }
                 }
@@ -122,7 +119,6 @@ private:
     }
 
     void link(Node *a, Node *b) {
-//        std::cout << a->getPoint().getAsString() << " to " << b->getPoint().getAsString() << std::endl;
         a->link(b);
     }
 
