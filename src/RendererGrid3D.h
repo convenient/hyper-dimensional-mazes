@@ -118,18 +118,18 @@ class RendererGrid3D {
             this->axisInitialised = true;
         }
 
-//        Node *start = solver->getStartNode();
-//        Node *end = solver->getEndNode();
+        Node *start = solver->getStartNode();
+        Node *end = solver->getEndNode();
         for (auto i : this->m->getMap()) {
             Node *node = i.second;
-//            if (node == start || node == end) {
-//                continue;
-//            }
+            if (node == start || node == end) {
+                continue;
+            }
             drawNode(node);
         }
 
-//        this->drawStartNode();
-//        this->drawEndNode();
+        this->drawStartNode();
+        this->drawEndNode();
     }
 
     /**
@@ -171,14 +171,14 @@ class RendererGrid3D {
          * Paint node for debugging purposes
          */
         Point test;
-        test.addPosition("x", 0);
+        /*test.addPosition("x", 0);
         test.addPosition("y", 0);
-        test.addPosition("z", -1);
+        test.addPosition("z", -1);*/
 
         Point test1;
-        test1.addPosition("x", 0);
+        /*test1.addPosition("x", 0);
         test1.addPosition("y", -1);
-        test1.addPosition("z", -1);
+        test1.addPosition("z", -1);*/
 
         std::vector<std::vector<float>> drawColours = standardCubeColours;
 
@@ -425,13 +425,13 @@ public:
     void generate() {
         m->generate();
 
-//        solver->setMazeUnsolved();
-//        std::vector<Node *> solution = solver->solve();
+        solver->setMazeUnsolved();
+        std::vector<Node *> solution = solver->solve();
 
         this->drawMaze();
 
-//        this->generateCallback(m, solver);
-//        glutPostRedisplay();
+        this->generateCallback(m, solver);
+        glutPostRedisplay();
     }
 
     void solve() {

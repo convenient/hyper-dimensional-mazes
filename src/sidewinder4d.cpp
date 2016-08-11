@@ -8,6 +8,11 @@ int main(int argc, char **argv) {
     Maze *mazePtr = new MazeSidewinder;
     Solver *solver = new Solver(mazePtr);
 
+    if (argc == 2) {
+        unsigned long seed =  strtoul (argv[1], NULL, 0);
+        mazePtr->setSeed(seed);
+    }
+
     int mazeSize = 3;
 
     std::cout << "Generating a sidewinder maze of " << mazeSize << " by "<< mazeSize << " by " << mazeSize << " by " << mazeSize <<  std::endl;
