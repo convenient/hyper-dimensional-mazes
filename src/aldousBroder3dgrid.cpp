@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
 
-    std::cout << "Generating a binary maze of " << mazeSize << " by " << mazeSize << " by " << mazeSize << std::endl;
+    std::cout << "Generating a Aldous-Broder maze of " << mazeSize << " by " << mazeSize << " by " << mazeSize << std::endl;
 
     for (int x=minpart; x<maxpart; x++) {
         for (int y=minpart; y<maxpart; y++) {
