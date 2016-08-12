@@ -38,6 +38,8 @@ class MazeWilsons : public Maze {
 
     void trimWalkAfter(Node *node) {
         bool remove = false;
+
+        //TODO The bug is in here
         for (auto walkNodeMap : this->positionToNode) {
             Node* walkNode = walkNodeMap.second;
             if (remove) {
@@ -105,7 +107,7 @@ private:
                 Node *lastNodeInWalk = this->getLastNodeInWalk();
                 std::cout << "last node from walk\t" << lastNodeInWalk->getPoint().getAsString() << std::endl;
                 Node *neighbour = this->getRandomNeighbourNode(lastNodeInWalk);
-
+                std::cout << "random neighbour node\t" << neighbour->getPoint().getAsString() << std::endl;
                 if (this->nodeIsVisited(neighbour)) {
                     std::cout << "linking!" << std::endl;
                     this->addToWalk(neighbour);
