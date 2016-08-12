@@ -63,6 +63,19 @@ class MazeWilsons : public Maze {
         }
     }
 
+    void debugWalk() {
+        std::cout << "\t" << "pos to node" << std::endl;
+        for (auto walkNodeMap : this->positionToNode) {
+            std::cout << "\t" << walkNodeMap.first << "\t" << walkNodeMap.second->getPoint().getAsString() << std::endl;
+        }
+
+        std::cout << "\t" <<  "node to pos" << std::endl;
+        for (auto walkNodeMap : this->nodeToPosition) {
+            std::cout << "\t" << walkNodeMap.second << "\t" << walkNodeMap.first->getPoint().getAsString() << std::endl;
+        }
+    }
+
+
 private:
     void generateAlgorithm() {
 
@@ -70,6 +83,7 @@ private:
         while (this->getUnvisitedNodeCount() > 0) {
             std::cout << "##################################################" << std::endl;
             Node *targetNode = this->getRandomUnvisitedNode();
+            std::cout << "Target node\t\t\t" << targetNode->getPoint().getAsString() << std::endl;
             this->markNodeAsVisited(targetNode);
 
             Node *initialWalkNode;
@@ -83,11 +97,13 @@ private:
             this->clearWalk();
 
             this->addToWalk(initialWalkNode);
+            this->debugWalk();
+            std::cout << "Starting walk!" << std::endl;
             while (true) {
-                std::cout << "##############" << std::endl;
+                std::cout << "------------walking--------------" << std::endl;
 
                 Node *lastNodeInWalk = this->getLastNodeInWalk();
-                std::cout << "last node in walk " << lastNodeInWalk->getPoint().getAsString() << std::endl;
+                std::cout << "last node from walk\t" << lastNodeInWalk->getPoint().getAsString() << std::endl;
                 Node *neighbour = this->getRandomNeighbourNode(lastNodeInWalk);
 
                 if (this->nodeIsVisited(neighbour)) {
@@ -99,15 +115,16 @@ private:
                 }
 
                 if (!this->isInWalk(neighbour)) {
-                    std::cout << "adding to walk " << neighbour->getPoint().getAsString() << std::endl;
+                    std::cout << "adding to walk\t" << neighbour->getPoint().getAsString();
                     this->addToWalk(neighbour);
-                    std::cout << "added " << std::endl;
+                    std::cout << "\tdone" << std::endl;
                 } else {
-                    std::cout << "closing loop " << std::endl;
+                    std::cout << "closing loop ";
                     this->trimWalkAfter(neighbour);
-                    std::cout << "closed " << std::endl;
-
+                    std::cout << "\tdone" << std::endl;
                 }
+
+                this->debugWalk();
             }
         }
     }
