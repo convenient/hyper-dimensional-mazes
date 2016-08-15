@@ -103,6 +103,18 @@ public:
         return this->getRandomNode(this->unvisited_map);
     };
 
+    /**
+     * Super inefficient! only used to clean up the end of wilsons
+     */
+    Node *getRandomVisitedNode() {
+        while (true) {
+            Node *node = this->getRandomNode(this->map);
+            if (this->nodeIsVisited(node)) {
+                return node;
+            }
+        }
+    };
+
     std::vector<Node *> getPotentialEntraceExitNodes() {
         std::vector<Node *> deadEnds;
 

@@ -39,15 +39,20 @@ class MazeWilsons : public Maze {
     void trimWalkAfter(Node *node) {
         bool remove = false;
 
-        //TODO The bug is in here
+        std::vector<Node *> nodesToRemove;
+
         for (auto walkNodeMap : this->positionToNode) {
             Node* walkNode = walkNodeMap.second;
             if (remove) {
-                this->removeFromWalk(walkNode);
+                nodesToRemove.push_back(walkNode);
             }
             if (walkNode == node) {
                 remove = true;
             }
+        }
+
+        for (auto nodeToRemove : nodesToRemove) {
+            this->removeFromWalk(nodeToRemove);
         }
     }
 
@@ -78,19 +83,25 @@ class MazeWilsons : public Maze {
     }
 
 
+
+
 private:
     void generateAlgorithm() {
 
 
         while (this->getUnvisitedNodeCount() > 0) {
-            std::cout << "##################################################" << std::endl;
+            std::cout << "##################################################" << this->getUnvisitedNodeCount() << std::endl;
             Node *targetNode = this->getRandomUnvisitedNode();
             std::cout << "Target node\t\t\t" << targetNode->getPoint().getAsString() << std::endl;
             this->markNodeAsVisited(targetNode);
 
             Node *initialWalkNode;
             while (true) {
-                initialWalkNode = this->getRandomUnvisitedNode();
+                if (this->getUnvisitedNodeCount() <= 2) {
+                    initialWalkNode = this->getRandomVisitedNode();
+                } else {
+                    initialWalkNode = this->getRandomUnvisitedNode();
+                }
                 if (initialWalkNode != targetNode) {
                     break;
                 }
