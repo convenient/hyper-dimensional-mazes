@@ -60,6 +60,10 @@ class MazeWilsons : public Maze {
         Node *previousWalkNode = nullptr;
         for (auto walkNodeMap : this->positionToNode) {
             Node *walkNode = walkNodeMap.second;
+            if (this->nodeExistsAtPoint(walkNode->getPoint())) {
+                //todo figure out whats going on here.
+                this->markNodeAsVisited(walkNode);
+            }
 
             if (previousWalkNode == nullptr) {
                 //This is the first walk through, we need to iterate over to the next section
@@ -94,6 +98,9 @@ private:
 
 
         while (this->getUnvisitedNodeCount() > 0) {
+
+
+
             std::cout << "##################################################" << this->getUnvisitedNodeCount() << std::endl;
             Node *targetNode = this->getRandomUnvisitedNode();
             std::cout << "Target node\t\t\t" << targetNode->getPoint().getAsString() << std::endl;
