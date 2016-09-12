@@ -71,14 +71,18 @@ class MazeWilsons : public Maze {
     }
 
     void debugWalk() {
-        std::cout << "\t" << "pos to node" << std::endl;
-        for (auto walkNodeMap : this->positionToNode) {
-            std::cout << "\t" << walkNodeMap.first << "\t" << walkNodeMap.second->getPoint().getAsString() << std::endl;
+        if (this->nodeToPosition.size() != this->positionToNode.size()) {
+            exit(-99);
         }
 
-        std::cout << "\t" <<  "node to pos" << std::endl;
-        for (auto walkNodeMap : this->nodeToPosition) {
-            std::cout << "\t" << walkNodeMap.second << "\t" << walkNodeMap.first->getPoint().getAsString() << std::endl;
+        for (auto walkNodeMap : this->positionToNode) {
+            unsigned long pos1 = walkNodeMap.first;
+            Node *debug = walkNodeMap.second;
+            unsigned long pos2 = this->nodeToPosition.at(debug);
+            if (pos1 != pos2) {
+                exit(-44);
+            }
+            std::cout << "\t" << pos1 << "\t" << debug->getPoint().getAsString() << std::endl;
         }
     }
 
