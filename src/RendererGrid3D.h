@@ -171,12 +171,12 @@ class RendererGrid3D {
          * Paint node for debugging purposes
          */
         Point test;
-        test.addPosition("x", -2);
-        test.addPosition("y", -2);
+//        test.addPosition("x", -2);
+//        test.addPosition("y", -2);
 //        test.addPosition("z", -1);
 
         Point test1;
-        test1.addPosition("x", -2);
+        test1.addPosition("x", -1);
         test1.addPosition("y", -1);
 //        test1.addPosition("z", -1);*/
 

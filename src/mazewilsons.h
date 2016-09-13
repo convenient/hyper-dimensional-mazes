@@ -60,8 +60,7 @@ class MazeWilsons : public Maze {
         Node *previousWalkNode = nullptr;
         for (auto walkNodeMap : this->positionToNode) {
             Node *walkNode = walkNodeMap.second;
-            if (this->nodeExistsAtPoint(walkNode->getPoint())) {
-                //todo figure out whats going on here.
+            if (!this->nodeIsVisited(walkNode)) {
                 this->markNodeAsVisited(walkNode);
             }
 
@@ -72,6 +71,7 @@ class MazeWilsons : public Maze {
             }
             previousWalkNode = walkNode;
         }
+        this->clearWalk();
     }
 
     void debugWalk() {
@@ -104,7 +104,10 @@ private:
             std::cout << "##################################################" << this->getUnvisitedNodeCount() << std::endl;
             Node *targetNode = this->getRandomUnvisitedNode();
             std::cout << "Target node\t\t\t" << targetNode->getPoint().getAsString() << std::endl;
-            this->markNodeAsVisited(targetNode);
+
+            if (targetNode->getPoint().getAsString() == "(x:-1)(y:-1)") {
+                int lol = 1;
+            }
 
             Node *initialWalkNode;
             while (true) {
@@ -114,6 +117,7 @@ private:
                     initialWalkNode = this->getRandomUnvisitedNode();
                 }
                 if (initialWalkNode != targetNode) {
+                    this->markNodeAsVisited(initialWalkNode);
                     break;
                 }
             }

@@ -79,6 +79,9 @@ public:
     }
 
     void markNodeAsVisited(Node *node) {
+        if (this->nodeIsVisited(node)) {
+            return;
+        }
         Point p = node->getPoint();
         if (this->nodeExistsAtPoint(p)) {
             std::string pointId = p.getAsString();
