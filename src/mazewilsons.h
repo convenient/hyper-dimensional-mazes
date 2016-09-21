@@ -8,7 +8,7 @@ class MazeWilsons : public Maze {
     std::map<Node *, long> nodeToPosition;
     std::map<long, Node*> positionToNode;
 
-    Node *secondLastNodeInWalk;
+    Node *secondLastNodeInWalk = nullptr;
 
     long positionCounter;
 
@@ -38,7 +38,10 @@ class MazeWilsons : public Maze {
     }
 
     Node* getLastNodeInWalk() {
-        return this->positionToNode.rbegin()->second;
+        if (this->positionToNode.size()>0) {
+            return this->positionToNode.rbegin()->second;
+        }
+        return nullptr;
     }
 
     void trimWalkAfter(Node *node) {
@@ -166,12 +169,8 @@ private:
         std::cout << "DONE" << std::endl;
     }
 
-    /**
-     * Get a random neighbour node, just not the one you previously came from! You're not allowed to double back.
-     */
     Node* getRandomNeighbourNode(Node *node) {
         Node *chosenNode = nullptr;
-        //todo for loop throw exception after going through all nodes
         while (true) {
             std::vector<Node *> neighbourNodes = this->getNeighbourNodes(node);
             unsigned long r = (unsigned long) this->getRandomNumber(0, (int) neighbourNodes.size() - 1);
