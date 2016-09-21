@@ -8,6 +8,8 @@ class MazeWilsons : public Maze {
     std::map<Node *, long> nodeToPosition;
     std::map<long, Node*> positionToNode;
 
+    Node *secondLastNodeInWalk;
+
     long positionCounter;
 
     void clearWalk() {
@@ -17,6 +19,9 @@ class MazeWilsons : public Maze {
     }
 
     void addToWalk(Node* node) {
+
+        this->secondLastNodeInWalk = this->getLastNodeInWalk();
+
         this->positionCounter++;
         this->nodeToPosition.insert({node, this->positionCounter});
         this->positionToNode.insert({this->positionCounter, node});
@@ -61,6 +66,7 @@ class MazeWilsons : public Maze {
         for (auto walkNodeMap : this->positionToNode) {
             Node *walkNode = walkNodeMap.second;
             if (!this->nodeIsVisited(walkNode)) {
+                std::cout << "visiting " << walkNode->getPoint().getAsString() << std::endl;
                 this->markNodeAsVisited(walkNode);
             }
 
@@ -117,6 +123,7 @@ private:
                     initialWalkNode = this->getRandomUnvisitedNode();
                 }
                 if (initialWalkNode != targetNode) {
+                    std::cout << "visiting initial walk node " << initialWalkNode->getPoint().getAsString() << std::endl;
                     this->markNodeAsVisited(initialWalkNode);
                     break;
                 }
@@ -155,12 +162,25 @@ private:
                 this->debugWalk();
             }
         }
+
+        std::cout << "DONE" << std::endl;
     }
 
+    /**
+     * Get a random neighbour node, just not the one you previously came from! You're not allowed to double back.
+     */
     Node* getRandomNeighbourNode(Node *node) {
-        std::vector<Node *> neighbourNodes = this->getNeighbourNodes(node);
-        unsigned long r = (unsigned long) this->getRandomNumber(0, (int) neighbourNodes.size() - 1);
-        Node *chosenNode = neighbourNodes.at(r);
+        Node *chosenNode = nullptr;
+        //todo for loop throw exception after going through all nodes
+        while (true) {
+            std::vector<Node *> neighbourNodes = this->getNeighbourNodes(node);
+            unsigned long r = (unsigned long) this->getRandomNumber(0, (int) neighbourNodes.size() - 1);
+            chosenNode = neighbourNodes.at(r);
+
+            if (chosenNode != this->secondLastNodeInWalk) {
+                break;
+            }
+        }
         return chosenNode;
     }
 };

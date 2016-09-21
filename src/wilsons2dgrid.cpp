@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 
     Maze *mazePtr = new MazeWilsons;
     Solver *solver = new Solver(mazePtr);
-                    mazePtr->setSeed(1470947053512);
+                    mazePtr->setSeed(1474465848856);
     char title[] = "Wilsons Maze - 2D Grid";
     RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 
