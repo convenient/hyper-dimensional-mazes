@@ -35,6 +35,12 @@ class Maze {
 
 public:
 
+    void (*generateStepCallbackFunction)();
+
+    void setGenerateStepCallback(void (*callback)()) {
+        this->generateStepCallbackFunction = callback;
+    }
+
     void setSeed(unsigned long seed) {
         this->seed = seed;
     }
@@ -79,6 +85,9 @@ public:
     }
 
     void markNodeAsVisited(Node *node) {
+        if (this->nodeIsVisited(node)) {
+            return;
+        }
         Point p = node->getPoint();
         if (this->nodeExistsAtPoint(p)) {
             std::string pointId = p.getAsString();
@@ -101,6 +110,18 @@ public:
 
     Node *getRandomUnvisitedNode() {
         return this->getRandomNode(this->unvisited_map);
+    };
+
+    /**
+     * Super inefficient! only used to clean up the end of wilsons
+     */
+    Node *getRandomVisitedNode() {
+        while (true) {
+            Node *node = this->getRandomNode(this->map);
+            if (this->nodeIsVisited(node)) {
+                return node;
+            }
+        }
     };
 
     std::vector<Node *> getPotentialEntraceExitNodes() {

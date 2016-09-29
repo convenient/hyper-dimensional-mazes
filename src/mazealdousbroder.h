@@ -20,6 +20,9 @@ private:
 
             if (!this->nodeIsVisited(chosenNode)) {
                 workingNode->link(chosenNode);
+                if (this->generateStepCallbackFunction != nullptr) {
+                    this->generateStepCallbackFunction();
+                }
             }
             if (!this->nodeIsVisited(workingNode)) {
                 this->markNodeAsVisited(workingNode);

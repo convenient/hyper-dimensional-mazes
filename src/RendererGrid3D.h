@@ -20,6 +20,9 @@ void processKeys(unsigned char key, int x, int y);
 
 class RendererGrid3D {
 
+    //mark to false to disable for debugging maze generation
+    bool solutionLogicEnabled = true;
+
     GLfloat squareSize = 0.03;
 
     GLfloat rotateMultiplier = -8;
@@ -118,11 +121,15 @@ class RendererGrid3D {
             this->axisInitialised = true;
         }
 
-        Node *start = solver->getStartNode();
-        Node *end = solver->getEndNode();
+        Node *start = nullptr;
+        Node *end = nullptr;
+        if (this->solutionLogicEnabled) {
+            start = solver->getStartNode();
+            end = solver->getEndNode();
+        }
         for (auto i : this->m->getMap()) {
             Node *node = i.second;
-            if (node == start || node == end) {
+            if (this->solutionLogicEnabled && (node == start || node == end)) {
                 continue;
             }
             drawNode(node);
@@ -136,6 +143,10 @@ class RendererGrid3D {
      * Draw the path between the first and last node.
      */
     void drawPath(std::vector<Node *> path) {
+
+        if (!this->solutionLogicEnabled) {
+            return;
+        }
 
         if (path.size() <=2) {
             return;
@@ -153,12 +164,18 @@ class RendererGrid3D {
     }
 
     void drawStartNode() {
+        if (!this->solutionLogicEnabled) {
+            return;
+        }
         Node *start = solver->getStartNode();
         drawCube(start->getPoint(), squareSize, startCubeColours);
         drawConnectors(start);
     }
 
     void drawEndNode() {
+        if (!this->solutionLogicEnabled) {
+            return;
+        }
         Node *end = solver->getEndNode();
         drawCube(end->getPoint(), squareSize, endCubeColours);
         drawConnectors(end);
@@ -171,14 +188,14 @@ class RendererGrid3D {
          * Paint node for debugging purposes
          */
         Point test;
-        /*test.addPosition("x", 0);
-        test.addPosition("y", 0);
-        test.addPosition("z", -1);*/
+//        test.addPosition("x", 1);
+//        test.addPosition("y", 1);
+//        test.addPosition("z", -1);
 
         Point test1;
-        /*test1.addPosition("x", 0);
-        test1.addPosition("y", -1);
-        test1.addPosition("z", -1);*/
+//        test1.addPosition("x", 1);
+//        test1.addPosition("y", -2);
+//        test1.addPosition("z", -1);
 
         std::vector<std::vector<float>> drawColours = standardCubeColours;
 
@@ -411,7 +428,7 @@ class RendererGrid3D {
         glRotatef(superSecretOpenGlHackyPointer->rotationYaxis, 0.0f, 1.0f, 0.0f);
         glRotatef(superSecretOpenGlHackyPointer->rotationZaxis, 0.0f, 0.0f, 1.0f);
 
-        if (superSecretOpenGlHackyPointer->showingSolution) {
+        if (superSecretOpenGlHackyPointer->showingSolution && superSecretOpenGlHackyPointer->solutionLogicEnabled) {
             superSecretOpenGlHackyPointer->solve();
         } else {
             superSecretOpenGlHackyPointer->drawMaze();
@@ -425,12 +442,16 @@ public:
     void generate() {
         m->generate();
 
-        solver->setMazeUnsolved();
-        std::vector<Node *> solution = solver->solve();
+        if (this->solutionLogicEnabled) {
+            solver->setMazeUnsolved();
+            std::vector<Node *> solution = solver->solve();
+        }
 
         this->drawMaze();
 
-        this->generateCallback(m, solver);
+        if (this->solutionLogicEnabled) {
+            this->generateCallback(m, solver);
+        }
         glutPostRedisplay();
     }
 
@@ -440,10 +461,20 @@ public:
         this->solveCallback(m, this->solver);
     }
 
+    static void drawLink() {
+        for (auto i : superSecretOpenGlHackyPointer->m->getMap()) {
+            Node *node = i.second;
+            superSecretOpenGlHackyPointer->drawNode(node);
+        }
+        glFlush();
+    }
+
     RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s)) {
 
         this->m = maze;
         this->solver = solver;
+
+        this->m->setGenerateStepCallback(drawLink);
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};

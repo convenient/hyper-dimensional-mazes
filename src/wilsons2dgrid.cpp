@@ -1,5 +1,5 @@
 #include <iostream>
-#include "mazealdousbroder.h"
+#include "mazewilsons.h"
 #include "RendererText.h"
 #include "solver.h"
 #include "RendererGrid3D.h"
@@ -20,10 +20,10 @@ void solveCallback(Maze *m, Solver *s) {
 
 int main(int argc, char **argv) {
 
-    Maze *mazePtr = new MazeAldousBroder;
+    Maze *mazePtr = new MazeWilsons;
     Solver *solver = new Solver(mazePtr);
-
-    char title[] = "Aldous-Broder Maze - 3D Grid";
+                    mazePtr->setSeed(1474465848856);
+    char title[] = "Wilsons Maze - 2D Grid";
     RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 
     int mazeSize = 10;
@@ -31,17 +31,14 @@ int main(int argc, char **argv) {
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
 
-    std::cout << "Generating a Aldous-Broder maze of " << mazeSize << " by " << mazeSize << " by " << mazeSize << std::endl;
+    std::cout << "Generating a wilsons maze of " << mazeSize << " by " << mazeSize << std::endl;
 
     for (int x=minpart; x<maxpart; x++) {
         for (int y=minpart; y<maxpart; y++) {
-            for (int z=minpart; z<maxpart; z++) {
-                Point p;
-                p.addPosition("x", x);
-                p.addPosition("y", y);
-                p.addPosition("z", z);
-                mazePtr->createNode(p);
-            }
+            Point p;
+            p.addPosition("x", x);
+            p.addPosition("y", y);
+            mazePtr->createNode(p);
         }
     }
 
