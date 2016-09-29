@@ -35,6 +35,12 @@ class Maze {
 
 public:
 
+    void (*generateStepCallbackFunction)();
+
+    void setGenerateStepCallback(void (*callback)()) {
+        this->generateStepCallbackFunction = callback;
+    }
+
     void setSeed(unsigned long seed) {
         this->seed = seed;
     }

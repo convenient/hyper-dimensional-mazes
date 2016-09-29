@@ -107,7 +107,7 @@ private:
                 firstRow = false;
             }
 
-            if (firstRow || potentialPoints.size() > 0 && this->getRandomNumber(0, 1)) {
+            if (firstRow || (potentialPoints.size() > 0 && this->getRandomNumber(0, 1))) {
                 Node *nextNode = this->getNodeAtPoint(potentialPoints.front());
                 this->link(node, nextNode);
             } else {

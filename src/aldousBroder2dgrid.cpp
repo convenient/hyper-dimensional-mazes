@@ -18,6 +18,11 @@ void solveCallback(Maze *m, Solver *s) {
     }
 }
 
+void drawCallback() {
+    std::cout << "Should I draw now?" << std::endl;
+}
+
+
 int main(int argc, char **argv) {
 
     Maze *mazePtr = new MazeAldousBroder;
@@ -26,7 +31,7 @@ int main(int argc, char **argv) {
     char title[] = "Aldous-Broder Maze - 2D Grid";
     RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 
-    int mazeSize = 18;
+    int mazeSize = 8;
     //Offset the node position to make rendering easier and map to nice opengl stuff.
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);

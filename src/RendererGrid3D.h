@@ -461,10 +461,20 @@ public:
         this->solveCallback(m, this->solver);
     }
 
+    static void drawLink() {
+        for (auto i : superSecretOpenGlHackyPointer->m->getMap()) {
+            Node *node = i.second;
+            superSecretOpenGlHackyPointer->drawNode(node);
+        }
+        glFlush();
+    }
+
     RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s)) {
 
         this->m = maze;
         this->solver = solver;
+
+        this->m->setGenerateStepCallback(drawLink);
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
