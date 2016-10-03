@@ -39,8 +39,17 @@ public:
         this->seed = seed;
     }
 
+    void (*linkNodesCallback)(Maze *m, Node *a, Node *b);
+
+    void registerCallbackLinkNodes(void (*callback)(Maze *m, Node *a, Node *b)) {
+        this->linkNodesCallback = callback;
+    }
+
     void linkNodes(Node *a, Node* b) {
         a->link(b);
+        if (this->linkNodesCallback != nullptr) {
+            this->linkNodesCallback(this, a, b);
+        }
     }
 
     unsigned long getSeed() {

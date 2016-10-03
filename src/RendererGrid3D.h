@@ -347,6 +347,16 @@ class RendererGrid3D {
         glEnd();
     }
 
+    static void linkCallback(Maze *m, Node *a, Node *b) {
+
+        //get all neighbour nods for a and b, then redraw
+//        for (auto i : m->getMap()) {
+//            Node *node = i.second;
+//            superSecretOpenGlHackyPointer->drawNode(node);
+//        }
+
+//        glutPostRedisplay();
+    }
 
     static void processKeys(unsigned char key, int x, int y)
     {
@@ -443,6 +453,8 @@ public:
     RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s)) {
 
         this->m = maze;
+        this->m->registerCallbackLinkNodes(this->linkCallback);
+
         this->solver = solver;
 
         char fakeParam[] = "fake";
@@ -466,6 +478,7 @@ public:
     }
 
     void startOpenGl() {
+        //TODO figure out how to start opengl then trigger the first maze automatically
         generate();
         glutMainLoop();
     }
