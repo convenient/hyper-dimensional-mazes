@@ -19,7 +19,7 @@ private:
             Node *chosenNode = neighbourNodes.at(r);
 
             if (!this->nodeIsVisited(chosenNode)) {
-                workingNode->link(chosenNode);
+                this->linkNodes(workingNode, chosenNode);
             }
             if (!this->nodeIsVisited(workingNode)) {
                 this->markNodeAsVisited(workingNode);

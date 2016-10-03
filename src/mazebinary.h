@@ -42,7 +42,7 @@ private:
 
                 Node *chosenNode = potentialNodes.at(r);
 
-                workingNode->link(chosenNode);
+                this->linkNodes(workingNode, chosenNode);
             }
 
             this->markNodeAsVisited(workingNode);

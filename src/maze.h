@@ -39,6 +39,10 @@ public:
         this->seed = seed;
     }
 
+    void linkNodes(Node *a, Node* b) {
+        a->link(b);
+    }
+
     unsigned long getSeed() {
         if (this->seed == 0) {
             this->seed =
