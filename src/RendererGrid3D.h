@@ -25,7 +25,7 @@ class RendererGrid3D {
     GLfloat rotateMultiplier = -8;
 
     bool showingSolution = false;
-
+    bool firstRenderComplete = false;
     bool rotate = false;
 
     GLfloat rotationXaxis = 0.0f;
@@ -118,18 +118,24 @@ class RendererGrid3D {
             this->axisInitialised = true;
         }
 
-        Node *start = solver->getStartNode();
-        Node *end = solver->getEndNode();
+        Node *start = nullptr;
+        Node *end = nullptr;
+        if (this->solver->getMazeSolved()) {
+            start = solver->getStartNode();
+            end = solver->getEndNode();
+        }
         for (auto i : this->m->getMap()) {
             Node *node = i.second;
-            if (node == start || node == end) {
+            if (this->solver->getMazeSolved() && (node == start || node == end)) {
                 continue;
             }
             drawNode(node);
         }
 
-        this->drawStartNode();
-        this->drawEndNode();
+        if (this->solver->getMazeSolved()) {
+            this->drawStartNode();
+            this->drawEndNode();
+        }
     }
 
     /**
@@ -349,13 +355,11 @@ class RendererGrid3D {
 
     static void linkCallback(Maze *m, Node *a, Node *b) {
 
-        //get all neighbour nods for a and b, then redraw
-//        for (auto i : m->getMap()) {
-//            Node *node = i.second;
-//            superSecretOpenGlHackyPointer->drawNode(node);
-//        }
-
-//        glutPostRedisplay();
+        //todo this shit is inefficient and breaks shit
+        for (auto i : m->getMap()) {
+            superSecretOpenGlHackyPointer->drawNode(i.second);
+        }
+        glutPostRedisplay();
     }
 
     static void processKeys(unsigned char key, int x, int y)
@@ -368,7 +372,7 @@ class RendererGrid3D {
                 exit(0);
                 break;
             case 'g':
-                superSecretOpenGlHackyPointer->generate();
+                superSecretOpenGlHackyPointer->generateAndDraw();
                 break;
             case 's':
                 if (superSecretOpenGlHackyPointer->showingSolution) {
@@ -405,6 +409,9 @@ class RendererGrid3D {
             superSecretOpenGlHackyPointer->rotationYaxis += 0.05f * multiplier;
 
             glutPostRedisplay();
+        } else if (!superSecretOpenGlHackyPointer->firstRenderComplete) {
+            superSecretOpenGlHackyPointer->generate();
+            superSecretOpenGlHackyPointer->firstRenderComplete = true;
         }
     }
 
@@ -431,10 +438,13 @@ class RendererGrid3D {
     }
 
 public:
-
     void generate() {
         m->generate();
+    }
 
+    void generateAndDraw() {
+
+        m->generate();
         solver->setMazeUnsolved();
         std::vector<Node *> solution = solver->solve();
 
@@ -478,8 +488,6 @@ public:
     }
 
     void startOpenGl() {
-        //TODO figure out how to start opengl then trigger the first maze automatically
-        generate();
         glutMainLoop();
     }
 };
