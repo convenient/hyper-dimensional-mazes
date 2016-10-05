@@ -452,6 +452,7 @@ public:
 
     void generateAndDraw() {
 
+        //todo make it clear the screen
         m->generate();
         solver->setMazeUnsolved();
         std::vector<Node *> solution = solver->solve();
