@@ -355,11 +355,19 @@ class RendererGrid3D {
 
     static void linkCallback(Maze *m, Node *a, Node *b) {
 
-        //todo this shit is inefficient and breaks shit
+        /**
+         * todo this shit is inefficient
+         * solution = node->get all neighbournodes
+         *
+         * create an opengl equivalent that "draws" a node with the background colour for the nodes and its connectors
+         * then simply call redraw, that way we dont have to compute so many nodes that havent changed
+         */
         for (auto i : m->getMap()) {
             superSecretOpenGlHackyPointer->drawNode(i.second);
         }
+
         glutPostRedisplay();
+        glFlush();//probably overkill, but it works.
     }
 
     static void processKeys(unsigned char key, int x, int y)
