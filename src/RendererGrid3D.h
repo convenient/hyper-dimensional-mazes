@@ -27,6 +27,7 @@ class RendererGrid3D {
     bool showingSolution = false;
     bool firstRenderComplete = false;
     bool rotate = false;
+    bool drawWhileGenerating = false;
 
     GLfloat rotationXaxis = 0.0f;
     GLfloat rotationYaxis = 0.0f;
@@ -35,8 +36,6 @@ class RendererGrid3D {
     std::string xAxisIdentifier;
     std::string yAxisIdentifier;
     std::string zAxisIdentifier;
-
-    bool axisInitialised = false;
 
     void (*generateCallback)(Maze *m, Solver *s);
     void (*solveCallback)(Maze *m, Solver *s);
@@ -99,32 +98,37 @@ class RendererGrid3D {
 
     }
 
-    void drawMaze() {
-        if (!this->axisInitialised) {
-            std::vector<std::string> axis = m->getAllAxis();
+    void initAxis() {
+        std::vector<std::string> axis = m->getAllAxis();
 
-            if (axis.size() == 3) {
-                xAxisIdentifier = axis.at(0);
-                yAxisIdentifier = axis.at(1);
-                zAxisIdentifier = axis.at(2);
-            } else if (axis.size() == 2) {
-                xAxisIdentifier = axis.at(0);
-                yAxisIdentifier = axis.at(1);
-                zAxisIdentifier = "totally_not_a_real_axis_identifier";
-            } else {
-                throw std::logic_error("Tried to render a non-3d or a non-2d maze");
-            }
-
-            this->axisInitialised = true;
+        if (axis.size() == 3) {
+            xAxisIdentifier = axis.at(0);
+            yAxisIdentifier = axis.at(1);
+            zAxisIdentifier = axis.at(2);
+            this->drawWhileGenerating = false;
+        } else if (axis.size() == 2) {
+            xAxisIdentifier = axis.at(0);
+            yAxisIdentifier = axis.at(1);
+            zAxisIdentifier = "totally_not_a_real_axis_identifier";
+            this->drawWhileGenerating = true;
+        } else {
+            throw std::logic_error("Tried to render a non-3d or a non-2d maze");
         }
+    }
 
+    void drawMaze() {
         Node *start = nullptr;
         Node *end = nullptr;
         if (this->solver->getMazeSolved()) {
             start = solver->getStartNode();
             end = solver->getEndNode();
         }
-        for (auto i : this->m->getVisitedNodesMap()) {
+
+        std::unordered_map<std::string, Node *> map = this->m->getMap();
+        if (this->drawWhileGenerating) {
+            map = this->m->getVisitedNodesMap();
+        }
+        for (auto i : map) {
             Node *node = i.second;
             if (this->solver->getMazeSolved() && (node == start || node == end)) {
                 continue;
@@ -354,7 +358,7 @@ class RendererGrid3D {
     }
 
     static void linkCallback(Maze *m, Node *a, Node *b) {
-        
+
         for (auto i : m->getVisitedNodesMap()) {
             superSecretOpenGlHackyPointer->drawNode(i.second);
         }
@@ -411,8 +415,12 @@ class RendererGrid3D {
 
             glutPostRedisplay();
         } else if (!superSecretOpenGlHackyPointer->firstRenderComplete) {
-            superSecretOpenGlHackyPointer->generate();
-            superSecretOpenGlHackyPointer->solver->solve();
+            if (superSecretOpenGlHackyPointer->drawWhileGenerating) {
+                superSecretOpenGlHackyPointer->generate();
+                superSecretOpenGlHackyPointer->solver->solve();
+            } else {
+                superSecretOpenGlHackyPointer->generateAndDraw();
+            }
             superSecretOpenGlHackyPointer->firstRenderComplete = true;
         }
     }
@@ -446,7 +454,8 @@ public:
 
     void generateAndDraw() {
 
-        //todo make it clear the screen
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         m->generate();
         solver->setMazeUnsolved();
         std::vector<Node *> solution = solver->solve();
@@ -466,7 +475,6 @@ public:
     RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s)) {
 
         this->m = maze;
-        this->m->registerCallbackLinkNodes(this->linkCallback);
 
         this->solver = solver;
 
@@ -491,11 +499,15 @@ public:
     }
 
     void startOpenGl() {
+        this->initAxis();
+
+        if (this->drawWhileGenerating) {
+            this->m->registerCallbackLinkNodes(this->linkCallback);
+        }
+
         glutMainLoop();
     }
 };
-
-
 
 
 #endif //MAZES_FOR_PROGRAMMERS_RENDERERGRID3D_H

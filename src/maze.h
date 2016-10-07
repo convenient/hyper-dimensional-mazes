@@ -41,14 +41,16 @@ public:
     }
 
     void (*linkNodesCallback)(Maze *m, Node *a, Node *b);
+    bool useLinkNodesCallback = false;
 
     void registerCallbackLinkNodes(void (*callback)(Maze *m, Node *a, Node *b)) {
         this->linkNodesCallback = callback;
+        this->useLinkNodesCallback = true;
     }
 
     void linkNodes(Node *a, Node* b) {
         a->link(b);
-        if (this->linkNodesCallback != nullptr) {
+        if (this->useLinkNodesCallback) {
             this->linkNodesCallback(this, a, b);
         }
     }
