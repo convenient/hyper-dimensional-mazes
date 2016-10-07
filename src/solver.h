@@ -132,6 +132,10 @@ public:
     void setMazeUnsolved() {
         this->mazeSolved = false;
     }
+
+    bool getMazeSolved() {
+        return this->mazeSolved;
+    }
 };
 
 #endif //MAZES_FOR_PROGRAMMERS_SOLVER_H

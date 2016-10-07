@@ -107,19 +107,15 @@ private:
                 firstRow = false;
             }
 
-            if (firstRow || potentialPoints.size() > 0 && this->getRandomNumber(0, 1)) {
+            if (firstRow || (potentialPoints.size() > 0 && this->getRandomNumber(0, 1))) {
                 Node *nextNode = this->getNodeAtPoint(potentialPoints.front());
-                this->link(node, nextNode);
+                this->linkNodes(node, nextNode);
             } else {
                 this->processCarveSet(&carvedPath, axis);
             }
 
             previousNode = node;
         }
-    }
-
-    void link(Node *a, Node *b) {
-        a->link(b);
     }
 
     void processCarveSet(std::vector<Node *>* carvedPath, std::vector<std::string> axisList) {
@@ -135,7 +131,7 @@ private:
                 Point tmpPoint = Point::getNeighbourPoint(randomNodeFromCarveSet->getPoint(), axisIdentifier, Point::negative);
                 if (this->nodeExistsAtPoint(tmpPoint)) {
                     Node *nextNode = this->getNodeAtPoint(tmpPoint);
-                    this->link(randomNodeFromCarveSet, nextNode);
+                    this->linkNodes(randomNodeFromCarveSet, nextNode);
                     carvedPath->clear();
                     return;
                 }
