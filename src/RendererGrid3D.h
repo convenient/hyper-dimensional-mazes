@@ -124,7 +124,7 @@ class RendererGrid3D {
             start = solver->getStartNode();
             end = solver->getEndNode();
         }
-        for (auto i : this->m->getMap()) {
+        for (auto i : this->m->getVisitedNodesMap()) {
             Node *node = i.second;
             if (this->solver->getMazeSolved() && (node == start || node == end)) {
                 continue;
@@ -354,15 +354,8 @@ class RendererGrid3D {
     }
 
     static void linkCallback(Maze *m, Node *a, Node *b) {
-
-        /**
-         * todo this shit is inefficient
-         * solution = node->get all neighbournodes
-         *
-         * create an opengl equivalent that "draws" a node with the background colour for the nodes and its connectors
-         * then simply call redraw, that way we dont have to compute so many nodes that havent changed
-         */
-        for (auto i : m->getMap()) {
+        
+        for (auto i : m->getVisitedNodesMap()) {
             superSecretOpenGlHackyPointer->drawNode(i.second);
         }
 
@@ -419,6 +412,7 @@ class RendererGrid3D {
             glutPostRedisplay();
         } else if (!superSecretOpenGlHackyPointer->firstRenderComplete) {
             superSecretOpenGlHackyPointer->generate();
+            superSecretOpenGlHackyPointer->solver->solve();
             superSecretOpenGlHackyPointer->firstRenderComplete = true;
         }
     }

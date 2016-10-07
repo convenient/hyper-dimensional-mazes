@@ -9,6 +9,7 @@
 class Maze {
     std::unordered_map<std::string, Node *> map;
     std::unordered_map<std::string, Node *> unvisited_map;
+    std::unordered_map<std::string, Node *> visited_map;
 
     unsigned long seed = 0;
 
@@ -66,6 +67,7 @@ public:
          * Reset all object caches etc
          */
         this->unvisited_map = map;
+        this->visited_map.clear();
         this->axis.clear();
         for (auto nodeItr : this->getMap()) {
             Node *node = nodeItr.second;
@@ -97,6 +99,7 @@ public:
             std::string pointId = p.getAsString();
             if (this->unvisited_map.count(pointId)) {
                 this->unvisited_map.erase(pointId);
+                this->visited_map.insert({pointId, node});
                 return;
             }
         }
@@ -106,14 +109,21 @@ public:
     bool nodeIsVisited(Node *node) {
         Point p = node->getPoint();
         if (this->nodeExistsAtPoint(p)) {
-            std::string pointId = p.getAsString();
-            return !(this->unvisited_map.count(pointId));
+            return (this->visited_map.count(p.getAsString()));
         }
         throw std::logic_error("Tried to mark a node as visited when it does not exist");
     }
 
     Node *getRandomUnvisitedNode() {
         return this->getRandomNode(this->unvisited_map);
+    };
+
+    Node *getRandomVisitedNode() {
+        return this->getRandomNode(this->visited_map);
+    };
+
+    std::unordered_map<std::string, Node *> getVisitedNodesMap () {
+        return this->visited_map;
     };
 
     std::vector<Node *> getPotentialEntraceExitNodes() {
