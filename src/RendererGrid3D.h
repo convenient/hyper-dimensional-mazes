@@ -107,10 +107,12 @@ class RendererGrid3D {
                 xAxisIdentifier = axis.at(0);
                 yAxisIdentifier = axis.at(1);
                 zAxisIdentifier = axis.at(2);
+                this->threeDimensions = true;
             } else if (axis.size() == 2) {
                 xAxisIdentifier = axis.at(0);
                 yAxisIdentifier = axis.at(1);
                 zAxisIdentifier = "totally_not_a_real_axis_identifier";
+                this->threeDimensions = false;
             } else {
                 throw std::logic_error("Tried to render a non-3d or a non-2d maze");
             }
@@ -354,10 +356,24 @@ class RendererGrid3D {
     }
 
     static void linkCallback(Maze *m, Node *a, Node *b) {
-        
-        for (auto i : m->getVisitedNodesMap()) {
-            superSecretOpenGlHackyPointer->drawNode(i.second);
+
+        if (superSecretOpenGlHackyPointer->threeDimensions) {
+            unsigned long count = superSecretOpenGlHackyPointer->m->getMap().size();
+            unsigned long interval = count / 100;
+            if (superSecretOpenGlHackyPointer->threeDimensionRotateCount % interval == 0) {
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+                superSecretOpenGlHackyPointer->rotationXaxis += (0.075f) * superSecretOpenGlHackyPointer->rotateMultiplier;
+                superSecretOpenGlHackyPointer->rotationYaxis += (0.05f) * superSecretOpenGlHackyPointer->rotateMultiplier;
+
+                glRotatef(superSecretOpenGlHackyPointer->rotationXaxis, 1.0f, 0.0f, 0.0f);
+                glRotatef(superSecretOpenGlHackyPointer->rotationYaxis, 0.0f, 1.0f, 0.0f);
+                glRotatef(superSecretOpenGlHackyPointer->rotationZaxis, 0.0f, 0.0f, 1.0f);
+            }
+            superSecretOpenGlHackyPointer->threeDimensionRotateCount++;
         }
+
+        superSecretOpenGlHackyPointer->drawMaze();
 
         glutPostRedisplay();
         glFlush();//probably overkill, but it works.
@@ -440,13 +456,18 @@ class RendererGrid3D {
     }
 
 public:
+
+    bool threeDimensions = false;
+    unsigned long threeDimensionRotateCount = 0;
+
     void generate() {
         m->generate();
     }
 
     void generateAndDraw() {
 
-        //todo make it clear the screen
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         m->generate();
         solver->setMazeUnsolved();
         std::vector<Node *> solution = solver->solve();
