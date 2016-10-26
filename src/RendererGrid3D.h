@@ -22,6 +22,9 @@ class RendererGrid3D {
 
     GLfloat squareSize = 0.03;
 
+    //Disable for maze generation debugging
+    bool solutionLogicEnabled = true;
+
     GLfloat rotateMultiplier = -8;
 
     bool showingSolution = false;
@@ -119,7 +122,7 @@ class RendererGrid3D {
     void drawMaze() {
         Node *start = nullptr;
         Node *end = nullptr;
-        if (this->solver->getMazeSolved()) {
+        if (this->solutionLogicEnabled && this->solver->getMazeSolved()) {
             start = solver->getStartNode();
             end = solver->getEndNode();
         }
@@ -130,13 +133,13 @@ class RendererGrid3D {
         }
         for (auto i : map) {
             Node *node = i.second;
-            if (this->solver->getMazeSolved() && (node == start || node == end)) {
+            if (this->solutionLogicEnabled && this->solver->getMazeSolved() && (node == start || node == end)) {
                 continue;
             }
             drawNode(node);
         }
 
-        if (this->solver->getMazeSolved()) {
+        if (this->solutionLogicEnabled && this->solver->getMazeSolved()) {
             this->drawStartNode();
             this->drawEndNode();
         }
@@ -146,7 +149,9 @@ class RendererGrid3D {
      * Draw the path between the first and last node.
      */
     void drawPath(std::vector<Node *> path) {
-
+        if (!this->solutionLogicEnabled) {
+            return;
+        }
         if (path.size() <=2) {
             return;
         }
@@ -163,12 +168,18 @@ class RendererGrid3D {
     }
 
     void drawStartNode() {
+        if (!this->solutionLogicEnabled) {
+            return;
+        }
         Node *start = solver->getStartNode();
         drawCube(start->getPoint(), squareSize, startCubeColours);
         drawConnectors(start);
     }
 
     void drawEndNode() {
+        if (!this->solutionLogicEnabled) {
+            return;
+        }
         Node *end = solver->getEndNode();
         drawCube(end->getPoint(), squareSize, endCubeColours);
         drawConnectors(end);
@@ -438,7 +449,7 @@ class RendererGrid3D {
         glRotatef(superSecretOpenGlHackyPointer->rotationYaxis, 0.0f, 1.0f, 0.0f);
         glRotatef(superSecretOpenGlHackyPointer->rotationZaxis, 0.0f, 0.0f, 1.0f);
 
-        if (superSecretOpenGlHackyPointer->showingSolution) {
+        if (superSecretOpenGlHackyPointer->showingSolution && superSecretOpenGlHackyPointer->solutionLogicEnabled) {
             superSecretOpenGlHackyPointer->solve();
         } else {
             superSecretOpenGlHackyPointer->drawMaze();
@@ -457,12 +468,16 @@ public:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m->generate();
-        solver->setMazeUnsolved();
-        std::vector<Node *> solution = solver->solve();
+        if (this->solutionLogicEnabled) {
+            solver->setMazeUnsolved();
+            std::vector<Node *> solution = solver->solve();
+        }
 
         this->drawMaze();
 
-        this->generateCallback(m, solver);
+        if (this->solutionLogicEnabled) {
+            this->generateCallback(m, solver);
+        }
         glutPostRedisplay();
     }
 
