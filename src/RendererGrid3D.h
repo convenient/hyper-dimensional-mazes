@@ -429,6 +429,7 @@ class RendererGrid3D {
             if (superSecretOpenGlHackyPointer->drawWhileGenerating) {
                 superSecretOpenGlHackyPointer->generate();
                 superSecretOpenGlHackyPointer->solver->solve();
+                superSecretOpenGlHackyPointer->triggerGenerateCallback();
             } else {
                 superSecretOpenGlHackyPointer->generateAndDraw();
             }
@@ -476,9 +477,14 @@ public:
         this->drawMaze();
 
         if (this->solutionLogicEnabled) {
-            this->generateCallback(m, solver);
+            this->triggerGenerateCallback();
         }
         glutPostRedisplay();
+    }
+
+    void triggerGenerateCallback()
+    {
+        this->generateCallback(this->m, this->solver);
     }
 
     void solve() {
