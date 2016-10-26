@@ -23,7 +23,7 @@ class RendererGrid3D {
     GLfloat squareSize = 0.03;
 
     //Disable for maze generation debugging
-    bool solutionLogicEnabled = true;
+    bool solutionLogicEnabled = false;
 
     GLfloat rotateMultiplier = -8;
 
@@ -428,8 +428,10 @@ class RendererGrid3D {
         } else if (!superSecretOpenGlHackyPointer->firstRenderComplete) {
             if (superSecretOpenGlHackyPointer->drawWhileGenerating) {
                 superSecretOpenGlHackyPointer->generate();
-                superSecretOpenGlHackyPointer->solver->solve();
-                superSecretOpenGlHackyPointer->triggerGenerateCallback();
+                if (superSecretOpenGlHackyPointer->solutionLogicEnabled) {
+                    superSecretOpenGlHackyPointer->solver->solve();
+                    superSecretOpenGlHackyPointer->triggerGenerateCallback();
+                }
             } else {
                 superSecretOpenGlHackyPointer->generateAndDraw();
             }
