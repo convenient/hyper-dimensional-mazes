@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
 
     int mazeSize = 6;
 
-    std::cout << "Generating a binary maze of " << mazeSize << " by "<< mazeSize << " by " << mazeSize << " by " << mazeSize <<  std::endl;
+    std::cout << "Generating a Aldous-Broder maze of " << mazeSize << " by "<< mazeSize << " by " << mazeSize << " by " << mazeSize <<  std::endl;
 
     for (int w=0; w< mazeSize; w++) {
         for (int x = 0; x < mazeSize; x++) {

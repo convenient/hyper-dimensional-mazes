@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     Maze *mazePtr = new MazeSidewinder;
     Solver *solver = new Solver(mazePtr);
 
-    char title[] = "Binary Maze - 2D Grid";
+    char title[] = "Sidewinder Maze - 2D Grid";
     RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 
     int mazeSize = 18;
