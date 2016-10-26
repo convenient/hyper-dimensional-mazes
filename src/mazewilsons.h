@@ -98,7 +98,10 @@ class MazeWilsons : public Maze {
             std::cout << "\t" << pos1 << "\t" << debug->getPoint().getAsString() << std::endl;
         }
     }
-
+public:
+    std::string getName() {
+        return "Wilsons";
+    }
 
 private:
     void generateAlgorithm() {

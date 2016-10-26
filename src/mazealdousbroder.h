@@ -4,6 +4,11 @@
 #include "maze.h"
 
 class MazeAldousBroder : public Maze {
+public:
+    std::string getName() {
+        return "Aldous Broder";
+    }
+
 private:
     void generateAlgorithm() {
 

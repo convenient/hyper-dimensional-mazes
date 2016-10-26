@@ -4,6 +4,10 @@
 #include "maze.h"
 
 class MazeBinary : public Maze {
+public:
+    std::string getName() {
+        return "Binary";
+    }
 private:
     /**
      * A dimensionally agnostic binary maze algorithm with a bias towards the positive axis

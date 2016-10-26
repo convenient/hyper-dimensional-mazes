@@ -34,6 +34,11 @@ bool compareNodesByPoint(Node* a, Node* b)
 }
 
 class MazeSidewinder : public Maze {
+public:
+    std::string getName() {
+        return "Sidewinder";
+    }
+
 private:
 
     /**
