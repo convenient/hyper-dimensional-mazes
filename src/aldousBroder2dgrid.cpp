@@ -23,6 +23,11 @@ int main(int argc, char **argv) {
     Maze *mazePtr = new MazeAldousBroder;
     Solver *solver = new Solver(mazePtr);
 
+    if (argc == 2) {
+        unsigned long seed =  strtoul (argv[1], NULL, 0);
+        mazePtr->setSeed(seed);
+    }
+
     char title[] = "Aldous-Broder Maze - 2D Grid";
     RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 

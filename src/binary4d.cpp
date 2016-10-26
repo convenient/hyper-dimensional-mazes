@@ -8,6 +8,11 @@ int main(int argc, char **argv) {
     Maze *mazePtr = new MazeBinary;
     Solver *solver = new Solver(mazePtr);
 
+    if (argc == 2) {
+        unsigned long seed =  strtoul (argv[1], NULL, 0);
+        mazePtr->setSeed(seed);
+    }
+
     int mazeSize = 6;
 
     std::cout << "Generating a binary maze of " << mazeSize << " by "<< mazeSize << " by " << mazeSize << " by " << mazeSize <<  std::endl;
