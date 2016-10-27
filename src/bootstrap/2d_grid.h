@@ -2,9 +2,9 @@
 #define MAZES_FOR_PROGRAMMERS_2D_GRID_H
 
 #include <iostream>
-#include "Render/RendererText.h"
+#include "../Render/RendererText.h"
 #include "solver.h"
-#include "Render/RendererGrid3D.h"
+#include "../Render/RendererGrid3D.h"
 
 bool showTextSolution = false;
 

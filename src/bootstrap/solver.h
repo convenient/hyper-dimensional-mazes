@@ -1,7 +1,7 @@
 #ifndef MAZES_FOR_PROGRAMMERS_SOLVER_H
 #define MAZES_FOR_PROGRAMMERS_SOLVER_H
 
-#include "graph/dijkstra.h"
+#include "../graph/dijkstra.h"
 #include <chrono>
 #include <thread>
 #include <future>

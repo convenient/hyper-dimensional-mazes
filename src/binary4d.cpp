@@ -1,7 +1,7 @@
 #include <iostream>
-#include "mazebinary.h"
+#include "maze/mazebinary.h"
 #include "Render/RendererText.h"
-#include "solver.h"
+#include "bootstrap/solver.h"
 
 int main(int argc, char **argv) {
 

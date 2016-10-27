@@ -1,7 +1,7 @@
 #include <iostream>
-#include "mazealdousbroder.h"
+#include "maze/mazealdousbroder.h"
 #include "Render/RendererText.h"
-#include "solver.h"
+#include "bootstrap/solver.h"
 #include "Render/RendererGrid3D.h"
 
 bool showTextSolution = false;

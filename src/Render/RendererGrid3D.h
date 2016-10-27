@@ -11,8 +11,8 @@
 #include <GL/glut.h>
 #endif
 
-#include "../maze.h"
-#include "../solver.h"
+#include "../maze/maze.h"
+#include "../bootstrap/solver.h"
 class RendererGrid3D;
 RendererGrid3D *superSecretOpenGlHackyPointer;
 
@@ -23,7 +23,7 @@ class RendererGrid3D {
     GLfloat squareSize = 0.03;
 
     //Disable for maze generation debugging
-    bool solutionLogicEnabled = false;
+    bool solutionLogicEnabled = true;
 
     GLfloat rotateMultiplier = -8;
 
