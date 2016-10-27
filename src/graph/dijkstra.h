@@ -1,7 +1,7 @@
 #ifndef MAZES_FOR_PROGRAMMERS_DIJKSTRA_H
 #define MAZES_FOR_PROGRAMMERS_DIJKSTRA_H
 
-#include "maze.h"
+#include "node.h"
 #include <algorithm>
 
 class Dijkstra {

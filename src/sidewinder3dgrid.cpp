@@ -1,8 +1,8 @@
 #include <iostream>
 #include "mazesidewinder.h"
-#include "RendererText.h"
+#include "Render/RendererText.h"
 #include "solver.h"
-#include "RendererGrid3D.h"
+#include "Render/RendererGrid3D.h"
 
 bool showTextSolution = false;
 

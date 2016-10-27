@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "point.h"
+#include "graph/point.h"
 
 TEST(point_test, get_point_value) {
 

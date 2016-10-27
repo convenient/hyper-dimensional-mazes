@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "node.h"
+#include "graph/node.h"
 
 TEST(nodetest, test_bi_directional_links) {
     Point aPoint;

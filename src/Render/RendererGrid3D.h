@@ -4,15 +4,15 @@
 #include <unistd.h>
 
 #ifdef __APPLE__
-#include <OpenGL/gl.h> 
-#include <OpenGL/glu.h>
+#include <OpenGL/OpenGL.h>
+#include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
 #else
 #include <GL/glut.h>
 #endif
 
-#include "maze.h"
-#include "solver.h"
+#include "../maze.h"
+#include "../solver.h"
 class RendererGrid3D;
 RendererGrid3D *superSecretOpenGlHackyPointer;
 

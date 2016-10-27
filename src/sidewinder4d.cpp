@@ -1,6 +1,6 @@
 #include <iostream>
 #include "mazesidewinder.h"
-#include "RendererText.h"
+#include "Render/RendererText.h"
 #include "solver.h"
 
 int main(int argc, char **argv) {

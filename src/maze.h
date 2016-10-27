@@ -2,7 +2,7 @@
 #define MAZES_FOR_PROGRAMMERS_MAZE_H
 
 #include <iostream>
-#include "node.h"
+#include "graph/node.h"
 #include <random>
 #include <string>
 #include <chrono>

@@ -11,7 +11,7 @@ mkdir build
 mkdir bin
 echo "This directory contains all the output binary files." > bin/README.md
 cd build
-#cmake ..
-/home/luker/Applications/clion-1.2.4/bin/cmake/bin/cmake ..
+cmake ..
+#/home/luker/Applications/clion-1.2.4/bin/cmake/bin/cmake ..
 make
 ./../bin/runTests

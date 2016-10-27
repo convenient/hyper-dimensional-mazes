@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "dijkstra.h"
+#include "graph/dijkstra.h"
 
 TEST(dijkstratest, base_path_find) {
 
