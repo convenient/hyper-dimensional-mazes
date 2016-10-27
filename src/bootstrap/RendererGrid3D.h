@@ -11,7 +11,7 @@
 #include <GL/glut.h>
 #endif
 
-#include "../maze/maze.h"
+#include "../graph/maze/maze.h"
 #include "solver.h"
 class RendererGrid3D;
 RendererGrid3D *superSecretOpenGlHackyPointer;

@@ -1,4 +1,4 @@
-#include "maze/mazealdousbroder.h"
+#include "graph/maze/mazealdousbroder.h"
 #include "bootstrap/2d_grid.h"
 
 int main(int argc, char **argv) {

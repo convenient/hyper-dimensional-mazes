@@ -1,5 +1,5 @@
 #include <iostream>
-#include "maze/mazebinary.h"
+#include "graph/maze/mazebinary.h"
 #include "bootstrap/RendererText.h"
 #include "bootstrap/solver.h"
 

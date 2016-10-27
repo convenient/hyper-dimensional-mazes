@@ -1,5 +1,5 @@
 #include <iostream>
-#include "maze/mazealdousbroder.h"
+#include "graph/maze/mazealdousbroder.h"
 #include "bootstrap/RendererText.h"
 #include "bootstrap/solver.h"
 #include "bootstrap/RendererGrid3D.h"
