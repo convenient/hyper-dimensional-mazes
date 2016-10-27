@@ -1,6 +1,7 @@
 #ifndef MAZES_FOR_PROGRAMMERS_MAZE_H
 #define MAZES_FOR_PROGRAMMERS_MAZE_H
 
+#include <iostream>
 #include "node.h"
 #include <random>
 #include <string>
