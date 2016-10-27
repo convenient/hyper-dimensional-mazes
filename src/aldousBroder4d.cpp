@@ -1,6 +1,6 @@
 #include <iostream>
 #include "maze/mazealdousbroder.h"
-#include "Render/RendererText.h"
+#include "bootstrap/RendererText.h"
 #include "bootstrap/solver.h"
 
 int main(int argc, char **argv) {

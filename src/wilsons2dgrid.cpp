@@ -1,8 +1,8 @@
 #include <iostream>
 #include "maze/mazewilsons.h"
-#include "Render/RendererText.h"
+#include "bootstrap/RendererText.h"
 #include "bootstrap/solver.h"
-#include "Render/RendererGrid3D.h"
+#include "bootstrap/RendererGrid3D.h"
 
 bool showTextSolution = false;
 
