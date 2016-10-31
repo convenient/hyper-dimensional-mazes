@@ -29,8 +29,10 @@ int run(int argc, char **argv, Maze *mazePtr) {
         mazePtr->setSeed(seed);
     }
 
-    //todo make this dynamic
-    char title[] = "WHATEVER Maze - 2D Grid";
+    std::string titleString = mazePtr->getName() + " Maze - 3D Grid";
+    char *title = new char[titleString.length() + 1];
+    strcpy(title, titleString.c_str());
+
     RendererGrid3D *rendererGridPtr = new RendererGrid3D(mazePtr, solver, title, generateCallback, solveCallback);
 
     int mazeSize = 10;
@@ -38,7 +40,7 @@ int run(int argc, char **argv, Maze *mazePtr) {
     int minpart = (int)floor(mazeSize/2) * -1;
     int maxpart = (int)ceil(mazeSize/2);
 
-    std::cout << "Generating a WHATEVER maze of " << mazeSize << " by " << mazeSize << " by " << mazeSize << std::endl;
+    std::cout << "Generating a " + mazePtr->getName() + " maze of " << mazeSize << " by " << mazeSize << " by " << mazeSize << std::endl;
 
     for (int x=minpart; x<maxpart; x++) {
         for (int y=minpart; y<maxpart; y++) {

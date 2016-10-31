@@ -34,9 +34,9 @@ class Maze {
 
     virtual void generateAlgorithm() = 0;
 
-    virtual std::string getName() = 0;
-
 public:
+
+    virtual std::string getName() = 0;
 
     void setSeed(unsigned long seed) {
         this->seed = seed;

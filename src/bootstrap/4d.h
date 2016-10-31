@@ -18,8 +18,7 @@ int run(int argc, char **argv, Maze *mazePtr) {
 
     int mazeSize = 6;
 
-    //todo sort this
-    std::cout << "Generating a WHATEVER maze of " << mazeSize << " by "<< mazeSize << " by " << mazeSize << " by " << mazeSize <<  std::endl;
+    std::cout << "Generating a " + mazePtr->getName() + " maze of " << mazeSize << " by "<< mazeSize << " by " << mazeSize << " by " << mazeSize <<  std::endl;
 
     for (int w=0; w< mazeSize; w++) {
         for (int x = 0; x < mazeSize; x++) {
