@@ -123,11 +123,13 @@ private:
 
             Node *initialWalkNode;
             while (true) {
-                if (this->getUnvisitedNodeCount() <= 2) {
-                    initialWalkNode = this->getRandomVisitedNode();
-                } else {
-                    initialWalkNode = this->getRandomUnvisitedNode();
+                if (this->getUnvisitedNodeCount() <= 1) {
+                    //If there is only one node remaining, aim anywhere. It doesn't matter.
+                    targetNode = this->getRandomVisitedNode();
                 }
+
+                initialWalkNode = this->getRandomUnvisitedNode();
+
                 if (initialWalkNode != targetNode) {
                     std::cout << "visiting initial walk node " << initialWalkNode->getPoint().getAsString() << std::endl;
                     this->markNodeAsVisited(initialWalkNode);

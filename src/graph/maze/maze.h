@@ -98,9 +98,8 @@ public:
 
     void markNodeAsVisited(Node *node) {
 
-        //todo figure this out, likely shouldn't be doing this
         if (this->nodeIsVisited(node)) {
-            return;
+            throw std::logic_error("Tried to mark a node as visited, when it has already been visited");
         }
 
         Point p = node->getPoint();
