@@ -1,6 +1,8 @@
 #ifndef MAZES_FOR_PROGRAMMERS_MAZESIDEWINDER_H
 #define MAZES_FOR_PROGRAMMERS_MAZESIDEWINDER_H
 
+#include <iostream>
+//debugging
 #include "maze.h"
 #include <algorithm>
 
@@ -27,10 +29,7 @@ bool compareNodesByPoint(Node* a, Node* b)
         return (aVal < bVal);
     }
 
-    std::cout << aPoint.getAsString() << std::endl;
-    std::cout << bPoint.getAsString() << std::endl;
-
-    throw std::logic_error("These nodes are at the same exact point, this should never happen");
+    throw std::logic_error("These nodes are at the same exact point, this should never happen: " + aPoint.getAsString());
 }
 
 class MazeSidewinder : public Maze {

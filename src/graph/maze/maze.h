@@ -1,7 +1,6 @@
 #ifndef MAZES_FOR_PROGRAMMERS_MAZE_H
 #define MAZES_FOR_PROGRAMMERS_MAZE_H
 
-#include <iostream>
 #include "../node.h"
 #include <random>
 #include <string>
@@ -86,7 +85,6 @@ public:
         if (!this->rngSeeded) {
 
             unsigned long seed = this->getSeed();
-            std::cout << "Using seed: " << seed << std::endl;
 
             this->rng.seed(seed);
             this->rngSeeded = true;

@@ -1,6 +1,8 @@
 #ifndef MAZES_FOR_PROGRAMMERS_MAZEWILSONS_H
 #define MAZES_FOR_PROGRAMMERS_MAZEWILSONS_H
 
+#include <iostream>
+//debugging
 #include "maze.h"
 #include <map>
 

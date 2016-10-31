@@ -14,6 +14,8 @@ int run(int argc, char **argv, Maze *mazePtr) {
         mazePtr->setSeed(seed);
     }
 
+    std::cout << "Using seed: " << mazePtr->getSeed() << std::endl;
+
     int mazeSize = 6;
 
     //todo sort this
