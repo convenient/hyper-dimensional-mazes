@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.3)
 project(mazes_for_programmers)
 
-#Suppress deprecated opengl functions on osx
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 #Output directory for files
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin )
