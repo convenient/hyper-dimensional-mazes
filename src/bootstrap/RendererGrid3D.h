@@ -23,7 +23,7 @@ class RendererGrid3D {
     GLfloat squareSize = 0.03;
 
     //Disable for maze generation debugging
-    bool solutionLogicEnabled = false;
+    bool solutionLogicEnabled = true;
 
     GLfloat rotateMultiplier = -8;
 
