@@ -106,16 +106,21 @@ private:
 
             unsigned long count = this->getUnvisitedNodeCount();
 
+            Node *targetNode;
+            if (this->getVisitedNodesMap().empty()) {
+                targetNode = this->getRandomUnvisitedNode();
+            } else {
+                targetNode = this->getRandomVisitedNode();
+            }
+
 //            std::cout << "##################################################" <<  count << std::endl;
-            Node *targetNode = this->getRandomUnvisitedNode();
 //            std::cout << "Target node\t\t\t" << targetNode->getPoint().getAsString() << std::endl;
 
             Node *initialWalkNode;
             while (true) {
                 initialWalkNode = this->getRandomUnvisitedNode();
                 //The initial walk node must be different from the target node
-                //unless this is the last node to visit, who cares!
-                if ((count <= 1) || (initialWalkNode != targetNode)) {
+                if (initialWalkNode != targetNode) {
                     break;
                 }
             }
@@ -161,10 +166,12 @@ private:
 
         //A supermassive hack hole, because the maze was not finishing off properly and was leaving an unlined island :(
         //This would mean that not all the maze is connected.
+        //this does not work. i've still got a fundamental flaw in my algo.
 //        for (auto neighbour : this->getNeighbourNodes(lastNodeAdded)) {
 //            std::cout << "WHATER" << std::endl;
 //            if (!lastNodeAdded->isLinked(neighbour)) {
-//                lastNodeAdded->link(neighbour);
+//                std::cout << "LINKME" << std::endl;
+//                this->linkNodes(lastNodeAdded, neighbour);
 //                break;
 //            }
 //        }
