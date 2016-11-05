@@ -14,22 +14,22 @@ add_subdirectory(tests)
 
 #Define executables
 ## Binary
-add_executable(binary_2d_grid src/binary2dgrid.cpp)
-add_executable(binary_3d_grid src/binary3dgrid.cpp)
+add_executable(binary_2d src/binary2dgrid.cpp)
+add_executable(binary_3d src/binary3dgrid.cpp)
 add_executable(binary_4d src/binary4d.cpp)
 
 #Sidewinder
-add_executable(sidewinder_2d_grid src/sidewinder2dgrid.cpp)
-add_executable(sidewinder_3d_grid src/sidewinder3dgrid.cpp)
+add_executable(sidewinder_2d src/sidewinder2d.cpp)
+add_executable(sidewinder_3d src/sidewinder3d.cpp)
 add_executable(sidewinder_4d src/sidewinder4d.cpp)
 
 #Aldous Broder
-add_executable(aldous_broder_2d_grid src/aldousBroder2dgrid.cpp)
-add_executable(aldous_broder_3d_grid src/aldousBroder3dgrid.cpp)
+add_executable(aldous_broder_2d src/aldousBroder2d.cpp)
+add_executable(aldous_broder_3d src/aldousBroder3d.cpp)
 add_executable(aldous_broder_4d src/aldousBroder4d.cpp)
 
 #Wilsons
-add_executable(wilsons_2d_grid src/wilsons2dgrid.cpp)
+add_executable(wilsons_2d src/wilsons2d.cpp)
 add_executable(wilsons_3d src/wilsons3d.cpp)
 add_executable(wilsons_4d src/wilsons4d.cpp)
 
@@ -38,15 +38,15 @@ find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
-target_link_libraries(sidewinder_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
-target_link_libraries(sidewinder_3d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(sidewinder_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(sidewinder_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(sidewinder_4d pthread)
-target_link_libraries(binary_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
-target_link_libraries(binary_3d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(binary_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(binary_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(binary_4d pthread)
-target_link_libraries(aldous_broder_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
-target_link_libraries(aldous_broder_3d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(aldous_broder_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(aldous_broder_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(aldous_broder_4d pthread)
-target_link_libraries(wilsons_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(wilsons_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(wilsons_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(wilsons_4d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
