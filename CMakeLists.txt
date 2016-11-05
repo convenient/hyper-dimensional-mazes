@@ -14,8 +14,8 @@ add_subdirectory(tests)
 
 #Define executables
 ## Binary
-add_executable(binary_2d src/binary2dgrid.cpp)
-add_executable(binary_3d src/binary3dgrid.cpp)
+add_executable(binary_2d src/binary2d.cpp)
+add_executable(binary_3d src/binary3d.cpp)
 add_executable(binary_4d src/binary4d.cpp)
 
 #Sidewinder
