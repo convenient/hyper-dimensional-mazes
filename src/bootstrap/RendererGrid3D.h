@@ -25,7 +25,7 @@ class RendererGrid3D {
     //Disable for maze generation debugging
     bool solutionLogicEnabled = true;
 
-    GLfloat rotateMultiplier = -8;
+    GLfloat rotateMultiplier = -28;
 
     bool showingSolution = false;
     bool firstRenderComplete = false;
