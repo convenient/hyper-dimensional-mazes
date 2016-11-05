@@ -31,6 +31,7 @@ add_executable(aldous_broder_4d src/aldousBroder4d.cpp)
 #Wilsons
 add_executable(wilsons_2d_grid src/wilsons2dgrid.cpp)
 add_executable(wilsons_3d src/wilsons3d.cpp)
+add_executable(wilsons_4d src/wilsons4d.cpp)
 
 ## OpenGL
 find_package(OpenGL REQUIRED)
@@ -48,3 +49,4 @@ target_link_libraries(aldous_broder_3d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} 
 target_link_libraries(aldous_broder_4d pthread)
 target_link_libraries(wilsons_2d_grid ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(wilsons_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(wilsons_4d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
