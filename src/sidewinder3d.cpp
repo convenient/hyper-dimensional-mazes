@@ -1,6 +1,6 @@
 #include "graph/maze/mazesidewinder.h"
-#include "bootstrap/3d_grid.h"
+#include "bootstrap/rendered.h"
 
 int main(int argc, char **argv) {
-    return run(argc, argv, new MazeSidewinder);
+    return run(argc, argv, new MazeSidewinder, "3", "10");
 }

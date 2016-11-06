@@ -1,6 +1,6 @@
 #include "graph/maze/mazebinary.h"
-#include "bootstrap/3d_grid.h"
+#include "bootstrap/rendered.h"
 
 int main(int argc, char **argv) {
-    return run(argc, argv, new MazeBinary);
+    return run(argc, argv, new MazeBinary, "3", "10");
 }

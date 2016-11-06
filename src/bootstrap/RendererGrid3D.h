@@ -498,7 +498,6 @@ public:
     RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s)) {
 
         this->m = maze;
-        std::cout << "Using seed: " << this->m->getSeed() << std::endl;
 
         this->solver = solver;
 

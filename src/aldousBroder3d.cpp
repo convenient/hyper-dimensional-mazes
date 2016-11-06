@@ -1,6 +1,6 @@
 #include "graph/maze/mazealdousbroder.h"
-#include "bootstrap/3d_grid.h"
+#include "bootstrap/rendered.h"
 
 int main(int argc, char **argv) {
-    return run(argc, argv, new MazeAldousBroder);
+    return run(argc, argv, new MazeAldousBroder, "3", "10");
 }
