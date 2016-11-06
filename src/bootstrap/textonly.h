@@ -5,7 +5,7 @@
 #include "RendererText.h"
 #include "solver.h"
 
-int run(int argc, char **argv, Maze *mazePtr, st::string numberOfDimensions, std::string defaultSize) {
+int run(int argc, char **argv, Maze *mazePtr, std::string numberOfDimensions, std::string defaultSize) {
 
     convenient_maze::init(argc, argv, mazePtr, numberOfDimensions, defaultSize);
     convenient_maze::describeDimensions();
