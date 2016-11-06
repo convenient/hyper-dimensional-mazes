@@ -16,22 +16,22 @@ add_subdirectory(tests)
 ## Binary
 add_executable(binary_2d src/binary2d.cpp)
 add_executable(binary_3d src/binary3d.cpp)
-add_executable(binary_4d src/binary4d.cpp)
+add_executable(binary_nd src/binary.cpp)
 
 #Sidewinder
 add_executable(sidewinder_2d src/sidewinder2d.cpp)
 add_executable(sidewinder_3d src/sidewinder3d.cpp)
-add_executable(sidewinder_4d src/sidewinder4d.cpp)
+add_executable(sidewinder_nd src/sidewinder.cpp)
 
 #Aldous Broder
 add_executable(aldous_broder_2d src/aldousBroder2d.cpp)
 add_executable(aldous_broder_3d src/aldousBroder3d.cpp)
-add_executable(aldous_broder_4d src/aldousBroder4d.cpp)
+add_executable(aldous_broder_nd src/aldousBroder.cpp)
 
 #Wilsons
 add_executable(wilsons_2d src/wilsons2d.cpp)
 add_executable(wilsons_3d src/wilsons3d.cpp)
-add_executable(wilsons_4d src/wilsons4d.cpp)
+add_executable(wilsons_nd src/wilsons.cpp)
 
 ## OpenGL
 find_package(OpenGL REQUIRED)
@@ -40,13 +40,13 @@ include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} )
 
 target_link_libraries(sidewinder_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(sidewinder_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
-target_link_libraries(sidewinder_4d pthread)
+target_link_libraries(sidewinder_nd pthread)
 target_link_libraries(binary_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(binary_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
-target_link_libraries(binary_4d pthread)
+target_link_libraries(binary_nd pthread)
 target_link_libraries(aldous_broder_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(aldous_broder_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
-target_link_libraries(aldous_broder_4d pthread)
+target_link_libraries(aldous_broder_nd pthread)
 target_link_libraries(wilsons_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(wilsons_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
-target_link_libraries(wilsons_4d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(wilsons_nd ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
