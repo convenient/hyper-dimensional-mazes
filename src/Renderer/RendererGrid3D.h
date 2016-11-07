@@ -12,7 +12,7 @@
 #endif
 
 #include "../graph/maze/maze.h"
-#include "solver.h"
+#include "../graph/solver.h"
 class RendererGrid3D;
 RendererGrid3D *superSecretOpenGlHackyPointer;
 

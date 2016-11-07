@@ -4,6 +4,24 @@
 #include <iostream>
 #include <string>
 #include "../lib/cxxopts/src/cxxopts.hpp"
+#include "../graph/solver.h"
+#include "../renderer/RendererText.h"
+#include "../renderer/RendererGrid3D.h"
+
+bool showTextSolution = false;
+
+//todo can these be namespaced?
+void generateCallback(Maze *m, Solver *s) {
+    showTextSolution = true;
+    RendererText::drawNodeGoal(s->getStartNode(), s->getEndNode());
+}
+
+void solveCallback(Maze *m, Solver *s) {
+    if (showTextSolution) {
+        RendererText::drawPath(s->solve());
+        showTextSolution = false;
+    }
+}
 
 namespace convenient_maze {
 
@@ -94,7 +112,7 @@ namespace convenient_maze {
         }
     }
 
-    static void init(int argc, char **argv, Maze *mazePtr, std::string dimensions, std::string defaultLength) {
+    static int init(int argc, char **argv, Maze *mazePtr, std::string dimensions, std::string defaultLength, bool shouldRender) {
         maze = mazePtr;
 
         opts.add_options()
@@ -112,7 +130,30 @@ namespace convenient_maze {
         numberOfDimensions = opts["dimensions"].as<int>();
 
         std::cout << "Using seed: " << mazePtr->getSeed() << std::endl;
+        describeDimensions();
+
+        Solver *solver = new Solver(mazePtr);
+        addNodesToMaze();
+
+        if (shouldRender) {
+            RendererGrid3D *rendererGridPtr =
+                    new RendererGrid3D(
+                            mazePtr,
+                            solver,
+                            getTitleCharStar(),
+                            generateCallback,
+                            solveCallback
+                    );
+            rendererGridPtr->startOpenGl();
+        } else {
+            mazePtr->generate();
+            std::vector<Node *> path = solver->solve();
+            RendererText::drawPath(path);
+        }
+
+        return 0;
     }
 }
+
 
 #endif //MAZES_FOR_PROGRAMMERS_CONVENIENT_MAZE_H
