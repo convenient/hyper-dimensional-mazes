@@ -90,6 +90,7 @@ class MazeWilsons : public Maze {
         for (auto walkNodeMap : this->positionToNode) {
             unsigned long pos1 = walkNodeMap.first;
             Node *debug = walkNodeMap.second;
+            //todo cleanup
             std::cout << "\t" << pos1 << "\t" << debug->getPoint().getAsString() << std::endl;
         }
     }

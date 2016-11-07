@@ -82,6 +82,7 @@ public:
         }
         std::vector<Node *> deadEnds = this->maze->getPotentialEntraceExitNodes();
         if (deadEnds.size() < 2) {
+            //todo make throw exceptions, no dependency on cout
             std::cout << "Er....not enough dead ends to solve" << std::endl;
             return longestPath;
         }
