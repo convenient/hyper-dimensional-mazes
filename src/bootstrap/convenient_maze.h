@@ -5,27 +5,12 @@
 #include <string>
 #include "../lib/cxxopts/src/cxxopts.hpp"
 #include "../graph/solver.h"
-#include "../renderer/RendererText.h"
-#include "../renderer/RendererGrid3D.h"
-
-bool showTextSolution = false;
-
-//todo can these be namespaced?
-void generateCallback(Maze *m, Solver *s) {
-    showTextSolution = true;
-    RendererText::drawNodeGoal(s->getStartNode(), s->getEndNode());
-}
-
-void solveCallback(Maze *m, Solver *s) {
-    if (showTextSolution) {
-        RendererText::drawPath(s->solve());
-        showTextSolution = false;
-    }
-}
+#include "../Renderer/RendererText.h"
 
 namespace convenient_maze {
 
     cxxopts::Options opts("", "");
+    Solver *solver;
 
     Maze *maze;
     int numberOfDimensions;
@@ -38,7 +23,7 @@ namespace convenient_maze {
         return getMazeName() + " Maze - " + std::to_string(numberOfDimensions) + "D Grid";
     }
 
-    static char * getTitleCharStar() {
+    static char* getTitleCharStar() {
         std::string titleAsString = getTitleString();
 
         char *title = new char[titleAsString.length() + 1];
@@ -48,6 +33,10 @@ namespace convenient_maze {
 
     static int getMazeLength() {
         return opts["length"].as<int>();
+    }
+
+    static Solver* getSolver() {
+        return solver;
     }
 
     static void describeDimensions() {
@@ -112,7 +101,7 @@ namespace convenient_maze {
         }
     }
 
-    static int init(int argc, char **argv, Maze *mazePtr, std::string dimensions, std::string defaultLength, bool shouldRender) {
+    static int init(int argc, char **argv, Maze *mazePtr, std::string dimensions, std::string defaultLength) {
         maze = mazePtr;
 
         opts.add_options()
@@ -132,24 +121,8 @@ namespace convenient_maze {
         std::cout << "Using seed: " << mazePtr->getSeed() << std::endl;
         describeDimensions();
 
-        Solver *solver = new Solver(mazePtr);
+        solver = new Solver(mazePtr);
         addNodesToMaze();
-
-        if (shouldRender) {
-            RendererGrid3D *rendererGridPtr =
-                    new RendererGrid3D(
-                            mazePtr,
-                            solver,
-                            getTitleCharStar(),
-                            generateCallback,
-                            solveCallback
-                    );
-            rendererGridPtr->startOpenGl();
-        } else {
-            mazePtr->generate();
-            std::vector<Node *> path = solver->solve();
-            RendererText::drawPath(path);
-        }
 
         return 0;
     }
