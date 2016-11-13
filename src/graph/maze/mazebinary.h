@@ -32,7 +32,6 @@ private:
                     //This greater than or less than size will define the bias of the maze
                     //> == to the top right
                     //< == to the bottom left
-                    //Todo find programattic way of varying the axis bias
                     if (axisValue > workingNodeAxisValue) {
                         if (this->nodeExistsAtPoint(neighbour)) {
                             potentialNodes.push_back(neighbourNode);
