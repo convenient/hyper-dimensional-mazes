@@ -1,8 +1,6 @@
 #ifndef MAZES_FOR_PROGRAMMERS_MAZEWILSONS_H
 #define MAZES_FOR_PROGRAMMERS_MAZEWILSONS_H
 
-#include <iostream>
-//debugging
 #include "maze.h"
 #include <map>
 
@@ -71,29 +69,19 @@ class MazeWilsons : public Maze {
             if (previousWalkNode == nullptr) {
                 //This is the first walk through, we need to iterate over to the next section
             } else {
-//                std::cout << previousWalkNode->getPoint().getAsString() << "\tlinking to\t" << walkNode->getPoint().getAsString() << std::endl;
                 this->markNodeAsVisited(previousWalkNode);
                 this->linkNodes(walkNode, previousWalkNode);
             }
             previousWalkNode = walkNode;
         }
         Node *lastNodeInWalk = this->getLastNodeInWalk();
-        //The last node in the walk may potentially be visitied if this is a "collision" with an already visited section
+        //The last node in the walk may potentially be visited if this is a "collision" with an already visited section
         if (!this->nodeIsVisited(lastNodeInWalk)) {
             this->markNodeAsVisited(lastNodeInWalk);
         }
         this->clearWalk();
     }
 
-    void debugWalk() {
-        return;
-        for (auto walkNodeMap : this->positionToNode) {
-            unsigned long pos1 = walkNodeMap.first;
-            Node *debug = walkNodeMap.second;
-            //todo cleanup
-            std::cout << "\t" << pos1 << "\t" << debug->getPoint().getAsString() << std::endl;
-        }
-    }
 public:
     std::string getName() {
         return "Wilsons";
@@ -114,9 +102,6 @@ private:
                 targetNode = this->getRandomVisitedNode();
             }
 
-//            std::cout << "##################################################" <<  count << std::endl;
-//            std::cout << "Target node\t\t\t" << targetNode->getPoint().getAsString() << std::endl;
-
             Node *initialWalkNode;
             while (true) {
                 initialWalkNode = this->getRandomUnvisitedNode();
@@ -127,57 +112,29 @@ private:
             }
 
             this->clearWalk();
-
             this->addToWalk(initialWalkNode);
-//            this->debugWalk();
-//            std::cout << "Starting walk!" << std::endl;
+
             while (true) {
-//                std::cout << "------------walking--------------" << std::endl;
 
                 Node *lastNodeInWalk = this->getLastNodeInWalk();
-//                std::cout << "last node from walk\t" << lastNodeInWalk->getPoint().getAsString() << std::endl;
                 Node *neighbour = this->getRandomNeighbourNode(lastNodeInWalk);
-//                std::cout << "random neighbour node\t" << neighbour->getPoint().getAsString() << std::endl;
 
                 //If we've hit a visited node then link to it
                 //Just make sure we're not linking back to the first node in the walk, and ouroboros-ing this
                 if ((neighbour == targetNode) || this->nodeIsVisited(neighbour)) {
-//                    std::cout << "linking!" << std::endl;
                     lastNodeAdded = neighbour;
                     this->addToWalk(neighbour);
-//                    this->debugWalk();
                     this->linkWalk();
-//                    std::cout << "linked" << std::endl;
                     break;
                 }
 
                 if (!this->isInWalk(neighbour)) {
-//                    std::cout << "adding to walk\t" << neighbour->getPoint().getAsString();
                     this->addToWalk(neighbour);
-//                    std::cout << "\tdone" << std::endl;
                 } else {
-//                    std::cout << "closing loop ";
                     this->trimWalkAfter(neighbour);
-//                    std::cout << "\tdone" << std::endl;
                 }
-
-                this->debugWalk();
             }
         }
-
-        //A supermassive hack hole, because the maze was not finishing off properly and was leaving an unlined island :(
-        //This would mean that not all the maze is connected.
-        //this does not work. i've still got a fundamental flaw in my algo.
-//        for (auto neighbour : this->getNeighbourNodes(lastNodeAdded)) {
-//            std::cout << "WHATER" << std::endl;
-//            if (!lastNodeAdded->isLinked(neighbour)) {
-//                std::cout << "LINKME" << std::endl;
-//                this->linkNodes(lastNodeAdded, neighbour);
-//                break;
-//            }
-//        }
-
-//        std::cout << "DONE" << std::endl;
     }
 
     Node* getRandomNeighbourNode(Node *node) {
