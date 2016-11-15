@@ -6,6 +6,7 @@
 #include "../lib/cxxopts/src/cxxopts.hpp"
 #include "../graph/solver.h"
 #include "../Renderer/RendererText.h"
+#include "../lib/NestedLoop/NestedLoop.h"
 
 namespace convenient_maze {
 
@@ -80,24 +81,23 @@ namespace convenient_maze {
                 }
             }
 
-        } else if (numberOfDimensions == 4) {
-            for (int w=0; w< mazeLength; w++) {
-                for (int x = 0; x < mazeLength; x++) {
-                    for (int y = 0; y < mazeLength; y++) {
-                        for (int z = 0; z < mazeLength; z++) {
-                            Point p;
-                            p.addPosition("w", w);
-                            p.addPosition("x", x);
-                            p.addPosition("y", y);
-                            p.addPosition("z", z);
-                            maze->createNode(p);
-                        }
-                    }
-                }
-            }
         } else {
-            //todo make this do some fun recursive stuff
-            throw std::logic_error("Need to sort this handler out... n dimensions not fully sorted");
+            //Looper was a good movie.
+            //Joseph Gordon-Levitt looked _really_ similar to Bruce Willis, it was uncanny.
+            nestedLoop::nestedLoop looper(numberOfDimensions, mazeLength);
+
+            while (looper.next()) {
+                Point p;
+
+                for (int i=0; i<looper.idxes.size(); i++) {
+                    int asciiVal = 65+i;
+                    char character = static_cast<char>(65+i);
+                    std::string charString(1, character);
+                    int val = looper.idxes[i];
+                    p.addPosition(charString, looper.idxes[i]);
+                }
+                maze->createNode(p);
+            }
         }
     }
 
