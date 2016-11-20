@@ -1,8 +1,6 @@
 #ifndef MAZES_FOR_PROGRAMMERS_MAZESIDEWINDER_H
 #define MAZES_FOR_PROGRAMMERS_MAZESIDEWINDER_H
 
-#include <iostream>
-//debugging
 #include "maze.h"
 #include <algorithm>
 
@@ -59,41 +57,41 @@ private:
 
         std::sort(sortedNodes.begin(), sortedNodes.end(), compareNodesByPoint);
 
-        std::string firstAxis = axis.front();
+        /**
+         * Backbone generation
+         */
+        std::string targetAxis = axis.front();
         std::vector<std::string> remainingAxis;
         for (auto axisIdentifier : axis) {
-            if (axisIdentifier != firstAxis) {
+            if (axisIdentifier != targetAxis) {
                 remainingAxis.push_back(axisIdentifier);
             }
         }
 
+        int targetValueOnAxis = this->getRandomUnvisitedNode()->getPoint().getPositionOnAxis(targetAxis);
+        for (auto nodeMapPtr : this->getMap()) {
+            Node *n = nodeMapPtr.second;
+            int pos = n->getPoint().getPositionOnAxis(targetAxis);
+            if (pos < targetValueOnAxis) {
+                targetValueOnAxis = pos;
+            }
+        }
+
+        this->generateBackbone(targetAxis, targetValueOnAxis);
+
         //Iterator over the nodes that have been organised in row and order
         //For each item in row
-        bool firstRow = true;
         std::vector<Node *> carvedPath;
-        Node *previousNode = nullptr;
         for (auto node : sortedNodes) {
+
+            if (this->isBackboneNode(node, targetAxis, targetValueOnAxis)) {
+                continue; //backbone is processed separately
+            }
 
             if (this->getUnvisitedNodeCount() <= 0) {
                 break;
             }
             this->markNodeAsVisited(node);
-
-            //Modification to support n dimensions
-            if (previousNode != nullptr) {
-                bool neighbourNode = false;
-                Point previousPoint = previousNode->getPoint();
-                for (auto neighbourPoint : node->getPoint().getNeighbouringPoints()) {
-                    if (neighbourPoint.getEuclideanDistanceTo(previousPoint) == 0) {
-                        neighbourNode = true;
-                    }
-                }
-                if (!neighbourNode) {
-                    if (!carvedPath.empty()) {
-                        this->processCarveSet(&carvedPath, axis);
-                    }
-                }
-            }
 
             carvedPath.push_back(node);
 
@@ -107,24 +105,17 @@ private:
                 }
             }
 
-            if (firstRow && potentialPoints.size() <= 0) {
-                firstRow = false;
-            }
-
-            if (firstRow || (potentialPoints.size() > 0 && this->getRandomNumber(0, 1))) {
+            if (potentialPoints.size() > 0 && this->getRandomNumber(0, 1)) {
                 Node *nextNode = this->getNodeAtPoint(potentialPoints.front());
                 this->linkNodes(node, nextNode);
             } else {
                 this->processCarveSet(&carvedPath, axis);
             }
-
-            previousNode = node;
         }
     }
 
     void processCarveSet(std::vector<Node *>* carvedPath, std::vector<std::string> axisList) {
         if (carvedPath->empty()) {
-            std::cout << "carved path is empty" << std::endl;
             return;
         }
 
@@ -141,7 +132,31 @@ private:
                 }
             }
         }
-        std::cout << "FAIL TO CARVE " << std::endl;
+    }
+
+    bool isBackboneNode(Node *n, std::string targetAxis, int targetValueOnAxis) {
+        return (n->getPoint().getPositionOnAxis(targetAxis) == targetValueOnAxis);
+    }
+
+    void generateBackbone(std::string targetAxis, int targetValueOnAxis) {
+
+        for (auto nodeMapPtr : this->getMap()) {
+            Node *n = nodeMapPtr.second;
+            if (!this->isBackboneNode(n, targetAxis, targetValueOnAxis)) {
+                continue;
+            }
+            for (auto neighbourNode : this->getNeighbourNodes(n)) {
+                if (this->isBackboneNode(neighbourNode, targetAxis, targetValueOnAxis)) {
+                    this->linkNodes(neighbourNode, n);
+                    if (!this->nodeIsVisited(neighbourNode)) {
+                        this->markNodeAsVisited(neighbourNode);
+                    }
+                }
+            }
+            if (!this->nodeIsVisited(n)) {
+                this->markNodeAsVisited(n);
+            }
+        }
     }
 };
 
