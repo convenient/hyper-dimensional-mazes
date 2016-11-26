@@ -40,5 +40,12 @@ By comparing the last 3 files the only real difference in the generation of a ma
 
 #Dependencies
 
+- OpenGL
+
+    ```
     sudo apt-get install freeglut3
     sudo apt-get install freeglut3-dev
+    ```
+    
+- [cxxopts](https://github.com/jarro2783/cxxopts)
+- [NestedLoops.h](src/lib/NestedLoop/README.md)
