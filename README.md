@@ -38,6 +38,16 @@ By comparing the last 3 files the only real difference in the generation of a ma
 
 ## Binary Maze 4D
 
+# Aldous Broder
+
+## Aldous Broder 2D
+
+![readme/aldous_broder_2d.gif](readme/aldous_broder_2d.gif "readme/aldous_broder_2d.gif")
+
+## Aldous Broder 3D
+
+![readme/aldous_broder_3d.gif](readme/aldous_broder_3d.gif "readme/aldous_broder_3d.gif")
+
 #Dependencies
 
 - OpenGL
