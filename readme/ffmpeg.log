@@ -1,1 +1,0 @@
-ffmpeg -i aldous_broder_2d.mov -s 690x720 -pix_fmt rgb24 -r 15 -f gif - | gifsicle --optimize=3 --delay=3 > aldous_broder_2d.gif
