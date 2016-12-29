@@ -11,10 +11,9 @@ What this repo attempts to achieve is the following:
 I'll start with the binary maze as an in depth example as it's the simplest. I'll go a bit more in depth to the process here to help explain what's going on.
 
 # Binary Maze
+![binary2d](readme/binary2d.gif) ![binary2d](readme/binary2d.png) ![binary2d](readme/binary3d.gif)
 
-![binary2d](readme/binary2d.gif)
-![binary2d](readme/binary2d.png)
-![binary2d](readme/binary3d.gif)
+
 
 # Aldous Broder
 
