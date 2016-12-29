@@ -12,41 +12,11 @@ I'll start with the binary maze as an in depth example as it's the simplest. I'l
 
 # Binary Maze
 
-A binary maze can simply be described as "For every node in the maze randomly carve a passage up or right", and it is easily recognised by the long straight passes you get on two sides of the maze. 
-
-Programatically this got refactored to
-
-    For every node in the maze
-        For every axis in the maze
-            If there is a neighbouring node +1 on that axis
-                Add to list of PotentialNodes
-        Select a node randomly from the PotentialNodes
-        Carve into randomly selected node
-
-Removing all sense of direction from the algorithm makes it ugly and complicated, but it means the same algorithm will produce the same results in 2D but will also scale to ND dimensions without problem.
-
-- [Click here to see the binary algorithm](src/mazebinary.h)
-- [Click here to see the generation of a 2D binary maze](src/binary2dgrid.cpp)
-- [Click here to see the generation of a 3D binary maze](src/binary3dgrid.cpp)
-- [Click here to see the generation of a 4D binary maze](src/binary4d.cpp)
-
-By comparing the last 3 files the only real difference in the generation of a maze with more dimensions is that you must declare the extra axis when creating the "Point" for the node. 
-
-## Binary Maze 2D
-
-## Binary Maze 3D
-
-## Binary Maze 4D
+![binary2d](readme/binary2d.png)
+![binary2d](readme/binary2d.png)
+![binary2d](readme/binary2d.png)
 
 # Aldous Broder
-
-## Aldous Broder 2D
-
-![readme/aldous_broder_2d.gif](readme/aldous_broder_2d.gif "readme/aldous_broder_2d.gif")
-
-## Aldous Broder 3D
-
-![readme/aldous_broder_3d.gif](readme/aldous_broder_3d.gif "readme/aldous_broder_3d.gif")
 
 #Dependencies
 
