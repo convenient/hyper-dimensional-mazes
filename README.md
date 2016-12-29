@@ -12,9 +12,9 @@ I'll start with the binary maze as an in depth example as it's the simplest. I'l
 
 # Binary Maze
 
+![binary2d](readme/binary2d.gif)
 ![binary2d](readme/binary2d.png)
-![binary2d](readme/binary2d.png)
-![binary2d](readme/binary2d.png)
+![binary2d](readme/binary3d.gif)
 
 # Aldous Broder
 
