@@ -1,0 +1,183 @@
+Using seed: 1485039332644
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039336046
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039338885
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039342477
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039345632
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039349152
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039352665
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039356051
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039359589
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039362677
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039366040
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039369743
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039373383
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039377082
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039380654
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039384186
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039387645
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039391243
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039394679
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039398226
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039401526
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039405396
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039409274
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039412984
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039416653
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039421258
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039424265
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039427507
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039430890
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039433767
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039436712
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039440834
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039444347
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039448473
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039452892
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039456533
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039460138
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039463652
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039466734
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039470365
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039473905
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039477259
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039480865
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039484376
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039488121
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039491577
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039494886
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Solution took 0.136149 seconds and has a distance of 31
+(x:2)(y:-1)(z:0) to (x:2)(y:0)(z:-1)
+start at                                (x:2)(y:-1)(z:0)
+positive 1 on y                         (x:2)(y:0)(z:0)
+negative 1 on x                         (x:1)(y:0)(z:0)
+negative 1 on y                         (x:1)(y:-1)(z:0)
+negative 1 on y                         (x:1)(y:-2)(z:0)
+negative 1 on x                         (x:0)(y:-2)(z:0)
+negative 1 on x                         (x:-1)(y:-2)(z:0)
+negative 1 on x                         (x:-2)(y:-2)(z:0)
+negative 1 on x                         (x:-3)(y:-2)(z:0)
+negative 1 on y                         (x:-3)(y:-3)(z:0)
+positive 1 on z                         (x:-3)(y:-3)(z:1)
+positive 1 on y                         (x:-3)(y:-2)(z:1)
+positive 1 on y                         (x:-3)(y:-1)(z:1)
+positive 1 on x                         (x:-2)(y:-1)(z:1)
+positive 1 on x                         (x:-1)(y:-1)(z:1)
+positive 1 on x                         (x:0)(y:-1)(z:1)
+negative 1 on y                         (x:0)(y:-2)(z:1)
+negative 1 on y                         (x:0)(y:-3)(z:1)
+positive 1 on x                         (x:1)(y:-3)(z:1)
+positive 1 on x                         (x:2)(y:-3)(z:1)
+positive 1 on y                         (x:2)(y:-2)(z:1)
+negative 1 on x                         (x:1)(y:-2)(z:1)
+positive 1 on y                         (x:1)(y:-1)(z:1)
+positive 1 on y                         (x:1)(y:0)(z:1)
+positive 1 on y                         (x:1)(y:1)(z:1)
+positive 1 on y                         (x:1)(y:2)(z:1)
+negative 1 on z                         (x:1)(y:2)(z:0)
+negative 1 on z                         (x:1)(y:2)(z:-1)
+negative 1 on y                         (x:1)(y:1)(z:-1)
+positive 1 on x                         (x:2)(y:1)(z:-1)
+finish at                               (x:2)(y:0)(z:-1)
+Ensuring solution
+Using seed: 1485039698644
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039701922
+Generating a Sidewinder maze of 7 by 7 by 7
+Ensuring solution
+Using seed: 1485039704666
+Generating a Sidewinder maze of 7 by 7 by 7
