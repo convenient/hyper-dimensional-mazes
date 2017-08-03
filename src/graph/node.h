@@ -68,13 +68,19 @@ public:
     std::vector<Node *> getLinkedNodes() {
 
         if (this->linkedNodesVector.size()<=0) {
-            for (auto i : this->linkedNodes) {
-                Node *n = i.first;
-                this->linkedNodesVector.push_back(n);
-            }
+            this->linkedNodesVector = this->getLinkedNodesUncached();
         }
 
         return this->linkedNodesVector;
+    }
+
+    std::vector<Node *> getLinkedNodesUncached() {
+        std::vector<Node *> linkedNodes;
+        for (auto i : this->linkedNodes) {
+            Node *n = i.first;
+            linkedNodes.push_back(n);
+        }
+        return linkedNodes;
     }
 };
 

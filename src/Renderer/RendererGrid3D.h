@@ -24,13 +24,13 @@ class RendererGrid3D {
 
     //Disable for maze generation debugging
     bool solutionLogicEnabled = true;
+    bool drawWhileGenerating = true;
+    bool mergeLongPaths = false;
 
     GLfloat rotateMultiplier = -28;
-
     bool showingSolution = false;
     bool firstRenderComplete = false;
     bool rotate = false;
-    bool drawWhileGenerating = false;
 
     GLfloat rotationXaxis = 0.0f;
     GLfloat rotationYaxis = 0.0f;
@@ -122,6 +122,7 @@ class RendererGrid3D {
     void drawMaze() {
         Node *start = nullptr;
         Node *end = nullptr;
+
         if (this->solutionLogicEnabled && this->solver->getMazeSolved()) {
             start = solver->getStartNode();
             end = solver->getEndNode();
@@ -209,8 +210,45 @@ class RendererGrid3D {
             drawColours = startCubeColours;
         }
 
-        drawCube(nodePosition, squareSize, drawColours);
+
+        if (!this->mergeLongPaths || this->isConnectorNode(node)) {
+            drawCube(nodePosition, squareSize, drawColours);
+        }
+
         drawConnectors(node);
+    }
+
+    bool isConnectorNode(Node *node) {
+        Point nodePosition = node->getPoint();
+        std::vector<Node *> linkedNodes = node->getLinkedNodesUncached();
+
+        if (linkedNodes.size() == 0) {
+            //This node is not connected, draw it fully. This can happen during a draw-while-generating-run.
+            return true;
+        }
+
+        if (linkedNodes.size() == 1) {
+            //This node is a dead end, it should always be drawn
+            return true;
+        }
+        if (linkedNodes.size() >= 3) {
+            //This node connects to multiple endpoints and should always be drawn.
+            return true;
+        }
+
+        if (linkedNodes.size() != 2) {
+            throw std::logic_error("There is a non-zero, non 1, less than 3 value found which does not equal 2. What.");
+        }
+
+        Node *firstLinkedNode = linkedNodes.front();
+        Node *lastLinkedNode = linkedNodes.back();
+
+        if (firstLinkedNode->getPoint().getEuclideanDistanceTo(lastLinkedNode->getPoint()) != 2) {
+            //The two linked nodes are further than 2 units away, if they were a triangle this distance would be non 2
+            return true;
+        }
+
+        return false;
     }
 
     void drawConnectors(Node *node) {
@@ -247,6 +285,7 @@ class RendererGrid3D {
                     }
                 }
 
+
                 if (ySame && zSame) {
                     if (tmpNodePositionX > nodePositionX) {
                         isLinkedXPos = true;
@@ -266,28 +305,71 @@ class RendererGrid3D {
             }
         }
 
+        //I really should make the following draw rectangles rather than squares, but boy I don't want to refactor this
         GLfloat connectorCubeSize = squareSize/4.0f;
         if (isLinkedXPos) {
             drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, +1);
+            if (this->mergeLongPaths) {
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, +1.25);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, +1.50);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, +1.75);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, +2.00);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, +2.25);
+            }
         }
         if (isLinkedXNeg) {
             drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, -1);
+            if (this->mergeLongPaths) {
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, -1.25);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, -1.50);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, -1.75);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, -2.00);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, -2.25);
+            }
         }
         if (isLinkedYPos) {
             drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, +1);
+            if (this->mergeLongPaths) {
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, +1.25);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, +1.50);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, +1.75);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, +2.00);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, +2.25);
+            }
         }
         if (isLinkedYNeg) {
             drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, -1);
+            if (this->mergeLongPaths) {
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, -1.25);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, -1.50);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, -1.75);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, -2.00);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, yAxisIdentifier, -2.25);
+            }
         }
         if (isLinkedZPos) {
             drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, +1);
+            if (this->mergeLongPaths) {
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, +1.25);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, +1.50);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, +1.75);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, +2.00);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, +2.25);
+            }
         }
         if (isLinkedZNeg) {
             drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, -1);
+            if (this->mergeLongPaths) {
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, -1.25);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, -1.50);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, -1.75);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, -2.00);
+                drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, zAxisIdentifier, -2.25);
+            }
         }
     }
 
-    void drawCube(Point p, GLfloat size, std::vector<std::vector<float>> colours, bool connector = false, std::string connectorAxisIdentifier = "", int connectorOffset = 0) {
+    void drawCube(Point p, GLfloat size, std::vector<std::vector<float>> colours, bool connector = false, std::string connectorAxisIdentifier = "", GLfloat connectorOffset = 0) {
 
         float colour1A = colours.at(0).at(0);
         float colour1B = colours.at(0).at(1);
