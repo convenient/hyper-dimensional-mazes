@@ -20,7 +20,7 @@ void processKeys(unsigned char key, int x, int y);
 
 class RendererGrid3D {
 
-    GLfloat squareSize = 0.03;
+    GLfloat squareSize = 0.055;
 
     //Disable for maze generation debugging
     bool solutionLogicEnabled = true;
@@ -304,8 +304,8 @@ class RendererGrid3D {
         //*1 will make the cubes intersect
         //*2 would make the cubes side by side with no buffer
         //*3 will make them have a distance of half a cube from eachother
-        GLfloat xOffset = squareSize * p.getPositionOnAxis(xAxisIdentifier) * 3;
-        GLfloat yOffset = squareSize * p.getPositionOnAxis(yAxisIdentifier) * 3;
+        GLfloat xOffset = (squareSize * p.getPositionOnAxis(xAxisIdentifier) * 3) + (squareSize*1.5);
+        GLfloat yOffset = (squareSize * p.getPositionOnAxis(yAxisIdentifier) * 3) + (squareSize*1.5);
         GLfloat zOffset = squareSize * p.getPositionOnAxis(zAxisIdentifier) * 3;
 
         if (connector) {
@@ -442,7 +442,7 @@ class RendererGrid3D {
     static void render() {
         //Grey background
         glColor3f(0.0, 0.0, 0.0);
-        glClearColor(0.75, 0.75, 0.75, 1);
+        glClearColor(0.70, 0.70, 0.70, 1);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
@@ -469,6 +469,9 @@ public:
     void generateAndDraw() {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glFlush();
+        glutPostRedisplay();
+        sleep(2);
 
         m->generate();
         if (this->solutionLogicEnabled) {
@@ -507,8 +510,8 @@ public:
 
         glutInit(&fakeargc, fakeargv);
         glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_ALPHA | GLUT_DEPTH);
-        glutInitWindowSize(600, 600);
-        glutInitWindowPosition(100, 100);
+        glutInitWindowSize(285, 285);
+        glutInitWindowPosition(500, 150);
         glutCreateWindow(title);
         glutDisplayFunc(&render);
         glutKeyboardFunc(&processKeys);
