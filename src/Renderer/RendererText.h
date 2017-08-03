@@ -18,7 +18,7 @@ public:
         Node *previousNode = nullptr;
         for (auto node : path) {
 
-            std::cout << std::setw(40) << std::left;
+            std::cout << std::setw(20) << std::left;
 
             if (node == start) {
                 std::cout << "start at";
