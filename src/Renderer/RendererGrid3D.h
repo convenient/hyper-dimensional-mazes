@@ -28,6 +28,7 @@ class RendererGrid3D {
     bool mergeLongPaths = false;
 
     GLfloat rotateMultiplier = -28;
+    int microDrawDelay = 0;
     bool showingSolution = false;
     bool firstRenderComplete = false;
     bool rotate = false;
@@ -458,6 +459,7 @@ class RendererGrid3D {
 
         glutPostRedisplay();
         glFlush();//probably overkill, but it works.
+        superSecretOpenGlHackyPointer->drawDelaySleep();
     }
 
     static void processKeys(unsigned char key, int x, int y)
@@ -521,6 +523,12 @@ class RendererGrid3D {
         }
     }
 
+    void drawDelaySleep() {
+        if (this->microDrawDelay > 0) {
+            usleep(this->microDrawDelay);
+        }
+    }
+
     static void render() {
         //Grey background
         glColor3f(0.0, 0.0, 0.0);
@@ -580,11 +588,13 @@ public:
         this->solveCallback(m, this->solver);
     }
 
-    RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s)) {
+    RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s), int microDrawDelay) {
 
         this->m = maze;
 
         this->solver = solver;
+
+        this->microDrawDelay = microDrawDelay;
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};
