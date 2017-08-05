@@ -7,7 +7,7 @@ An experimental implementation of some common Maze generation algorithms, modifi
     1. [Rendering a 2D Maze](#rendering-a-2d-maze)
     1. [Rendering a 3D Maze](#rendering-a-3d-maze)
     1. [Rendering Higher Dimensions](#rendering-higher-dimensions)
-1. Algorithm Implementation
+1. [Algorithm Implementations](#algorithm-implementations)
     1. [Binary](#binary)
     1. [Sidewinder](#sidewinder)
     1. [Aldous-Broder](#aldous-broder)
@@ -51,29 +51,24 @@ I tried [TODO LINK] to build a renderer for a 3 dimensional maze, what you see d
 
 Higher dimensional mazes only have a text renderer.
 
-# Binary Algorithm
+# Algorithm Implementations
+
+## Binary
+
+See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h).
 
 > Pick a random unvisited node, carve a path north or east. Pick until all nodes are visited.
 
-See `src/graph/maze/mazebinary.h`.
-
 This was quite a simple one to translate into higher dimensions, simply stack the extra dimensions in the maze and pick a possible dimension form the list.
 
-
-## Binary 2D
-
-The binary algorithm forms a very distinctive V shape snaking from one edge of the maze to another.
-
+The binary algorithm forms a very distinctive V shape snaking from one edge of the maze to another, this is still visible in 3D.
 
 ![binary2d](readme/binary_2d.gif)
 ![binary2d_solution](readme/binary_2d.png)
 ![binary3d](readme/binary_3d.gif)
 
-## Binary 3D
-
-The distinctive V shape holds true in 3 dimensions.
-
-
+- [2D solution log](readme/binary_2d.log)
+- [3D solution log](readme/binary_3d.log)
 
 ## Binary ND
 
