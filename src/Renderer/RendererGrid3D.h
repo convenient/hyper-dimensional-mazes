@@ -33,8 +33,6 @@ class RendererGrid3D {
     bool firstRenderComplete = false;
     bool rotate = false;
 
-    int hackfirst = 0;
-
     GLfloat rotationXaxis = 0.0f;
     GLfloat rotationYaxis = 0.0f;
     GLfloat rotationZaxis = 0.0f;
@@ -125,10 +123,6 @@ class RendererGrid3D {
     void drawMaze() {
         Node *start = nullptr;
         Node *end = nullptr;
-
-        if (hackfirst<=0) {
-            return;
-        }
 
         if (this->solutionLogicEnabled && this->solver->getMazeSolved()) {
             start = solver->getStartNode();
@@ -478,7 +472,6 @@ class RendererGrid3D {
                 exit(0);
                 break;
             case 'g':
-                superSecretOpenGlHackyPointer->hackfirst++;
                 superSecretOpenGlHackyPointer->generateAndDraw();
                 break;
             case 's':
@@ -593,6 +586,10 @@ public:
         std::vector<Node *> solution = this->solver->solve();
         this->drawPath(solution);
         this->solveCallback(m, this->solver);
+    }
+
+    RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s)) {
+        RendererGrid3D(maze, solver, title, generateCallbackFunc, solveCallbackFunc, 0);
     }
 
     RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s), int microDrawDelay) {
