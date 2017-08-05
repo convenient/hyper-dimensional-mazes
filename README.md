@@ -7,7 +7,7 @@ An experimental implementation of some common Maze generation algorithms, modifi
     1. [Rendering a 2D Maze](#rendering-a-2d-maze)
     1. [Rendering a 3D Maze](#rendering-a-3d-maze)
     1. [Rendering Higher Dimensions](#rendering-higher-dimensions)
-1. Algorithm Implementation
+1. [Algorithm Implementations](#algorithm-implementations)
     1. [Binary](#binary)
     1. [Sidewinder](#sidewinder)
     1. [Aldous-Broder](#aldous-broder)
@@ -51,74 +51,24 @@ I tried [TODO LINK] to build a renderer for a 3 dimensional maze, what you see d
 
 Higher dimensional mazes only have a text renderer.
 
-# Binary Algorithm
+# Algorithm Implementations
+
+## Binary
+
+See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h).
 
 > Pick a random unvisited node, carve a path north or east. Pick until all nodes are visited.
 
-See `src/graph/maze/mazebinary.h`.
-
 This was quite a simple one to translate into higher dimensions, simply stack the extra dimensions in the maze and pick a possible dimension form the list.
 
+The binary algorithm forms a very distinctive V shape snaking from one edge of the maze to another, this is still visible in 3D.
 
-## Binary 2D
+![binary2d](readme/binary_2d.gif)
+![binary2d_solution](readme/binary_2d.png)
+![binary3d](readme/binary_3d.gif)
 
-The binary algorithm forms a very distinctive V shape snaking from one edge of the maze to another.
-
-
-| Visual Graph        | Text Graph           |
-| ------------- |:-------------:|
-| ![binary2d](readme/binary2d.gif) | Using seed: 1485002677078
-                                          Generating a Binary maze of 12 by 12
-                                          Ensuring solution
-                                          Solution took 0.0256184 seconds and has a distance of 40
-                                          (x:-1)(y:-6) to (x:-6)(y:-6)
-                                          start at          (x:-1)(y:-6)
-                                          positive 1 on y   (x:-1)(y:-5)
-                                          positive 1 on x   (x:0)(y:-5)
-                                          positive 1 on y   (x:0)(y:-4)
-                                          positive 1 on x   (x:1)(y:-4)
-                                          positive 1 on y   (x:1)(y:-3)
-                                          positive 1 on x   (x:2)(y:-3)
-                                          positive 1 on x   (x:3)(y:-3)
-                                          positive 1 on y   (x:3)(y:-2)
-                                          positive 1 on x   (x:4)(y:-2)
-                                          positive 1 on x   (x:5)(y:-2)
-                                          positive 1 on y   (x:5)(y:-1)
-                                          positive 1 on y   (x:5)(y:0)
-                                          positive 1 on y   (x:5)(y:1)
-                                          positive 1 on y   (x:5)(y:2)
-                                          positive 1 on y   (x:5)(y:3)
-                                          positive 1 on y   (x:5)(y:4)
-                                          positive 1 on y   (x:5)(y:5)
-                                          negative 1 on x   (x:4)(y:5)
-                                          negative 1 on x   (x:3)(y:5)
-                                          negative 1 on x   (x:2)(y:5)
-                                          negative 1 on x   (x:1)(y:5)
-                                          negative 1 on y   (x:1)(y:4)
-                                          negative 1 on x   (x:0)(y:4)
-                                          negative 1 on y   (x:0)(y:3)
-                                          negative 1 on y   (x:0)(y:2)
-                                          negative 1 on y   (x:0)(y:1)
-                                          negative 1 on y   (x:0)(y:0)
-                                          negative 1 on y   (x:0)(y:-1)
-                                          negative 1 on y   (x:0)(y:-2)
-                                          negative 1 on x   (x:-1)(y:-2)
-                                          negative 1 on x   (x:-2)(y:-2)
-                                          negative 1 on x   (x:-3)(y:-2)
-                                          negative 1 on x   (x:-4)(y:-2)
-                                          negative 1 on y   (x:-4)(y:-3)
-                                          negative 1 on x   (x:-5)(y:-3)
-                                          negative 1 on x   (x:-6)(y:-3)
-                                          negative 1 on y   (x:-6)(y:-4)
-                                          negative 1 on y   (x:-6)(y:-5)
-                                          finish at         (x:-6)(y:-6) |
-
-## Binary 3D
-
-The distinctive V shape holds true in 3 dimensions.
-
-![binary3d](readme/binary3d.gif)
-
+- [2D solution log](readme/binary_2d.log)
+- [3D solution log](readme/binary_3d.log)
 
 ## Binary ND
 
