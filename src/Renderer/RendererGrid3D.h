@@ -33,6 +33,8 @@ class RendererGrid3D {
     bool firstRenderComplete = false;
     bool rotate = false;
 
+    int hackfirst = 0;
+
     GLfloat rotationXaxis = 0.0f;
     GLfloat rotationYaxis = 0.0f;
     GLfloat rotationZaxis = 0.0f;
@@ -123,6 +125,10 @@ class RendererGrid3D {
     void drawMaze() {
         Node *start = nullptr;
         Node *end = nullptr;
+
+        if (hackfirst<=0) {
+            return;
+        }
 
         if (this->solutionLogicEnabled && this->solver->getMazeSolved()) {
             start = solver->getStartNode();
@@ -472,6 +478,7 @@ class RendererGrid3D {
                 exit(0);
                 break;
             case 'g':
+                superSecretOpenGlHackyPointer->hackfirst++;
                 superSecretOpenGlHackyPointer->generateAndDraw();
                 break;
             case 's':
