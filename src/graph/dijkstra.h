@@ -87,6 +87,9 @@ public:
      * If we're searching from Node A to Nodes X,Y,Z they may share part of a common path. This should help sort
      * out these commonalities partly
      *
+     * Not fully implemented dijsktra as each node is a simple 1 distance away
+     * TODO modify for nodes of N distance/weight
+     *
      */
     std::unordered_map<Node *, std::vector<Node *>> getPath(Node *start, std::vector<Node *> ends) {
         this->clearAll();
