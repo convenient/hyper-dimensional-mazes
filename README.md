@@ -65,59 +65,14 @@ This was quite a simple one to translate into higher dimensions, simply stack th
 The binary algorithm forms a very distinctive V shape snaking from one edge of the maze to another.
 
 
-| Visual Graph        | Text Graph           |
-| ------------- |:-------------:|
-| ![binary2d](readme/binary2d.gif) | Using seed: 1485002677078
-                                          Generating a Binary maze of 12 by 12
-                                          Ensuring solution
-                                          Solution took 0.0256184 seconds and has a distance of 40
-                                          (x:-1)(y:-6) to (x:-6)(y:-6)
-                                          start at          (x:-1)(y:-6)
-                                          positive 1 on y   (x:-1)(y:-5)
-                                          positive 1 on x   (x:0)(y:-5)
-                                          positive 1 on y   (x:0)(y:-4)
-                                          positive 1 on x   (x:1)(y:-4)
-                                          positive 1 on y   (x:1)(y:-3)
-                                          positive 1 on x   (x:2)(y:-3)
-                                          positive 1 on x   (x:3)(y:-3)
-                                          positive 1 on y   (x:3)(y:-2)
-                                          positive 1 on x   (x:4)(y:-2)
-                                          positive 1 on x   (x:5)(y:-2)
-                                          positive 1 on y   (x:5)(y:-1)
-                                          positive 1 on y   (x:5)(y:0)
-                                          positive 1 on y   (x:5)(y:1)
-                                          positive 1 on y   (x:5)(y:2)
-                                          positive 1 on y   (x:5)(y:3)
-                                          positive 1 on y   (x:5)(y:4)
-                                          positive 1 on y   (x:5)(y:5)
-                                          negative 1 on x   (x:4)(y:5)
-                                          negative 1 on x   (x:3)(y:5)
-                                          negative 1 on x   (x:2)(y:5)
-                                          negative 1 on x   (x:1)(y:5)
-                                          negative 1 on y   (x:1)(y:4)
-                                          negative 1 on x   (x:0)(y:4)
-                                          negative 1 on y   (x:0)(y:3)
-                                          negative 1 on y   (x:0)(y:2)
-                                          negative 1 on y   (x:0)(y:1)
-                                          negative 1 on y   (x:0)(y:0)
-                                          negative 1 on y   (x:0)(y:-1)
-                                          negative 1 on y   (x:0)(y:-2)
-                                          negative 1 on x   (x:-1)(y:-2)
-                                          negative 1 on x   (x:-2)(y:-2)
-                                          negative 1 on x   (x:-3)(y:-2)
-                                          negative 1 on x   (x:-4)(y:-2)
-                                          negative 1 on y   (x:-4)(y:-3)
-                                          negative 1 on x   (x:-5)(y:-3)
-                                          negative 1 on x   (x:-6)(y:-3)
-                                          negative 1 on y   (x:-6)(y:-4)
-                                          negative 1 on y   (x:-6)(y:-5)
-                                          finish at         (x:-6)(y:-6) |
+![binary2d](readme/binary_2d.gif)
+![binary2d_solution](readme/binary_2d.png)
+![binary3d](readme/binary_3d.gif)
 
 ## Binary 3D
 
 The distinctive V shape holds true in 3 dimensions.
 
-![binary3d](readme/binary3d.gif)
 
 
 ## Binary ND
