@@ -70,7 +70,7 @@ The binary algorithm forms a very distinctive V shape snaking from one edge of t
 - [2D solution log](readme/binary_2d.log)
 - [3D solution log](readme/binary_3d.log)
 
-## Binary ND
+### Binary ND
 
 A 4D binary solution. It's interesting that the distance for the solution is within the same orders of magnitude as the 2D and 3D mazes. It also appears to hold true for 5D mazes.
 
@@ -122,13 +122,9 @@ negative 1 on C                         (A:1)(B:0)(C:1)(D:0)
 finish at                               (A:1)(B:0)(C:0)(D:0)
 ```
 
-# Sidewinder Algorithm
+## Sidewinder
 
-## Sidewinder 2D
-
-## Sidewinder 3D
-
-## Sidewinder ND
+### Sidewinder ND
 
 Similar to the comments above, as the extra dimensions accrue for the current implementation the more likely you are to end up with multiple unlinked graphs rather than a uniform spanning tree. The more dimensions, the less likely this is to run. The length of each dimension has been reduced to demonstrate a working maze.
 
@@ -154,13 +150,9 @@ negative 1 on B                         (A:2)(B:1)(C:1)(D:2)
 finish at                               (A:2)(B:0)(C:1)(D:2)
 ```
 
-# Aldous-Broder Algorithm
+## Aldous-Broder
 
-## Aldous-Broder 2D
-
-## Aldous-Brodger 3D
-
-## Aldous-Broder ND
+### Aldous-Broder ND
 
 A 4D Aldous-Broder solution.
 
@@ -311,13 +303,9 @@ negative 1 on D                         (A:5)(B:5)(C:0)(D:3)
 finish at                               (A:5)(B:4)(C:0)(D:3)
 ```
 
-# Recursive Backtracker Algorithm
+## Recursive Backtracker
 
-## Recursive Backtracker 2D
-
-## Recursive Backtracker 3D
-
-## Recursive Backtracker ND
+### Recursive Backtracker ND
 
 A 4D Recursive Backtracker solution
 
