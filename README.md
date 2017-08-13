@@ -120,7 +120,7 @@ positive 1 on A                         (A:5)(B:0)(C:4)(D:2)
 
 See [`src/graph/maze/mazesidewinder.h`](src/graph/maze/mazesidewinder.h)
 
-The sidewinder algorithm is similar to the binary algorithm, however it results in one spanning path along a single axis of the maze. I refer to this as the "backbone".
+The sidewinder algorithm is similar to the binary algorithm, however it results in one spanning path along a single axis of the maze. I refer to this as the "backbone" and you can see it on the left hand side of the 2D generation below.
 
 The backbone and associated generation logic was very difficult to abstract for higher dimensions, and my solution is very buggy. The code fails far more frequently than it runs, and in order to get any usable output I had to reduce the size of the maze as the dimensions increase. You can still see a similar pattern in the small 3D maze as in the 2D maze, both solutions pass through the backbone on one axis.
 
@@ -151,7 +151,7 @@ negative 1 on y     (x:4)(y:-5)                |        positive 1 on y     (x:-
 
 ### Sidewinder ND
 
-Similar to the comments above, as the extra dimensions accrue for the current implementation the more likely you are to end up with multiple unlinked graphs rather than a uniform spanning tree. The more dimensions, the less likely this is to run. The length of each dimension has been reduced to demonstrate a working maze.
+Similar to the comments above, as the extra dimensions accrue the more likely you are to end up with multiple unlinked graphs rather than a uniform spanning tree. The more dimensions, the less likely this is to run. The length of each dimension has been reduced to demonstrate a working maze.
 
 [Read full 4D solution log](readme/sidewinder_4d.log)
 
