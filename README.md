@@ -13,17 +13,17 @@ An experimental implementation of some common Maze generation algorithms modifie
 1. [Developer Notes](#developer-notes)
    1. [Dependencies](#dependencies)
 
-These modifications are not all very performant, particularly the `Node` and `Point` classes which are the foundation of the dimension agnostic mazes. If you try and run anything higher than a 5th dimensional maze you really have to reduce the length of that dimension down, otherwise you're looking at a 30 minute runtime for even the simplest maze generation algorithm. 
+These modifications are not all very performant, particularly the [`Node`](src/graph/node.h) and [`Point`](src/graph/point.h) classes which are the foundation of the dimension agnostic mazes. If you try and run anything higher than a 5th dimensional maze you really have to reduce the length of that dimension down, otherwise you're looking at a 30 minute runtime for even the simplest maze generation algorithm.
 
 ## Defining a Maze
 
-Maze generation algorithms don't actually have any concept of the "start" or "end" of a maze and they simply carve out connections between different nodes. This isn't ideal as we can't really appreciate any weaving or texture within the maze without inspecting it in some way.
+Perfect maze generation algorithms don't actually have any concept of the "start" or "end" of a maze and they simply carve out connections between different nodes. This isn't ideal as we can't really appreciate any weaving or texture within the maze without inspecting it in some way.
 
 The following approach of forcing a "start" and "end" node into a maze helps highlight defining characteristics of the different algorithms as each algorithm has its own footprint.
 
 The approach taken for this project is
 
-1. Generate a maze using any algorithm.
+1. Generate a maze.
 1. Collect a list of all "Dead end" nodes that touch the edge of the maze.
 3. Compute the "all pairs all paths" problem between all of these dead ends.
 4. Find the pairs with the longest distance and mark them as the "start" and "end".
