@@ -55,13 +55,15 @@ Higher dimensional mazes only have a text renderer.
 
 ## Binary
 
+[:arrow_up: Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
+
 See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h).
 
 > Pick a random unvisited node, carve a path north or east. Pick until all nodes are visited.
 
 This was quite a simple one to translate into higher dimensions, simply stack the extra dimensions in the maze and pick a possible dimension form the list.
 
-The binary algorithm forms a very distinctive V shape snaking from one edge of the maze to another, this is still visible in 3D.
+The binary algorithm forms a solution with very distinctive V shape snaking from one edge of the maze to another, this is still visible in 3D.
 
 ![binary2d](readme/binary_2d.gif)
 ![binary2d_solution](readme/binary_2d.png)
