@@ -1,0 +1,8 @@
+Using seed: 1502657754132
+Generating a Wilsons maze of 12 by 12
+Ensuring solution
+Solution took 0.0338488 seconds and has a distance of 61
+(x:-4)(y:5) to (x:5)(y:4)
+Ensuring solution
+Solution took 0.0384293 seconds and has a distance of 51
+(x:-5)(y:5) to (x:-2)(y:-6)

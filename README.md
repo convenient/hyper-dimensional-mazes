@@ -184,8 +184,10 @@ finish at           (A:1)(B:0)(C:1)(D:0)
 
 See [`src/graph/maze/mazealdousbroder.h`](src/graph/maze/mazealdousbroder.h)
 
+Click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm) to read more about this algorithm.
+
 ![aldous_broder_2d](readme/aldous_broder_2d.gif)
-![baldous_broder_2d_solution](readme/aldous_broder_2d.png)
+![aldous_broder_2d_solution](readme/aldous_broder_2d.png)
 ![aldous_broder_3d](readme/aldous_broder_3d.gif)
 
 ### Aldous-Broder ND
@@ -196,6 +198,12 @@ See [`src/graph/maze/mazealdousbroder.h`](src/graph/maze/mazealdousbroder.h)
 
 See [`src/graph/maze/mazeawilsons.h`](src/graph/maze/mazeawilsons.h)
 
+Click [here](http://weblog.jamisbuck.org/2011/1/20/maze-generation-wilson-s-algorithm) to read more about this algorithm.
+
+![wilsons2d](readme/wilsons_2d.gif)
+![wilsons2d_solution](readme/wilsons_2d.png)
+![wilsons3d](readme/wilsons_3d.gif)
+
 ### Wilsons ND
 
 ## Recursive Backtracker
@@ -203,6 +211,8 @@ See [`src/graph/maze/mazeawilsons.h`](src/graph/maze/mazeawilsons.h)
 :arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazerecursivebacktracker.h`](src/graph/maze/mazerecursivebacktracker.h)
+
+Click [here](http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking) to read more about this algorithm.
 
 ### Recursive Backtracker ND
 
