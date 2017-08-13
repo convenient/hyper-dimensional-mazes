@@ -1,4 +1,4 @@
-# N-dimensional orthogonal maze generation algorithms
+# Hyper dimensional orthogonal maze generation algorithms
 
 An experimental implementation of some common Maze generation algorithms, modified to support N dimensions. All topics loosely inspired by the [Mazes for Programmers](https://pragprog.com/book/jbmaze/mazes-for-programmers) book.
 
@@ -48,7 +48,7 @@ I tried [TODO LINK] to build a renderer for a 4 (and higher) dimensional maze, h
 
 ## Binary
 
-:arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
+:arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h)
 
@@ -116,7 +116,7 @@ positive 1 on A                         (A:5)(B:0)(C:4)(D:2)
 
 ## Sidewinder
 
-:arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
+:arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazesidewinder.h`](src/graph/maze/mazesidewinder.h)
 
@@ -180,7 +180,7 @@ finish at           (A:1)(B:0)(C:1)(D:0)
 
 ## Aldous-Broder
 
-:arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
+:arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazealdousbroder.h`](src/graph/maze/mazealdousbroder.h)
 
@@ -194,7 +194,7 @@ Click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder
 
 ## Wilsons
 
-:arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
+:arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazewilsons.h`](src/graph/maze/mazewilsons.h)
 
@@ -208,7 +208,7 @@ Click [here](http://weblog.jamisbuck.org/2011/1/20/maze-generation-wilson-s-algo
 
 ## Recursive Backtracker
 
-:arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
+:arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazerecursivebacktracker.h`](src/graph/maze/mazerecursivebacktracker.h)
 
