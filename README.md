@@ -51,7 +51,7 @@ I tried [TODO LINK] to build a renderer for a 4 dimensional maze, however what I
 :arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h)
-Click [here](http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm) to read more about this algorithm.
+and click [here](http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm) to read more about this algorithm.
 
 This was quite a simple one to translate into higher dimensions, simply stack the extra dimensions in the maze and pick a possible dimension form the list.
 
@@ -117,7 +117,7 @@ positive 1 on A                         (A:5)(B:0)(C:4)(D:2)
 :arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazesidewinder.h`](src/graph/maze/mazesidewinder.h)
-Click [here](http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm) to read more about this algorithm.
+and click [here](http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm) to read more about this algorithm.
 
 The sidewinder algorithm is similar to the binary algorithm, however it results in one spanning path along a single axis of the maze. I refer to this as the "backbone" and you can see it on the left hand side of the 2D generation below.
 
@@ -181,7 +181,7 @@ finish at           (A:1)(B:0)(C:1)(D:0)
 :arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazealdousbroder.h`](src/graph/maze/mazealdousbroder.h)
-Click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm) to read more about this algorithm.
+and click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm) to read more about this algorithm.
 
 ![aldous_broder_2d](readme/aldous_broder_2d.gif)
 ![aldous_broder_2d_solution](readme/aldous_broder_2d.png)
@@ -194,7 +194,7 @@ Click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder
 :arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazewilsons.h`](src/graph/maze/mazewilsons.h)
-Click [here](http://weblog.jamisbuck.org/2011/1/20/maze-generation-wilson-s-algorithm) to read more about this algorithm.
+and click [here](http://weblog.jamisbuck.org/2011/1/20/maze-generation-wilson-s-algorithm) to read more about this algorithm.
 
 
 ![wilsons2d](readme/wilsons_2d.gif)
@@ -208,7 +208,7 @@ Click [here](http://weblog.jamisbuck.org/2011/1/20/maze-generation-wilson-s-algo
 :arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazerecursivebacktracker.h`](src/graph/maze/mazerecursivebacktracker.h)
-Click [here](http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking) to read more about this algorithm.
+and click [here](http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking) to read more about this algorithm.
 
 ![recursive_backtracker_2d](readme/recursive_backtracker_2d.gif)
 ![recursive_backtracker_2d_solution](readme/recursive_backtracker_2d.png)
