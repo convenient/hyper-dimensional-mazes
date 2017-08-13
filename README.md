@@ -196,7 +196,7 @@ Click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder
 
 :arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
 
-See [`src/graph/maze/mazeawilsons.h`](src/graph/maze/mazeawilsons.h)
+See [`src/graph/maze/mazewilsons.h`](src/graph/maze/mazewilsons.h)
 
 Click [here](http://weblog.jamisbuck.org/2011/1/20/maze-generation-wilson-s-algorithm) to read more about this algorithm.
 
