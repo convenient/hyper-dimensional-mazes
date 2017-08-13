@@ -214,6 +214,10 @@ See [`src/graph/maze/mazerecursivebacktracker.h`](src/graph/maze/mazerecursiveba
 
 Click [here](http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking) to read more about this algorithm.
 
+![recursive_backtracker_2d](readme/recursive_backtracker_2d.gif)
+![recursive_backtracker_2d_solution](readme/recursive_backtracker_2d.png)
+![recursive_backtracker_3d](readme/recursive_backtracker_3d.gif)
+
 ### Recursive Backtracker ND
 
 # Developer Notes
