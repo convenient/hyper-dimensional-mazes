@@ -67,12 +67,32 @@ The binary algorithm forms a very distinctive V shape snaking from one edge of t
 ![binary2d_solution](readme/binary_2d.png)
 ![binary3d](readme/binary_3d.gif)
 
-- [2D solution log](readme/binary_2d.log)
-- [3D solution log](readme/binary_3d.log)
+| [Read full 2D solution log](readme/binary_2d.log)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|  [Read full 3D solution log](readme/binary_3d.log) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+|---|---|
+
+```
+Generating a Binary maze of 12 by 12           |        Generating a Binary maze of 8 by 8 by 8
+Solution took 0.0354854 seconds                |        Solution took 1.0908 seconds
+Solution has a distance of 42                  |        Solution has a distance of 41
+(x:-6)(y:-3) to (x:-6)(y:-6)                   |        (x:-4)(y:-4)(z:-4) to (x:-2)(y:-4)(z:-4)
+start at            (x:-6)(y:-3)               |        start at            (x:-4)(y:-4)(z:-4)
+positive 1 on y     (x:-6)(y:-2)               |        positive 1 on z     (x:-4)(y:-4)(z:-3)
+positive 1 on x     (x:-5)(y:-2)               |        positive 1 on z     (x:-4)(y:-4)(z:-2)
+positive 1 on y     (x:-5)(y:-1)               |        positive 1 on x     (x:-3)(y:-4)(z:-2)
+positive 1 on y     (x:-5)(y:0)                |        positive 1 on z     (x:-3)(y:-4)(z:-1)
+positive 1 on x     (x:-4)(y:0)                |        positive 1 on y     (x:-3)(y:-3)(z:-1)
+positive 1 on y     (x:-4)(y:1)                |        positive 1 on x     (x:-2)(y:-3)(z:-1)
+positive 1 on y     (x:-4)(y:2)                |        positive 1 on x     (x:-1)(y:-3)(z:-1)
+...Read full log for more...                   |        ...Read full log for more...
+```
 
 ### Binary ND
 
-A 4D binary solution. It's interesting that the distance for the solution is within the same orders of magnitude as the 2D and 3D mazes. It also appears to hold true for 5D mazes.
+A 4D binary solution is shown below.
+
+It is interesting to note that the solution distance is similar for both a 2D, a 3D, and a 4D maze
+
+[Read full 4D solution log](readme/binary_4d.log)
 
 ```
 $ ./binary_nd -d 4
@@ -92,34 +112,7 @@ positive 1 on C                         (A:4)(B:0)(C:3)(D:1)
 positive 1 on D                         (A:4)(B:0)(C:3)(D:2)
 positive 1 on C                         (A:4)(B:0)(C:4)(D:2)
 positive 1 on A                         (A:5)(B:0)(C:4)(D:2)
-positive 1 on D                         (A:5)(B:0)(C:4)(D:3)
-positive 1 on C                         (A:5)(B:0)(C:5)(D:3)
-positive 1 on D                         (A:5)(B:0)(C:5)(D:4)
-positive 1 on B                         (A:5)(B:1)(C:5)(D:4)
-positive 1 on B                         (A:5)(B:2)(C:5)(D:4)
-positive 1 on B                         (A:5)(B:3)(C:5)(D:4)
-positive 1 on D                         (A:5)(B:3)(C:5)(D:5)
-positive 1 on B                         (A:5)(B:4)(C:5)(D:5)
-positive 1 on B                         (A:5)(B:5)(C:5)(D:5)
-negative 1 on A                         (A:4)(B:5)(C:5)(D:5)
-negative 1 on B                         (A:4)(B:4)(C:5)(D:5)
-negative 1 on A                         (A:3)(B:4)(C:5)(D:5)
-negative 1 on C                         (A:3)(B:4)(C:4)(D:5)
-negative 1 on A                         (A:2)(B:4)(C:4)(D:5)
-negative 1 on B                         (A:2)(B:3)(C:4)(D:5)
-negative 1 on C                         (A:2)(B:3)(C:3)(D:5)
-negative 1 on D                         (A:2)(B:3)(C:3)(D:4)
-negative 1 on D                         (A:2)(B:3)(C:3)(D:3)
-negative 1 on B                         (A:2)(B:2)(C:3)(D:3)
-negative 1 on B                         (A:2)(B:1)(C:3)(D:3)
-negative 1 on B                         (A:2)(B:0)(C:3)(D:3)
-negative 1 on C                         (A:2)(B:0)(C:2)(D:3)
-negative 1 on D                         (A:2)(B:0)(C:2)(D:2)
-negative 1 on D                         (A:2)(B:0)(C:2)(D:1)
-negative 1 on D                         (A:2)(B:0)(C:2)(D:0)
-negative 1 on A                         (A:1)(B:0)(C:2)(D:0)
-negative 1 on C                         (A:1)(B:0)(C:1)(D:0)
-finish at                               (A:1)(B:0)(C:0)(D:0)
+...Read full log for more...
 ```
 
 ## Sidewinder
