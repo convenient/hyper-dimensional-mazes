@@ -4,9 +4,6 @@ An experimental implementation of some common Maze generation algorithms, modifi
 
 1. [Defining a Maze](#defining-a-maze)
 1. [Rendering the Mazes](#rendering-the-mazes)
-    1. [Rendering a 2D Maze](#rendering-a-2d-maze)
-    1. [Rendering a 3D Maze](#rendering-a-3d-maze)
-    1. [Rendering Higher Dimensions](#rendering-higher-dimensions)
 1. [Algorithm Implementations](#algorithm-implementations)
     1. [Binary](#binary)
     1. [Sidewinder](#sidewinder)
@@ -16,7 +13,7 @@ An experimental implementation of some common Maze generation algorithms, modifi
 1. [Developer Notes](#developer-notes)
    1. [Dependencies](#dependencies)
 
-These modifications are not all very performant, particularly the `Node` and `Point` classes which are the foundation of the dimension agnostic mazes. If you try and run anything higher than a 5th dimensional maze you really have to drop the length of that dimension right down, otherwise you're looking at a 30 minute runtime for even the simplest maze generation algorithm. This is a bit mad but sure is interesting.
+These modifications are not all very performant, particularly the `Node` and `Point` classes which are the foundation of the dimension agnostic mazes. If you try and run anything higher than a 5th dimensional maze you really have to reduce the length of that dimension down, otherwise you're looking at a 30 minute runtime for even the simplest maze generation algorithm. 
 
 ## Defining a Maze
 
@@ -31,31 +28,27 @@ The approach taken for this project is
 3. Compute the "all pairs all paths" problem between all of these dead ends.
 4. Find the pairs with the longest distance and mark them as the "start" and "end".
 
-There are some cool performance modifications to the breadth first search described in step 3, if you are interested the entrypoints are `src/graph/solver.h` and `src/graph/dijkstra.h`.
+There are some cool performance modifications to the breadth first search described in step 3, if you are interested the entrypoints are [`src/graph/solver.h`](src/graph/solver.h) and [`src/graph/dijkstra.h`](src/graph/dijkstra.h).
 
 ## Rendering the Mazes
 
+|  | OpenGL | CLI output |
+|---|---|---|
+| 2D | :white_check_mark: |:white_check_mark:  |
+| 3D | :white_check_mark: |:white_check_mark:  |
+| ND | :x: |:white_check_mark:  |
+
 All mazes render with a text CLI output, highlighting the start node, the end node, and the path required to navigate between them.
 
-### Rendering a 2D Maze
+2D and 3D mazes can have their graphs rendered using OpenGl. 3D mazes render like a stacked 2D maze, however it's difficult to see the solution happening "inside" the maze.
 
-Render as you'd expect, as if you draw them on a piece of paper.
-
-### Rendering a 3D Maze
-
-Like a stacked 2D maze. It's difficult to see the solution happening "inside" the graph but it is there.
-
-### Rendering Higher Dimensions
-
-I tried [TODO LINK] to build a renderer for a 3 dimensional maze, what you see doesn't make sense. Although I guess this is expected unless you frequently brush your teeth with LSD.
-
-Higher dimensional mazes only have a text renderer.
+I tried [TODO LINK] to build a renderer for a 4 (and higher) dimensional maze, however what I saw didn't make much sense. Although I suspect this is expected unless you slip LSD in your tea.
 
 # Algorithm Implementations
 
 ## Binary
 
-[:arrow_up: Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
+:arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
 
 See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h).
 
