@@ -56,7 +56,11 @@ See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h).
 
 This was quite a simple one to translate into higher dimensions, simply stack the extra dimensions in the maze and pick a possible dimension form the list.
 
-The binary algorithm forms a solution with very distinctive V shape snaking from one edge of the maze to another, this is still visible in 3D.
+The binary algorithm forms a solution with very distinctive V shape snaking from one edge of the maze to another, this is still visible in 3D. ]
+
+There are long spanning paths across one edge of each axis.
+
+Click [here](http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm) to read more about this algorithm.
 
 ![binary2d](readme/binary_2d.gif)
 ![binary2d_solution](readme/binary_2d.png)
@@ -116,31 +120,60 @@ positive 1 on A                         (A:5)(B:0)(C:4)(D:2)
 
 See [`src/graph/maze/mazesidewinder.h`](src/graph/maze/mazesidewinder.h).
 
+The sidewinder algorithm is similar to the binary algorithm, however it only results in one spanning path along axis which I refer to as the "backbone" of the maze.
+
+The backbone and associated generation logic was very difficult to abstract for higher dimensions, and my solution is very buggy. The code fails far more frequently than it runs, and in order to get any usable output I had to reduce the size of the maze as the dimensions increase.
+
+Click [here](http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm) to read more about this algorithm.
+
+![sidewinder2d](readme/sidewinder_2d.gif)
+![sidewinder2d_solution](readme/sidewinder_2d.png)
+![sidewinder3d](readme/sidewinder_3d.gif)
+
+| [Read full 2D solution log](readme/sidewinder_2d.log)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|  [Read full 3D solution log](readme/sidewinder_3d.log) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+|---|---|
+
+```
+Generating a Sidewinder maze of 12 by 12       |        Generating a Sidewinder maze of 5 by 5 by 5
+Solution took 0.0258571                        |        Solution took 0.00741086 seconds
+Solution has a distance of 54                  |        Solution has a distance of 15
+(x:5)(y:-5) to (x:5)(y:2)                      |        (x:0)(y:-2)(z:-1) to (x:1)(y:-2)(z:0)
+start at            (x:5)(y:-5)                |        start at            (x:0)(y:-2)(z:-1)
+positive 1 on y     (x:5)(y:-4)                |        positive 1 on y     (x:0)(y:-1)(z:-1)
+positive 1 on y     (x:5)(y:-3)                |        negative 1 on x     (x:-1)(y:-1)(z:-1)
+positive 1 on y     (x:5)(y:-2)                |        negative 1 on x     (x:-2)(y:-1)(z:-1)
+negative 1 on x     (x:4)(y:-2)                |        positive 1 on z     (x:-2)(y:-1)(z:0)
+negative 1 on y     (x:4)(y:-3)                |        positive 1 on y     (x:-2)(y:0)(z:0)
+negative 1 on y     (x:4)(y:-4)                |        positive 1 on z     (x:-2)(y:0)(z:1)
+negative 1 on y     (x:4)(y:-5)                |        positive 1 on y     (x:-2)(y:1)(z:1)
+...Read full log for more...                   |        ...Read full log for more...
+```
 
 ### Sidewinder ND
 
 Similar to the comments above, as the extra dimensions accrue for the current implementation the more likely you are to end up with multiple unlinked graphs rather than a uniform spanning tree. The more dimensions, the less likely this is to run. The length of each dimension has been reduced to demonstrate a working maze.
 
 ```
-./sidewinder_nd -d 4 -l 3
-Using seed: 1491156789245
+$ ./bin/sidewinder_nd -l 3
 Generating a Sidewinder maze of 3 by 3 by 3 by 3
 Ensuring solution
-Solution took 0.0304006 seconds and has a distance of 14
-start at                                (A:2)(B:0)(C:2)(D:0)
-negative 1 on A                         (A:1)(B:0)(C:2)(D:0)
-positive 1 on B                         (A:1)(B:1)(C:2)(D:0)
-positive 1 on B                         (A:1)(B:2)(C:2)(D:0)
-positive 1 on D                         (A:1)(B:2)(C:2)(D:1)
-negative 1 on C                         (A:1)(B:2)(C:1)(D:1)
-negative 1 on A                         (A:0)(B:2)(C:1)(D:1)
-positive 1 on D                         (A:0)(B:2)(C:1)(D:2)
-negative 1 on B                         (A:0)(B:1)(C:1)(D:2)
-positive 1 on A                         (A:1)(B:1)(C:1)(D:2)
-positive 1 on B                         (A:1)(B:2)(C:1)(D:2)
-positive 1 on A                         (A:2)(B:2)(C:1)(D:2)
-negative 1 on B                         (A:2)(B:1)(C:1)(D:2)
-finish at                               (A:2)(B:0)(C:1)(D:2)
+Solution took 0.0367572 seconds and has a distance of 16
+start at            (A:1)(B:0)(C:0)(D:2)
+positive 1 on B     (A:1)(B:1)(C:0)(D:2)
+positive 1 on A     (A:2)(B:1)(C:0)(D:2)
+positive 1 on B     (A:2)(B:2)(C:0)(D:2)
+negative 1 on A     (A:1)(B:2)(C:0)(D:2)
+positive 1 on C     (A:1)(B:2)(C:1)(D:2)
+negative 1 on A     (A:0)(B:2)(C:1)(D:2)
+negative 1 on C     (A:0)(B:2)(C:0)(D:2)
+negative 1 on B     (A:0)(B:1)(C:0)(D:2)
+negative 1 on B     (A:0)(B:0)(C:0)(D:2)
+negative 1 on D     (A:0)(B:0)(C:0)(D:1)
+negative 1 on D     (A:0)(B:0)(C:0)(D:0)
+positive 1 on C     (A:0)(B:0)(C:1)(D:0)
+positive 1 on B     (A:0)(B:1)(C:1)(D:0)
+positive 1 on A     (A:1)(B:1)(C:1)(D:0)
+finish at           (A:1)(B:0)(C:1)(D:0)
 ```
 
 ## Aldous-Broder
