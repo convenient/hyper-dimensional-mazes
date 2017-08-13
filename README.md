@@ -50,7 +50,7 @@ I tried [TODO LINK] to build a renderer for a 4 (and higher) dimensional maze, h
 
 :arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
 
-See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h).
+See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h)
 
 > Pick a random unvisited node, carve a path north or east. Pick until all nodes are visited.
 
@@ -118,7 +118,7 @@ positive 1 on A                         (A:5)(B:0)(C:4)(D:2)
 
 :arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
 
-See [`src/graph/maze/mazesidewinder.h`](src/graph/maze/mazesidewinder.h).
+See [`src/graph/maze/mazesidewinder.h`](src/graph/maze/mazesidewinder.h)
 
 The sidewinder algorithm is similar to the binary algorithm, however it only results in one spanning path along axis which I refer to as the "backbone" of the maze.
 
@@ -182,7 +182,7 @@ finish at           (A:1)(B:0)(C:1)(D:0)
 
 :arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
 
-See [`src/graph/maze/mazealdousbroder.h`](src/graph/maze/mazealdousbroder.h).
+See [`src/graph/maze/mazealdousbroder.h`](src/graph/maze/mazealdousbroder.h)
 
 ### Aldous-Broder ND
 
@@ -190,7 +190,7 @@ See [`src/graph/maze/mazealdousbroder.h`](src/graph/maze/mazealdousbroder.h).
 
 :arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
 
-See [`src/graph/maze/mazeawilsons.h`](src/graph/maze/mazeawilsons.h).
+See [`src/graph/maze/mazeawilsons.h`](src/graph/maze/mazeawilsons.h)
 
 ### Wilsons ND
 
@@ -198,7 +198,7 @@ See [`src/graph/maze/mazeawilsons.h`](src/graph/maze/mazeawilsons.h).
 
 :arrow_up: [ Back to top ](#n-dimensional-orthogonal-maze-generation-algorithms)
 
-See [`src/graph/maze/mazerecursivebacktracker.h`](src/graph/maze/mazerecursivebacktracker.h).
+See [`src/graph/maze/mazerecursivebacktracker.h`](src/graph/maze/mazerecursivebacktracker.h)
 
 ### Recursive Backtracker ND
 
