@@ -43,6 +43,7 @@ public:
     }
 
     void (*linkNodesCallback)(Maze *m, Node *a, Node *b);
+
     bool useLinkNodesCallback = false;
 
     void registerCallbackLinkNodes(void (*callback)(Maze *m, Node *a, Node *b)) {
@@ -50,7 +51,7 @@ public:
         this->useLinkNodesCallback = true;
     }
 
-    void linkNodes(Node *a, Node* b) {
+    void linkNodes(Node *a, Node *b) {
         a->link(b);
         if (this->useLinkNodesCallback) {
             this->linkNodesCallback(this, a, b);
@@ -130,7 +131,7 @@ public:
         return this->getRandomNode(this->visited_map);
     };
 
-    std::unordered_map<std::string, Node *> getVisitedNodesMap () {
+    std::unordered_map<std::string, Node *> getVisitedNodesMap() {
         return this->visited_map;
     };
 
@@ -154,7 +155,7 @@ public:
 
     std::vector<std::string> getAllAxis() {
 
-        if (this->axis.size() <=0) {
+        if (this->axis.size() <= 0) {
             std::map<std::string, std::string> allDefinedAxis;
 
             for (auto nodeItr : this->getMap()) {

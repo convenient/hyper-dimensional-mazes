@@ -7,7 +7,7 @@
 
 class Node {
 private:
-    std::unordered_map<Node*, Point> linkedNodes;
+    std::unordered_map<Node *, Point> linkedNodes;
     std::vector<Node *> linkedNodesVector;
     Point point;
 
@@ -67,7 +67,7 @@ public:
 
     std::vector<Node *> getLinkedNodes() {
 
-        if (this->linkedNodesVector.size()<=0) {
+        if (this->linkedNodesVector.size() <= 0) {
             this->linkedNodesVector = this->getLinkedNodesUncached();
         }
 

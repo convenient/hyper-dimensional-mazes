@@ -5,9 +5,9 @@ TEST(nodetest, test_bi_directional_links) {
     Point aPoint;
     Point bPoint;
 
-    Node* adam = new Node(aPoint);
+    Node *adam = new Node(aPoint);
 
-    Node* betty = new Node(bPoint);
+    Node *betty = new Node(bPoint);
 
     ASSERT_FALSE(adam->isLinked(betty));
     ASSERT_FALSE(betty->isLinked(adam));

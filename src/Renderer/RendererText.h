@@ -1,5 +1,6 @@
 #ifndef MAZES_FOR_PROGRAMMERS_RENDERERTEXT_H
 #define MAZES_FOR_PROGRAMMERS_RENDERERTEXT_H
+
 #include <iostream>
 #include <iomanip>
 
@@ -29,7 +30,7 @@ public:
             }
 
             previousNode = node;
-            std::cout  << node->getPoint().getAsString() << std::endl;
+            std::cout << node->getPoint().getAsString() << std::endl;
         }
     }
 

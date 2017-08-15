@@ -4,8 +4,7 @@
 #include "maze.h"
 #include <algorithm>
 
-bool compareNodesByPoint(Node* a, Node* b)
-{
+bool compareNodesByPoint(Node *a, Node *b) {
     //Nodes are the same, return false
     if (a == b) {
         return false;
@@ -27,7 +26,8 @@ bool compareNodesByPoint(Node* a, Node* b)
         return (aVal < bVal);
     }
 
-    throw std::logic_error("These nodes are at the same exact point, this should never happen: " + aPoint.getAsString());
+    throw std::logic_error(
+            "These nodes are at the same exact point, this should never happen: " + aPoint.getAsString());
 }
 
 class MazeSidewinder : public Maze {
@@ -114,7 +114,7 @@ private:
         }
     }
 
-    void processCarveSet(std::vector<Node *>* carvedPath, std::vector<std::string> axisList) {
+    void processCarveSet(std::vector<Node *> *carvedPath, std::vector<std::string> axisList) {
         if (carvedPath->empty()) {
             return;
         }
@@ -123,7 +123,8 @@ private:
 
         for (auto randomNodeFromCarveSet : *carvedPath) {
             for (auto axisIdentifier : axisList) {
-                Point tmpPoint = Point::getNeighbourPoint(randomNodeFromCarveSet->getPoint(), axisIdentifier, Point::negative);
+                Point tmpPoint = Point::getNeighbourPoint(randomNodeFromCarveSet->getPoint(), axisIdentifier,
+                                                          Point::negative);
                 if (this->nodeExistsAtPoint(tmpPoint)) {
                     Node *nextNode = this->getNodeAtPoint(tmpPoint);
                     this->linkNodes(randomNodeFromCarveSet, nextNode);

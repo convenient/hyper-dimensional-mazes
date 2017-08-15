@@ -9,6 +9,7 @@ public:
     std::string getName() {
         return "Recursive Backtracker";
     }
+
 private:
     void generateAlgorithm() {
 
@@ -41,4 +42,5 @@ private:
         }
     }
 };
+
 #endif //MAZES_FOR_PROGRAMMERS_MAZERECURSIVEBACKTRACKER_H

@@ -20,7 +20,8 @@ namespace convenient_maze_opengl {
         }
     }
 
-    static int init(int argc, char **argv, Maze *mazePtr, std::string dimensions, std::string defaultLength, int microDrawDelay) {
+    static int
+    init(int argc, char **argv, Maze *mazePtr, std::string dimensions, std::string defaultLength, int microDrawDelay) {
 
         convenient_maze::init(argc, argv, mazePtr, dimensions, defaultLength);
 

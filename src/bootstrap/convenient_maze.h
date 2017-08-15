@@ -24,7 +24,7 @@ namespace convenient_maze {
         return getMazeName() + " Maze - " + std::to_string(numberOfDimensions) + "D Grid";
     }
 
-    static char* getTitleCharStar() {
+    static char *getTitleCharStar() {
         std::string titleAsString = getTitleString();
 
         char *title = new char[titleAsString.length() + 1];
@@ -36,14 +36,14 @@ namespace convenient_maze {
         return opts["length"].as<int>();
     }
 
-    static Solver* getSolver() {
+    static Solver *getSolver() {
         return solver;
     }
 
     static void describeDimensions() {
         std::cout << "Generating a " + getMazeName() + " maze of ";
-        for (int i=0; i<numberOfDimensions; i++) {
-            if (i>0) {
+        for (int i = 0; i < numberOfDimensions; i++) {
+            if (i > 0) {
                 std::cout << " by ";
             }
             std::cout << getMazeLength();
@@ -55,13 +55,13 @@ namespace convenient_maze {
         int mazeLength = getMazeLength();
 
         //Offset the node position to make rendering easier and map to nice opengl stuff.
-        int minpart = (int)floor(mazeLength/2) * -1;
-        int maxpart = (int)ceil(mazeLength/2);
+        int minpart = (int) floor(mazeLength / 2) * -1;
+        int maxpart = (int) ceil(mazeLength / 2);
 
         if (numberOfDimensions == 3) {
-            for (int x=minpart; x<maxpart; x++) {
-                for (int y=minpart; y<maxpart; y++) {
-                    for (int z=minpart; z<maxpart; z++) {
+            for (int x = minpart; x < maxpart; x++) {
+                for (int y = minpart; y < maxpart; y++) {
+                    for (int z = minpart; z < maxpart; z++) {
                         Point p;
                         p.addPosition("x", x);
                         p.addPosition("y", y);
@@ -72,8 +72,8 @@ namespace convenient_maze {
             }
         } else if (numberOfDimensions == 2) {
 
-            for (int x=minpart; x<maxpart; x++) {
-                for (int y=minpart; y<maxpart; y++) {
+            for (int x = minpart; x < maxpart; x++) {
+                for (int y = minpart; y < maxpart; y++) {
                     Point p;
                     p.addPosition("x", x);
                     p.addPosition("y", y);
@@ -89,9 +89,9 @@ namespace convenient_maze {
             while (looper.next()) {
                 Point p;
 
-                for (int i=0; i<looper.idxes.size(); i++) {
-                    int asciiVal = 65+i;
-                    char character = static_cast<char>(65+i);
+                for (int i = 0; i < looper.idxes.size(); i++) {
+                    int asciiVal = 65 + i;
+                    char character = static_cast<char>(65 + i);
                     std::string charString(1, character);
                     int val = looper.idxes[i];
                     p.addPosition(charString, looper.idxes[i]);
@@ -107,8 +107,7 @@ namespace convenient_maze {
         opts.add_options()
                 ("d,dimensions", "dimensions", cxxopts::value<int>()->default_value(dimensions))
                 ("l,length", "edge length", cxxopts::value<int>()->default_value(defaultLength))
-                ("s,seed", "maze seed", cxxopts::value<unsigned long>())
-                ;
+                ("s,seed", "maze seed", cxxopts::value<unsigned long>());
         opts.parse(argc, argv);
 
         if (opts.count("seed")) {
