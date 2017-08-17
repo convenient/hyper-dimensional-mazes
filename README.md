@@ -191,6 +191,25 @@ and click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-br
 ![aldous_broder_2d_solution](readme/aldous_broder_2d.png)
 ![aldous_broder_3d](readme/aldous_broder_3d.gif)
 
+| [Read full 2D solution log](readme/aldous_broder_2d.log)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|  [Read full 3D solution log](readme/aldous_broder_3d.log) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+|---|---|
+
+```
+Generating a Aldous Broder maze of 12 by 12    |        Generating a Aldous Broder maze of 8 by 8 by 8
+Solution took 0.0530468                        |        Solution took 1.91582 seconds
+Solution has a distance of 50                  |        Solution has a distance of 71
+(x:-6)(y:-1) to (x:1)(y:5)                     |        (x:0)(y:1)(z:-4) to (x:3)(y:3)(z:3)
+start at            (x:-6)(y:-1)               |        start at            (x:0)(y:1)(z:-4)
+positive 1 on y     (x:-6)(y:0)                |        positive 1 on x     (x:1)(y:1)(z:-4)
+positive 1 on x     (x:-5)(y:0)                |        positive 1 on x     (x:2)(y:1)(z:-4)
+positive 1 on x     (x:-4)(y:0)                |        negative 1 on y     (x:2)(y:0)(z:-4)
+negative 1 on y     (x:-4)(y:-1)               |        negative 1 on x     (x:1)(y:0)(z:-4)
+negative 1 on x     (x:-5)(y:-1)               |        negative 1 on x     (x:0)(y:0)(z:-4)
+negative 1 on y     (x:-5)(y:-2)               |        negative 1 on y     (x:0)(y:-1)(z:-4)
+positive 1 on x     (x:-4)(y:-2)               |        positive 1 on z     (x:0)(y:-1)(z:-3)
+...Read full log for more...                   |        ...Read full log for more...
+```
+
 ### Aldous-Broder Hyperdimensional (4D)
 
 [Read full 4D solution log](readme/aldous_broder_4d.log)
