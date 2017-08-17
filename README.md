@@ -155,8 +155,6 @@ negative 1 on y     (x:4)(y:-5)                |        positive 1 on y     (x:-
 
 Similar to the comments above, as the extra dimensions accrue the more likely you are to end up with multiple unlinked graphs rather than a spanning tree. The more dimensions, the less likely this is to run. The length of each dimension has been reduced to demonstrate a working maze.
 
-[Read full 4D solution log](readme/sidewinder_4d.log)
-
 ```
 $ ./bin/sidewinder_nd -l 3
 Generating a Sidewinder maze of 3 by 3 by 3 by 3
