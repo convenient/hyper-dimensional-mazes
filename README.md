@@ -349,6 +349,12 @@ negative 1 on D                        (A:3)(B:1)(C:4)(D:4)
 ...Read full log for more...
 ```
 
+# That's it!
+
+Thanks for reading.
+
+To anyone who wan't to fix the Sidewinder implementation: Crack on and open a PR, a working implementation I'll buy you a beer.
+
 # Developer Notes
 
 ## Dependencies
