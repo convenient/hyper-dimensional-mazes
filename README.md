@@ -298,6 +298,9 @@ negative 1 on D                        (A:3)(B:1)(C:4)(D:4)
 
 ## Dependencies
 
+- [cxxopts](https://github.com/jarro2783/cxxopts)
+- [NestedLoops.h](src/lib/NestedLoop/README.md)
+- [googletest 1.7.0](https://github.com/google/googletest)
 - OpenGL
 
     ```
@@ -305,6 +308,3 @@ negative 1 on D                        (A:3)(B:1)(C:4)(D:4)
     sudo apt-get install freeglut3-dev
     ```
     
-- [cxxopts](https://github.com/jarro2783/cxxopts)
-- [NestedLoops.h](src/lib/NestedLoop/README.md)
-- [googletest 1.7.0](https://github.com/google/googletest)
