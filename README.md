@@ -195,6 +195,29 @@ and click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-br
 
 ### Aldous-Broder Hyperdimensional (4D)
 
+[Read full 4D solution log](readme/aldous_broder_4d.log)
+
+```
+$ ./aldous_broder_nd -d 4
+Using seed: 1502657336674
+Generating a Aldous Broder maze of 6 by 6 by 6 by 6
+Ensuring solution
+Solution took 44.5247 seconds and has a distance of 126
+start at                                (A:4)(B:0)(C:0)(D:0)
+positive 1 on A                         (A:5)(B:0)(C:0)(D:0)
+positive 1 on D                         (A:5)(B:0)(C:0)(D:1)
+positive 1 on D                         (A:5)(B:0)(C:0)(D:2)
+positive 1 on C                         (A:5)(B:0)(C:1)(D:2)
+positive 1 on B                         (A:5)(B:1)(C:1)(D:2)
+positive 1 on D                         (A:5)(B:1)(C:1)(D:3)
+negative 1 on A                         (A:4)(B:1)(C:1)(D:3)
+positive 1 on D                         (A:4)(B:1)(C:1)(D:4)
+positive 1 on B                         (A:4)(B:2)(C:1)(D:4)
+positive 1 on B                         (A:4)(B:3)(C:1)(D:4)
+negative 1 on C                         (A:4)(B:3)(C:0)(D:4)
+...Read full log for more...
+```
+
 ## Wilsons
 
 :arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
@@ -210,6 +233,29 @@ and click [here](http://weblog.jamisbuck.org/2011/1/20/maze-generation-wilson-s-
 
 ### Wilsons Hyperdimensional (4D)
 
+[Read full 4D solution log](readme/wilsons_4d.log)
+
+```
+$ ./wilsons_nd -d 4
+Using seed: 1502657601278
+Generating a Wilsons maze of 6 by 6 by 6 by 6
+Ensuring solution
+Solution took 36.0249 seconds and has a distance of 116
+start at                                (A:5)(B:3)(C:3)(D:3)
+positive 1 on D                         (A:5)(B:3)(C:3)(D:4)
+positive 1 on D                         (A:5)(B:3)(C:3)(D:5)
+negative 1 on C                         (A:5)(B:3)(C:2)(D:5)
+positive 1 on B                         (A:5)(B:4)(C:2)(D:5)
+positive 1 on C                         (A:5)(B:4)(C:3)(D:5)
+positive 1 on B                         (A:5)(B:5)(C:3)(D:5)
+negative 1 on C                         (A:5)(B:5)(C:2)(D:5)
+negative 1 on C                         (A:5)(B:5)(C:1)(D:5)
+negative 1 on C                         (A:5)(B:5)(C:0)(D:5)
+negative 1 on A                         (A:4)(B:5)(C:0)(D:5)
+negative 1 on A                         (A:3)(B:5)(C:0)(D:5)
+...Read full log for more...
+```
+
 ## Recursive Backtracker
 
 :arrow_up: [ Back to top ](#hyper-dimensional-orthogonal-maze-generation-algorithms)
@@ -224,6 +270,29 @@ and click [here](http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursiv
 ![recursive_backtracker_3d](readme/recursive_backtracker_3d.gif)
 
 ### Recursive Backtracker Hyperdimensional (4D)
+
+[Read full 4D solution log](readme/recursive_backtracker_4d.log)
+
+```
+$ ./recursive_backtracker_nd -d 4
+Using seed: 1502658426288
+Generating a Recursive Backtracker maze of 6 by 6 by 6 by 6
+Ensuring solution
+Solution took 30.173 seconds and has a distance of 804
+start at                               (A:4)(B:0)(C:3)(D:4)
+positive 1 on D                        (A:4)(B:0)(C:3)(D:5)
+positive 1 on B                        (A:4)(B:1)(C:3)(D:5)
+negative 1 on A                        (A:3)(B:1)(C:3)(D:5)
+negative 1 on D                        (A:3)(B:1)(C:3)(D:4)
+negative 1 on B                        (A:3)(B:0)(C:3)(D:4)
+negative 1 on A                        (A:2)(B:0)(C:3)(D:4)
+positive 1 on D                        (A:2)(B:0)(C:3)(D:5)
+positive 1 on A                        (A:3)(B:0)(C:3)(D:5)
+positive 1 on C                        (A:3)(B:0)(C:4)(D:5)
+positive 1 on B                        (A:3)(B:1)(C:4)(D:5)
+negative 1 on D                        (A:3)(B:1)(C:4)(D:4)
+...Read full log for more...
+```
 
 # Developer Notes
 
