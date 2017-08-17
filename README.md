@@ -137,7 +137,7 @@ Despite the failings of this algorithm when it runs you can still see a similar 
 
 ```
 Generating a Sidewinder maze of 12 by 12       |        Generating a Sidewinder maze of 5 by 5 by 5
-Solution took 0.0258571                        |        Solution took 0.00741086 seconds
+Solution took 0.0258571 seconds                |        Solution took 0.00741086 seconds
 Solution has a distance of 54                  |        Solution has a distance of 15
 (x:5)(y:-5) to (x:5)(y:2)                      |        (x:0)(y:-2)(z:-1) to (x:1)(y:-2)(z:0)
 start at            (x:5)(y:-5)                |        start at            (x:0)(y:-2)(z:-1)
@@ -196,7 +196,7 @@ and click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-br
 
 ```
 Generating a Aldous Broder maze of 12 by 12    |        Generating a Aldous Broder maze of 8 by 8 by 8
-Solution took 0.0530468                        |        Solution took 1.91582 seconds
+Solution took 0.0530468 seconds                |        Solution took 1.91582 seconds
 Solution has a distance of 50                  |        Solution has a distance of 71
 (x:-6)(y:-1) to (x:1)(y:5)                     |        (x:0)(y:1)(z:-4) to (x:3)(y:3)(z:3)
 start at            (x:-6)(y:-1)               |        start at            (x:0)(y:1)(z:-4)
@@ -247,6 +247,25 @@ and click [here](http://weblog.jamisbuck.org/2011/1/20/maze-generation-wilson-s-
 ![wilsons2d](readme/wilsons_2d.gif)
 ![wilsons2d_solution](readme/wilsons_2d.png)
 ![wilsons3d](readme/wilsons_3d.gif)
+
+| [Read full 2D solution log](readme/wilsons_2d.log)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|  [Read full 3D solution log](readme/wilsons_3d.log) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+|---|---|
+
+```
+Generating a Wilsons maze of 12 by 12          |        Generating a Wilsons maze of 8 by 8 by 8
+Solution took 0.0299658 seconds                |        Solution took 2.43029 seconds
+Solution has a distance of 51                  |        Solution has a distance of 97
+(x:-5)(y:5) to (x:-2)(y:-6)                    |        (x:-4)(y:-2)(z:-2) to (x:-3)(y:2)(z:3)
+start at            (x:-5)(y:5)                |        start at            (x:-4)(y:-2)(z:-2)
+negative 1 on x     (x:-6)(y:5)                |        negative 1 on y     (x:-4)(y:-3)(z:-2)
+negative 1 on y     (x:-6)(y:4)                |        negative 1 on y     (x:-4)(y:-4)(z:-2)
+negative 1 on y     (x:-6)(y:3)                |        positive 1 on z     (x:-4)(y:-4)(z:-1)
+positive 1 on x     (x:-5)(y:3)                |        positive 1 on z     (x:-4)(y:-4)(z:0)
+negative 1 on y     (x:-5)(y:2)                |        positive 1 on y     (x:-4)(y:-3)(z:0)
+positive 1 on x     (x:-4)(y:2)                |        positive 1 on y     (x:-4)(y:-2)(z:0)
+positive 1 on y     (x:-4)(y:3)                |        positive 1 on z     (x:-4)(y:-2)(z:1)
+...Read full log for more...                   |        ...Read full log for more...
+```
 
 ### Wilsons Hyperdimensional (4D)
 
