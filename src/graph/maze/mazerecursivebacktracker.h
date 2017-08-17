@@ -13,6 +13,13 @@ public:
 private:
     void generateAlgorithm() {
 
+
+        /*
+         * https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker
+         *
+         * This doesn't actually use recursion but pretty much adheres to the wiki definition
+         */
+
         std::stack<Node *> stack;
 
         Node *initialNode = this->getRandomUnvisitedNode();
