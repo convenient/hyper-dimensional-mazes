@@ -305,6 +305,25 @@ and click [here](http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursiv
 ![recursive_backtracker_2d_solution](readme/recursive_backtracker_2d.png)
 ![recursive_backtracker_3d](readme/recursive_backtracker_3d.gif)
 
+| [Read full 2D solution log](readme/recursive_backtracker_2d.log)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|  [Read full 3D solution log](readme/recursive_backtracker_3d.log) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+|---|---|
+
+```
+Generating a Recursive Backtracker maze of 12x12  |  Generating a Recursive Backtracker maze of 8x8x8
+Solution took 0.0244822 seconds                   |  Solution took 0.817039 seconds
+Solution has a distance of 94                     |  Solution has a distance of 228
+(x:5)(y:-4) to (x:5)(y:5)                         |  (x:0)(y:2)(z:-4) to (x:1)(y:-4)(z:-2)
+start at            (x:5)(y:-4)                   |  start at            (x:0)(y:2)(z:-4)
+negative 1 on y     (x:5)(y:-5)                   |  negative 1 on y     (x:0)(y:1)(z:-4)
+negative 1 on y     (x:5)(y:-6)                   |  negative 1 on y     (x:0)(y:0)(z:-4)
+negative 1 on x     (x:4)(y:-6)                   |  negative 1 on x     (x:-1)(y:0)(z:-4)
+negative 1 on x     (x:3)(y:-6)                   |  positive 1 on z     (x:-1)(y:0)(z:-3)
+negative 1 on x     (x:2)(y:-6)                   |  positive 1 on x     (x:0)(y:0)(z:-3)
+positive 1 on y     (x:2)(y:-5)                   |  positive 1 on x     (x:1)(y:0)(z:-3)
+positive 1 on x     (x:3)(y:-5)                   |  negative 1 on y     (x:1)(y:-1)(z:-3)
+...Read full log for more...                      |  ...Read full log for more...
+```
+
 ### Recursive Backtracker Hyperdimensional (4D)
 
 [Read full 4D solution log](readme/recursive_backtracker_4d.log)
