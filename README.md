@@ -13,7 +13,7 @@ An experimental implementation of some common Maze generation algorithms modifie
 1. [Developer Notes](#developer-notes)
    1. [Dependencies](#dependencies)
 
-The [`Node`](src/graph/node.h) and [`Point`](src/graph/point.h) classes are the foundation of the dimensionally agnostic mazes, they are not very performant but that is not the purpose of this project. If you try and run anything higher than a 4th dimensional maze you really have to reduce the length of the dimensions down otherwise the runtime increases exponentially.
+The [`Node`](src/graph/node.h) and [`Point`](src/graph/point.h) classes are the foundation of the dimensionally agnostic mazes, they are not very performant but that is not the purpose of this project. If you try and run anything higher than a 4th-dimensional maze you really have to reduce the length of the dimensions down otherwise the runtime increases exponentially.
 
 ## Defining a Maze
 
@@ -38,9 +38,9 @@ There are some cool performance modifications to the breadth first search descri
 
 All mazes render with a text CLI output highlighting the start node, the end node, and the path required to navigate between them.
 
-2D and 3D mazes can have their graphs rendered using OpenGl. 3D mazes render like a stacked 2D maze, however it's difficult to see the solution happening "inside" the maze so only the 3D solution is included in this document.
+2D and 3D mazes can have their graphs rendered using OpenGL. 3D mazes render like a stacked 2D maze, however it's difficult to see the solution happening "inside" the maze so only the 3D solution is included in this document.
 
-There was a brief attempt to render a 4 dimensional maze by cycling through slices of it in 3 dimensions, however what appeared onscreen didn't make much sense. This is expected unless you slip LSD in your tea.
+There was a brief attempt to render a 4-dimensional maze by cycling through slices of it in 3 dimensions, however what appeared onscreen didn't make much sense. This is expected unless you slip LSD in your tea.
 
 # Algorithm Implementations
 
@@ -55,7 +55,7 @@ The binary algorithm can be summed up briefly as "*For every node, go up or go r
 
 ### Binary 2D and 3D
 
-This algorithm produces a maze with long spanning edges over one side of each axis, this is a side effect of the algorithm as described above as when you are at the top most edge, the only choice you can make is "go right". In the 2D graph shown below these spanning edges can be seen along the top and right hand sides of the maze.
+This algorithm produces a maze with long spanning edges over one side of each axis, this is a side effect of the algorithm as described above as when you are at the top most edge, the only choice you can make is "go right". In the 2D graph shown below these spanning edges can be seen along the top and right-hand sides of the maze.
 
 This algorithm forms a solution with very distinctive V shape snaking from one edge of the maze to another passing through these edge paths, this effect is still visible in 3D.
 
@@ -118,7 +118,7 @@ positive 1 on A                         (A:5)(B:0)(C:4)(D:2)
 See [`src/graph/maze/mazesidewinder.h`](src/graph/maze/mazesidewinder.h)
 and click [here](http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm) to read more about this algorithm.
 
-The sidewinder algorithm is similar to the binary algorithm, however it results in only one spanning path along a single axis of the maze. This is referred to as the "backbone"  within the source code, it can be seen on the left hand side of the 2D graph below. The backbone and associated generation logic was very difficult to abstract for higher dimensions, and the solution shown here is very buggy. The code fails far more frequently than it runs, and in order to get any usable output the size of the maze had to be reduced significantly.
+The sidewinder algorithm is similar to the binary algorithm, however it results in only one spanning path along a single axis of the maze. This is referred to as the "backbone"  within the source code, it can be seen on the left-hand side of the 2D graph below. The backbone and associated generation logic was very difficult to abstract for higher dimensions, and the solution shown here is very buggy. The code fails far more frequently than it runs, and in order to get any usable output the size of the maze had to be reduced significantly.
 
 ### Sidewinder 2D and 3D
 
@@ -181,7 +181,7 @@ finish at           (A:1)(B:0)(C:1)(D:0)
 See [`src/graph/maze/mazealdousbroder.h`](src/graph/maze/mazealdousbroder.h)
 and click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm) to read more about this algorithm.
 
-A very simple algorithm invented as a way to demonstrate generation of uniform spanning trees, it was very trivial to implement and the algorithm required no refactoring or manipulation to scale the number of dimensions. It can be summarised as
+A very simple algorithm invented as a way to demonstrate the generation of uniform spanning trees, it was very trivial to implement and the algorithm required no refactoring or manipulation to scale the number of dimensions. It can be summarised as
 >Choose a random node, then choose a random neighbour node, if not visited carve a passage
 
 ### Aldous-Broder 2D and 3D
@@ -312,7 +312,7 @@ This is a simple algorithm that required no special modification to work in high
 
 ### Recursive Backtracker 2D and 3D
 
-The deep solutions generated by this algorithm span most of the available maze, this is visible in both 2D and 3D. As the number of dimensions increase the solution depth increases relative to the number of nodes.
+The deep solutions generated by this algorithm span most of the available maze, this is visible in both 2D and 3D. As the number of dimensions increases the solution depth increases relative to the number of nodes.
 
 ![recursive_backtracker_2d](readme/recursive_backtracker_2d.gif)
 ![recursive_backtracker_2d_solution](readme/recursive_backtracker_2d.png)
@@ -383,4 +383,4 @@ To anyone who wants to fix the Sidewinder implementation; Crack on and open a PR
     sudo apt-get install freeglut3
     sudo apt-get install freeglut3-dev
     ```
-    
+   
