@@ -1,0 +1,21 @@
+$ ./bin/sidewinder_3d -s 1502654164770 -l 5
+Using seed: 1502654164770
+Generating a Sidewinder maze of 5 by 5 by 5
+Ensuring solution
+Solution took 0.00741086 seconds and has a distance of 15
+(x:0)(y:-2)(z:-1) to (x:1)(y:-2)(z:0)
+start at            (x:0)(y:-2)(z:-1)
+positive 1 on y     (x:0)(y:-1)(z:-1)
+negative 1 on x     (x:-1)(y:-1)(z:-1)
+negative 1 on x     (x:-2)(y:-1)(z:-1)
+positive 1 on z     (x:-2)(y:-1)(z:0)
+positive 1 on y     (x:-2)(y:0)(z:0)
+positive 1 on z     (x:-2)(y:0)(z:1)
+positive 1 on y     (x:-2)(y:1)(z:1)
+positive 1 on x     (x:-1)(y:1)(z:1)
+negative 1 on z     (x:-1)(y:1)(z:0)
+negative 1 on y     (x:-1)(y:0)(z:0)
+negative 1 on y     (x:-1)(y:-1)(z:0)
+negative 1 on y     (x:-1)(y:-2)(z:0)
+positive 1 on x     (x:0)(y:-2)(z:0)
+finish at           (x:1)(y:-2)(z:0)

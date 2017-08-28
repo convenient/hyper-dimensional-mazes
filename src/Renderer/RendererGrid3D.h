@@ -4,16 +4,20 @@
 #include <unistd.h>
 
 #ifdef __APPLE__
+
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
+
 #else
 #include <GL/glut.h>
 #endif
 
 #include "../graph/maze/maze.h"
 #include "../graph/solver.h"
+
 class RendererGrid3D;
+
 RendererGrid3D *superSecretOpenGlHackyPointer;
 
 void processKeys(unsigned char key, int x, int y);
@@ -28,6 +32,7 @@ class RendererGrid3D {
     bool mergeLongPaths = false;
 
     GLfloat rotateMultiplier = -28;
+    int microDrawDelay = 0;
     bool showingSolution = false;
     bool firstRenderComplete = false;
     bool rotate = false;
@@ -41,7 +46,9 @@ class RendererGrid3D {
     std::string zAxisIdentifier;
 
     void (*generateCallback)(Maze *m, Solver *s);
+
     void (*solveCallback)(Maze *m, Solver *s);
+
     Solver *solver;
 
     Maze *m;
@@ -153,12 +160,12 @@ class RendererGrid3D {
         if (!this->solutionLogicEnabled) {
             return;
         }
-        if (path.size() <=2) {
+        if (path.size() <= 2) {
             return;
         }
 
         path.erase(path.begin());
-        path.erase(path.end() -1);
+        path.erase(path.end() - 1);
 
         for (auto node : path) {
             drawNode(node);
@@ -306,7 +313,7 @@ class RendererGrid3D {
         }
 
         //I really should make the following draw rectangles rather than squares, but boy I don't want to refactor this
-        GLfloat connectorCubeSize = squareSize/4.0f;
+        GLfloat connectorCubeSize = squareSize / 4.0f;
         if (isLinkedXPos) {
             drawCube(nodePosition, connectorCubeSize, connectorCubeColours, true, xAxisIdentifier, +1);
             if (this->mergeLongPaths) {
@@ -369,7 +376,8 @@ class RendererGrid3D {
         }
     }
 
-    void drawCube(Point p, GLfloat size, std::vector<std::vector<float>> colours, bool connector = false, std::string connectorAxisIdentifier = "", GLfloat connectorOffset = 0) {
+    void drawCube(Point p, GLfloat size, std::vector<std::vector<float>> colours, bool connector = false,
+                  std::string connectorAxisIdentifier = "", GLfloat connectorOffset = 0) {
 
         float colour1A = colours.at(0).at(0);
         float colour1B = colours.at(0).at(1);
@@ -386,8 +394,8 @@ class RendererGrid3D {
         //*1 will make the cubes intersect
         //*2 would make the cubes side by side with no buffer
         //*3 will make them have a distance of half a cube from eachother
-        GLfloat xOffset = (squareSize * p.getPositionOnAxis(xAxisIdentifier) * 3) + (squareSize*1.5);
-        GLfloat yOffset = (squareSize * p.getPositionOnAxis(yAxisIdentifier) * 3) + (squareSize*1.5);
+        GLfloat xOffset = (squareSize * p.getPositionOnAxis(xAxisIdentifier) * 3) + (squareSize * 1.5);
+        GLfloat yOffset = (squareSize * p.getPositionOnAxis(yAxisIdentifier) * 3) + (squareSize * 1.5);
         GLfloat zOffset = squareSize * p.getPositionOnAxis(zAxisIdentifier) * 3;
 
         if (connector) {
@@ -411,42 +419,42 @@ class RendererGrid3D {
 
         // Back face (z = -1.0f)
         glColor3f(colour1A, colour1B, colour1C);
-        glVertex3f( size +xOffset, -size +yOffset, -size +zOffset);
-        glVertex3f(-size +xOffset, -size +yOffset, -size +zOffset);
-        glVertex3f(-size +xOffset,  size +yOffset, -size +zOffset);
-        glVertex3f( size +xOffset,  size +yOffset, -size +zOffset);
+        glVertex3f(size + xOffset, -size + yOffset, -size + zOffset);
+        glVertex3f(-size + xOffset, -size + yOffset, -size + zOffset);
+        glVertex3f(-size + xOffset, size + yOffset, -size + zOffset);
+        glVertex3f(size + xOffset, size + yOffset, -size + zOffset);
 
         // Front face  (z = 1.0f)
-        glVertex3f( size +xOffset,  size +yOffset, size +zOffset);
-        glVertex3f(-size +xOffset,  size +yOffset, size +zOffset);
-        glVertex3f(-size +xOffset, -size +yOffset, size +zOffset);
-        glVertex3f( size +xOffset, -size +yOffset, size +zOffset);
+        glVertex3f(size + xOffset, size + yOffset, size + zOffset);
+        glVertex3f(-size + xOffset, size + yOffset, size + zOffset);
+        glVertex3f(-size + xOffset, -size + yOffset, size + zOffset);
+        glVertex3f(size + xOffset, -size + yOffset, size + zOffset);
 
         // Top face (y = 1.0f)
         glColor3f(colour2A, colour2B, colour2C);
-        glVertex3f( size +xOffset, size +yOffset, -size +zOffset);
-        glVertex3f(-size +xOffset, size +yOffset, -size +zOffset);
-        glVertex3f(-size +xOffset, size +yOffset,  size +zOffset);
-        glVertex3f( size +xOffset, size +yOffset,  size +zOffset);
+        glVertex3f(size + xOffset, size + yOffset, -size + zOffset);
+        glVertex3f(-size + xOffset, size + yOffset, -size + zOffset);
+        glVertex3f(-size + xOffset, size + yOffset, size + zOffset);
+        glVertex3f(size + xOffset, size + yOffset, size + zOffset);
 
         // Bottom face (y = -1.0f)
-        glVertex3f( size +xOffset, -size +yOffset,  size +zOffset);
-        glVertex3f(-size +xOffset, -size +yOffset,  size +zOffset);
-        glVertex3f(-size +xOffset, -size +yOffset, -size +zOffset);
-        glVertex3f( size +xOffset, -size +yOffset, -size +zOffset);
+        glVertex3f(size + xOffset, -size + yOffset, size + zOffset);
+        glVertex3f(-size + xOffset, -size + yOffset, size + zOffset);
+        glVertex3f(-size + xOffset, -size + yOffset, -size + zOffset);
+        glVertex3f(size + xOffset, -size + yOffset, -size + zOffset);
 
         // Left face (x = -1.0f)
         glColor3f(colour3A, colour3B, colour3C);
-        glVertex3f(-size +xOffset,  size +yOffset,  size +zOffset);
-        glVertex3f(-size +xOffset,  size +yOffset, -size +zOffset);
-        glVertex3f(-size +xOffset, -size +yOffset, -size +zOffset);
-        glVertex3f(-size +xOffset, -size +yOffset,  size +zOffset);
+        glVertex3f(-size + xOffset, size + yOffset, size + zOffset);
+        glVertex3f(-size + xOffset, size + yOffset, -size + zOffset);
+        glVertex3f(-size + xOffset, -size + yOffset, -size + zOffset);
+        glVertex3f(-size + xOffset, -size + yOffset, size + zOffset);
 
         // Right face (x = 1.0f)
-        glVertex3f(size +xOffset,  size +yOffset, -size +zOffset);
-        glVertex3f(size +xOffset,  size +yOffset,  size +zOffset);
-        glVertex3f(size +xOffset, -size +yOffset,  size +zOffset);
-        glVertex3f(size +xOffset, -size +yOffset, -size +zOffset);
+        glVertex3f(size + xOffset, size + yOffset, -size + zOffset);
+        glVertex3f(size + xOffset, size + yOffset, size + zOffset);
+        glVertex3f(size + xOffset, -size + yOffset, size + zOffset);
+        glVertex3f(size + xOffset, -size + yOffset, -size + zOffset);
         glEnd();
     }
 
@@ -458,14 +466,13 @@ class RendererGrid3D {
 
         glutPostRedisplay();
         glFlush();//probably overkill, but it works.
+        superSecretOpenGlHackyPointer->drawDelaySleep();
     }
 
-    static void processKeys(unsigned char key, int x, int y)
-    {
+    static void processKeys(unsigned char key, int x, int y) {
         unsigned char charKey = tolower(key);
 
-        switch (key)
-        {
+        switch (key) {
             case 'q':
                 exit(0);
                 break;
@@ -481,10 +488,10 @@ class RendererGrid3D {
                 glutPostRedisplay();
                 break;
             case 'p':
-                superSecretOpenGlHackyPointer->rotateMultiplier+=1;
+                superSecretOpenGlHackyPointer->rotateMultiplier += 1;
                 break;
             case 'o':
-                superSecretOpenGlHackyPointer->rotateMultiplier-=1;
+                superSecretOpenGlHackyPointer->rotateMultiplier -= 1;
                 break;
             case 'r':
                 if (superSecretOpenGlHackyPointer->rotate) {
@@ -518,6 +525,12 @@ class RendererGrid3D {
                 superSecretOpenGlHackyPointer->generateAndDraw();
             }
             superSecretOpenGlHackyPointer->firstRenderComplete = true;
+        }
+    }
+
+    void drawDelaySleep() {
+        if (this->microDrawDelay > 0) {
+            usleep(this->microDrawDelay);
         }
     }
 
@@ -569,8 +582,7 @@ public:
         glutPostRedisplay();
     }
 
-    void triggerGenerateCallback()
-    {
+    void triggerGenerateCallback() {
         this->generateCallback(this->m, this->solver);
     }
 
@@ -580,11 +592,19 @@ public:
         this->solveCallback(m, this->solver);
     }
 
-    RendererGrid3D (Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s), void (*solveCallbackFunc)(Maze *m, Solver *s)) {
+    RendererGrid3D(Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s),
+                   void (*solveCallbackFunc)(Maze *m, Solver *s)) {
+        RendererGrid3D(maze, solver, title, generateCallbackFunc, solveCallbackFunc, 0);
+    }
+
+    RendererGrid3D(Maze *maze, Solver *solver, char *title, void (*generateCallbackFunc)(Maze *m, Solver *s),
+                   void (*solveCallbackFunc)(Maze *m, Solver *s), int microDrawDelay) {
 
         this->m = maze;
 
         this->solver = solver;
+
+        this->microDrawDelay = microDrawDelay;
 
         char fakeParam[] = "fake";
         char *fakeargv[] = {fakeParam, NULL};

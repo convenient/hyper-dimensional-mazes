@@ -9,8 +9,16 @@ public:
     std::string getName() {
         return "Recursive Backtracker";
     }
+
 private:
     void generateAlgorithm() {
+
+
+        /*
+         * https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker
+         *
+         * This doesn't actually use recursion but pretty much adheres to the wiki definition
+         */
 
         std::stack<Node *> stack;
 
@@ -41,4 +49,5 @@ private:
         }
     }
 };
+
 #endif //MAZES_FOR_PROGRAMMERS_MAZERECURSIVEBACKTRACKER_H

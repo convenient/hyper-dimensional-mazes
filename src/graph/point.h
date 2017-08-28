@@ -65,7 +65,7 @@ public:
             int position = this->getPositionOnAxis(axisIdentifier);
             int comparePosition = point.getPositionOnAxis(axisIdentifier);
 
-            distance  += pow((position - comparePosition), 2);
+            distance += pow((position - comparePosition), 2);
         }
 
         distance = sqrt(distance);
@@ -97,7 +97,7 @@ public:
             int otherPosition = p.getPositionOnAxis(axis);
             int difference = abs(thisPosition - otherPosition);
 
-            if (difference !=0) {
+            if (difference != 0) {
                 if (descriptionPopulated) {
                     description << ", ";
                 }
@@ -116,12 +116,12 @@ public:
         return description.str();
     }
 
-    std::vector<std::string> getAllAxis(){
+    std::vector<std::string> getAllAxis() {
         Point x;
         return Point::getAllAxis(*this, x);
     }
 
-    static std::vector<std::string> getAllAxis(Point a, Point b){
+    static std::vector<std::string> getAllAxis(Point a, Point b) {
 
         std::map<std::string, std::string> allDefinedAxis;
 

@@ -1,5 +1,6 @@
 #ifndef MAZES_FOR_PROGRAMMERS_RENDERERTEXT_H
 #define MAZES_FOR_PROGRAMMERS_RENDERERTEXT_H
+
 #include <iostream>
 #include <iomanip>
 
@@ -18,7 +19,7 @@ public:
         Node *previousNode = nullptr;
         for (auto node : path) {
 
-            std::cout << std::setw(40) << std::left;
+            std::cout << std::setw(20) << std::left;
 
             if (node == start) {
                 std::cout << "start at";
@@ -29,7 +30,7 @@ public:
             }
 
             previousNode = node;
-            std::cout  << node->getPoint().getAsString() << std::endl;
+            std::cout << node->getPoint().getAsString() << std::endl;
         }
     }
 

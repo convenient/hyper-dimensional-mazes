@@ -30,6 +30,7 @@ private:
 
         return longestPath;
     }
+
     std::vector<Node *> getLongestPathFromBatches(std::unordered_map<Node *, std::vector<Node *>> batches) {
         std::vector<Node *> longestPath;
 
@@ -43,11 +44,12 @@ private:
             std::vector<Node *> batchesToRemove;
 
             for (auto batch : batches) {
-                Node * start = batch.first;
+                Node *start = batch.first;
                 std::vector<Node *> endPoints = batch.second;
 
                 batchesToRemove.push_back(start);
-                futuresSolutions.push_back(std::async(std::launch::async, &getLongestPath, maze->getMap().size(), start, endPoints));
+                futuresSolutions.push_back(
+                        std::async(std::launch::async, &getLongestPath, maze->getMap().size(), start, endPoints));
 
                 if (counter++ == batchSize) {
                     break;
@@ -99,9 +101,9 @@ public:
          * Split them into batches of start node -> many end nodes
          */
         for (std::size_t i = 0; i < deadEnds.size(); i++) {
-            Node * start = deadEnds.at(i);
+            Node *start = deadEnds.at(i);
             std::vector<Node *> endPoints;
-            for (std::size_t j=i+1; j< deadEnds.size(); j++) {
+            for (std::size_t j = i + 1; j < deadEnds.size(); j++) {
                 Node *end = deadEnds.at(j);
                 endPoints.push_back(end);
             }
@@ -116,7 +118,9 @@ public:
 
         current_time = std::chrono::high_resolution_clock::now();
 
-        std::cout << "Solution took " << std::chrono::duration_cast<std::chrono::duration<float>>(current_time - start_time).count() << " seconds and has a distance of " << longestPath.size() << std::endl;
+        std::cout << "Solution took "
+                  << std::chrono::duration_cast<std::chrono::duration<float>>(current_time - start_time).count()
+                  << " seconds and has a distance of " << longestPath.size() << std::endl;
 
         this->solvedPath = longestPath;
         return this->solvedPath;

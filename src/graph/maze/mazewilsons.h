@@ -6,7 +6,7 @@
 
 class MazeWilsons : public Maze {
     std::map<Node *, long> nodeToPosition;
-    std::map<long, Node*> positionToNode;
+    std::map<long, Node *> positionToNode;
 
     Node *secondLastNodeInWalk = nullptr;
 
@@ -18,7 +18,7 @@ class MazeWilsons : public Maze {
         this->positionCounter = 0;
     }
 
-    void addToWalk(Node* node) {
+    void addToWalk(Node *node) {
         this->secondLastNodeInWalk = this->getLastNodeInWalk();
         this->positionCounter++;
         this->nodeToPosition.insert({node, this->positionCounter});
@@ -31,11 +31,11 @@ class MazeWilsons : public Maze {
         this->positionToNode.erase(position);
     }
 
-    bool isInWalk(Node* node) {
+    bool isInWalk(Node *node) {
         return (this->nodeToPosition.count(node));
     }
 
-    Node* getLastNodeInWalk() {
+    Node *getLastNodeInWalk() {
         if (this->positionToNode.size() > 0) {
             return this->positionToNode.rbegin()->second;
         }
@@ -48,7 +48,7 @@ class MazeWilsons : public Maze {
         std::vector<Node *> nodesToRemove;
 
         for (auto walkNodeMap : this->positionToNode) {
-            Node* walkNode = walkNodeMap.second;
+            Node *walkNode = walkNodeMap.second;
             if (remove) {
                 nodesToRemove.push_back(walkNode);
             }
@@ -137,7 +137,7 @@ private:
         }
     }
 
-    Node* getRandomNeighbourNode(Node *node) {
+    Node *getRandomNeighbourNode(Node *node) {
         Node *chosenNode = nullptr;
         while (true) {
             std::vector<Node *> neighbourNodes = this->getNeighbourNodes(node);

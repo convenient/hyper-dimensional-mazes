@@ -34,9 +34,9 @@ add_executable(wilsons_3d src/wilsons3d.cpp)
 add_executable(wilsons_nd src/wilsons.cpp)
 
 #Recursive backtracker
-add_executable(reccursive_backtracker_2d src/recursivebacktracker2d.cpp)
-add_executable(reccursive_backtracker_3d src/recursivebacktracker3d.cpp)
-add_executable(reccursive_backtracker_nd src/recursivebacktracker.cpp)
+add_executable(recursive_backtracker_2d src/recursivebacktracker2d.cpp)
+add_executable(recursive_backtracker_3d src/recursivebacktracker3d.cpp)
+add_executable(recursive_backtracker_nd src/recursivebacktracker.cpp)
 
 ## OpenGL
 find_package(OpenGL REQUIRED)
@@ -55,6 +55,6 @@ target_link_libraries(aldous_broder_nd pthread)
 target_link_libraries(wilsons_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(wilsons_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
 target_link_libraries(wilsons_nd pthread)
-target_link_libraries(reccursive_backtracker_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
-target_link_libraries(reccursive_backtracker_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
-target_link_libraries(reccursive_backtracker_nd pthread)
+target_link_libraries(recursive_backtracker_2d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(recursive_backtracker_3d ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} pthread)
+target_link_libraries(recursive_backtracker_nd pthread)
