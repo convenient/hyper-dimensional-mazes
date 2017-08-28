@@ -13,15 +13,13 @@ An experimental implementation of some common Maze generation algorithms modifie
 1. [Developer Notes](#developer-notes)
    1. [Dependencies](#dependencies)
 
-These modifications are not all very performant, particularly the [`Node`](src/graph/node.h) and [`Point`](src/graph/point.h) classes which are the foundation of the dimension agnostic mazes. If you try and run anything higher than a 5th dimensional maze you really have to reduce the length of the dimensions down.
+The [`Node`](src/graph/node.h) and [`Point`](src/graph/point.h) classes are the foundation of the dimensionally agnostic mazes, they are not very performant but that is not the purpose of this project. If you try and run anything higher than a 4th dimensional maze you really have to reduce the length of the dimensions down otherwise the runtime increases exponentially.
 
 ## Defining a Maze
 
-Perfect maze generation algorithms don't actually have any concept of the "start" or "end" of a maze and they simply carve out connections between different nodes. This isn't ideal as we can't really appreciate any weaving or texture within the maze without inspecting it in some way.
+Perfect maze generation algorithms don't actually have any concept of the "start" or "end" of a maze and they simply carve out connections between different nodes. This is not ideal as we can't appreciate any weaving or texture within the maze without inspecting it in some way.
 
-The following approach of forcing a "start" and "end" node into a maze helps highlight defining characteristics of the different algorithms as each algorithm has its own footprint.
-
-The approach taken for this project is
+The following approach of forcing a "start" and "end" node into a maze helps highlight the defining characteristics of the different algorithms as each algorithm has its own footprint.
 
 1. Generate a maze.
 1. Collect a list of all "Dead end" nodes that touch the edge of the maze.
@@ -38,11 +36,11 @@ There are some cool performance modifications to the breadth first search descri
 | 3D | :white_check_mark: |:white_check_mark:  |
 | ND | :x: |:white_check_mark:  |
 
-All mazes render with a text CLI output, highlighting the start node, the end node, and the path required to navigate between them.
+All mazes render with a text CLI output highlighting the start node, the end node, and the path required to navigate between them.
 
 2D and 3D mazes can have their graphs rendered using OpenGl. 3D mazes render like a stacked 2D maze, however it's difficult to see the solution happening "inside" the maze so only the 3D solution is included in this document.
 
-I briefly tried to build a renderer for a 4 dimensional maze, however what I saw didn't make much sense. I suspect this is expected unless you slip LSD in your tea.
+There was a brief attempt to render a 4 dimensional maze by cycling through slices of it in 3 dimensions, however what appeared onscreen didn't make much sense. This is expected unless you slip LSD in your tea.
 
 # Algorithm Implementations
 
@@ -53,13 +51,13 @@ I briefly tried to build a renderer for a 4 dimensional maze, however what I saw
 See [`src/graph/maze/mazebinary.h`](src/graph/maze/mazebinary.h)
 and click [here](http://weblog.jamisbuck.org/2011/2/1/maze-generation-binary-tree-algorithm) to read more about this algorithm.
 
-This was quite a simple one to translate into higher dimensions, simply stack the extra dimensions in the maze and pick a possible dimension form the list.
+The binary algorithm can be summed up briefly as "*For every node, go up or go right*". As such this was quite a simple one to translate into higher dimensions, simply stack the extra dimensions in the decision making part of the algorithm.
 
 ### Binary 2D and 3D
 
-The binary algorithm forms a solution with very distinctive V shape snaking from one edge of the maze to another, this is still visible in 3D.
+The binary algorithm produces a maze with long spanning edges over each axis, this is due to the nature of the algorithm as described above as when you are at the top most edge, the only choice you can make is "go right". In the 2D graph shown below these spanning edges can be seen along the top and right hand sides of the maze.
 
-There are long spanning paths across one edge of each axis, in 2D this can be seen at the top and right hand sizes.
+This algorithm forms a solution with very distinctive V shape snaking from one edge of the maze to another passing through these edge paths, this effect is still visible in 3D.
 
 ![binary2d](readme/binary_2d.gif)
 ![binary2d_solution](readme/binary_2d.png)
@@ -120,13 +118,11 @@ positive 1 on A                         (A:5)(B:0)(C:4)(D:2)
 See [`src/graph/maze/mazesidewinder.h`](src/graph/maze/mazesidewinder.h)
 and click [here](http://weblog.jamisbuck.org/2011/2/3/maze-generation-sidewinder-algorithm) to read more about this algorithm.
 
-The sidewinder algorithm is similar to the binary algorithm, however it results in one spanning path along a single axis of the maze. I refer to this as the "backbone" and you can see it on the left hand side of the 2D generation below.
-
-The backbone and associated generation logic was very difficult to abstract for higher dimensions, and my solution is very buggy. The code fails far more frequently than it runs, and in order to get any usable output I had to reduce the size of the maze as the dimensions increase. 
+The sidewinder algorithm is similar to the binary algorithm, however it results in one spanning path along a single axis of the maze. I refer to this as the "backbone" and you can see it on the left hand side of the 2D graph below. The backbone and associated generation logic was very difficult to abstract for higher dimensions, and the solution shown here is very buggy. The code fails far more frequently than it runs, and in order to get any usable output the size of the maze had to be reduced significantly.
 
 ### Sidewinder 2D and 3D
 
-Despite the failings of this algorithm when it runs you can still see a similar pattern in the small 3D maze as in the 2D maze, both solutions pass through the backbone on one axis.
+Despite the failings of this algorithm when it runs you can still see a similar pattern in the small 3D maze as in the 2D maze, both solutions pass through the backbone on one axis. In the 3D maze the solution intersects with 5 "backbone" nodes, these nodes are the the ones furthest away from the end node.
 
 ![sidewinder2d](readme/sidewinder_2d.gif)
 ![sidewinder2d_solution](readme/sidewinder_2d.png)
@@ -185,7 +181,12 @@ finish at           (A:1)(B:0)(C:1)(D:0)
 See [`src/graph/maze/mazealdousbroder.h`](src/graph/maze/mazealdousbroder.h)
 and click [here](http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm) to read more about this algorithm.
 
+A very simple algorithm invented as a way to demonstrate generation of uniform spanning trees, it was very trivial to implement and the algorithm required no refactoring or manipulation to scale the number of dimensions. It can be summarised as
+>Choose a random node, then choose a random neighbour node, if not visited carve a passage
+
 ### Aldous-Broder 2D and 3D
+
+This algorithm generates longer winding passage than the binary algorithm, due to this feature the solution distance increases as extra dimensions are added. This generates a very visible snake like path in both 2D and 3D.
 
 ![aldous_broder_2d](readme/aldous_broder_2d.gif)
 ![aldous_broder_2d_solution](readme/aldous_broder_2d.png)
@@ -242,7 +243,11 @@ negative 1 on C                         (A:4)(B:3)(C:0)(D:4)
 See [`src/graph/maze/mazewilsons.h`](src/graph/maze/mazewilsons.h)
 and click [here](http://weblog.jamisbuck.org/2011/1/20/maze-generation-wilson-s-algorithm) to read more about this algorithm.
 
+Like the Aldous-Broder algorithm Wilsons algorithm also generates uniform spanning trees, it uses [Loop erased random walks](https://en.wikipedia.org/wiki/Loop-erased_random_walk) to achieve this uniform spanning tree in a much more efficient manner.
+
 ### Wilsons 2D and 3D
+
+This algorithm was very complex and messy to implement in a dimensionally agnostic manner, it was particularly difficult to keep track of the random walk. This algorithm generates mazes with similar characteristics as the Aldous-Broder algorithm.
 
 ![wilsons2d](readme/wilsons_2d.gif)
 ![wilsons2d_solution](readme/wilsons_2d.png)
@@ -299,7 +304,11 @@ negative 1 on A                         (A:3)(B:5)(C:0)(D:5)
 See [`src/graph/maze/mazerecursivebacktracker.h`](src/graph/maze/mazerecursivebacktracker.h)
 and click [here](http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking) to read more about this algorithm.
 
+This is a simple algorithm that required no special modification to work in higher dimensions, it generates very deep mazes with a long solution distance.
+
 ### Recursive Backtracker 2D and 3D
+
+The deep solutions generated by this Algorithm span most of the available maze, this is visible in both 2D and 3D. As the number of dimensions increase the solution depth increases relative to the number of nodes.
 
 ![recursive_backtracker_2d](readme/recursive_backtracker_2d.gif)
 ![recursive_backtracker_2d_solution](readme/recursive_backtracker_2d.png)
@@ -325,6 +334,8 @@ positive 1 on x     (x:3)(y:-5)                   |  negative 1 on y     (x:1)(y
 ```
 
 ### Recursive Backtracker Hyperdimensional (4D)
+
+The paths generated by this algorithm are massively deep, on average a recursive backtracker maze of 6x6x6x6 will have a solution of ~1000.
 
 [Read full 4D solution log](readme/recursive_backtracker_4d.log)
 
