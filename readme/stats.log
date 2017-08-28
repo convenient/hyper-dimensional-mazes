@@ -1,0 +1,17 @@
+#binary_nd -d 2 -l 6	average solution distance 18
+#binary_nd -d 3 -l 6	average solution distance 29
+#binary_nd -d 4 -l 6	average solution distance 39
+#aldous_broder_nd -d 2 -l 6	average solution distance 17
+#aldous_broder_nd -d 3 -l 6	average solution distance 54
+#aldous_broder_nd -d 4 -l 6	average solution distance 141
+#wilsons_nd -d 2 -l 6	average solution distance 19
+#wilsons_nd -d 3 -l 6	average solution distance 52
+#wilsons_nd -d 4 -l 6	average solution distance 143
+#recursive_backtracker_nd -d 2 -l 6	average solution distance 23
+#recursive_backtracker_nd -d 3 -l 6	average solution distance 139
+#recursive_backtracker_nd -d 4 -l 6	average solution distance 1027
+
+binary                      18 * 1.61 * 1.34
+aldousbroder                17 * 3.17 * 2.61
+wilsons                     19 * 2.73 * 2.75
+recursive_backtracker       23 * 6.04 * 7.38
